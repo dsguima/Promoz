@@ -16,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import database.MySQLiteDatabase;
+
 public class ActMain extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -89,7 +91,8 @@ public class ActMain extends AppCompatActivity
             startActivity(intent);
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-
+            MySQLiteDatabase database = new MySQLiteDatabase(this);
+            database = null;
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
