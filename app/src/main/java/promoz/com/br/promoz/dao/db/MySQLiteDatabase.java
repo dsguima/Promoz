@@ -1,4 +1,4 @@
-package database;
+package promoz.com.br.promoz.dao.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,19 +11,22 @@ import android.util.Log;
 
 public class MySQLiteDatabase extends SQLiteOpenHelper {
 
-    public MySQLiteDatabase(Context context) {
-        super(context, PromozContract.DB.DATABASE_NAME, null, PromozContract.DB.DATABASE_VERSION);
+    public static final int DATABASE_VERSION = 1;
+    public static final String DATABASE_NAME = "promoz.db";
 
-        for(int i = 0; i < PromozContract.tablesList.length; i++){
-            Log.v("SQL", PromozContract.tablesList[i]);
+    public MySQLiteDatabase(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+
+        for(int i = 0; i < PromozContract.tablesCreationList.length; i++){
+            Log.v("SQL", PromozContract.tablesCreationList[i]);
         }
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.v("\nSQL", "CRIANDO DB\n");
-        for(int i = 0; i < PromozContract.tablesList.length; i++){
-            db.execSQL(PromozContract.tablesList[i]);
+        for(int i = 0; i < PromozContract.tablesCreationList.length; i++){
+            db.execSQL(PromozContract.tablesCreationList[i]);
         }
     }
 
