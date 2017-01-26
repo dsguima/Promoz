@@ -1,4 +1,4 @@
-package promoz.com.br.promoz;
+package promoz.com.br.promoz.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
