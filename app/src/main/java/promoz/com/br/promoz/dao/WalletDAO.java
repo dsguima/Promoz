@@ -8,18 +8,18 @@ import java.util.ArrayList;
 import java.util.List;
 import promoz.com.br.promoz.dao.db.MySQLiteDatabase;
 import promoz.com.br.promoz.dao.db.PromozContract;
-import promoz.com.br.promoz.model.HistoricTypeCoin;
+import promoz.com.br.promoz.model.Wallet;
 
 /**
  * Created by vallux on 25/01/17.
  */
 
-public class HistoricTypeCoinDAO extends PromozContract.HistoricTypeCoin {
+public class WalletDAO extends PromozContract.Wallet {
 
     private MySQLiteDatabase myDatabaseHelper;
     private SQLiteDatabase database;
 
-    public HistoricTypeCoinDAO(Context context) {
+    public WalletDAO(Context context) {
         this.myDatabaseHelper = new MySQLiteDatabase(context);
     }
 
@@ -30,18 +30,19 @@ public class HistoricTypeCoinDAO extends PromozContract.HistoricTypeCoin {
         return database;
     }
 
-    private HistoricTypeCoin populate(Cursor cursor){ // Popula o objeto "HistoricTypeCoin" com os dados do cursor
-        HistoricTypeCoin model = new HistoricTypeCoin(
+    private Wallet populate(Cursor cursor){ // Popula o objeto "Wallet" com os dados do cursor
+        Wallet model = new Wallet(
                 cursor.getInt(cursor.getColumnIndex(_ID)),
-                cursor.getString(cursor.getColumnIndex(COLUMN_HST_TP_DESC))
+                cursor.getInt(cursor.getColumnIndex(COLUMN_USER_ID)),
+                cursor.getInt(cursor.getColumnIndex(COLUMN_AMOUNT_COIN))
         );
         return model;
     }
 
-    public long save(HistoricTypeCoin hist){ // salva os campos do objeto na tabela - atualiza ou cria um novo caso não exista
+    public long save(Wallet hist){ // salva os campos do objeto na tabela - atualiza ou cria um novo caso não exista
 
         ContentValues values = new ContentValues();
-        values.put(COLUMN_HST_TP_DESC, hist.getDescription());
+        values.put(COLUMN_USER_ID, hist.getUserId());
 
         if(hist.get_id() != null){
             return getDatabase().update(TABLE_NAME, values, "_id = ?", new String[]{ hist.get_id().toString() });
@@ -49,11 +50,11 @@ public class HistoricTypeCoinDAO extends PromozContract.HistoricTypeCoin {
         return getDatabase().insert(TABLE_NAME, null, values);
     }
 
-    public List<HistoricTypeCoin> list(){
+    public List<Wallet> list(){
         Cursor cursor = getDatabase().query(TABLE_NAME, allFields, null, null, null, null, null);
 
 //        cursor.moveToFirst();
-        List<HistoricTypeCoin> lst = new ArrayList<HistoricTypeCoin>();
+        List<Wallet> lst = new ArrayList<Wallet>();
         while (cursor.moveToNext())
             lst.add(populate(cursor));
         cursor.close();
