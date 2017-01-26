@@ -32,7 +32,7 @@ public class userDAO extends PromozContract.User {
         return database;
     }
 
-    private User populateUser(Cursor cursor){ // Popula o objeto "User" com os dados do cursor
+    private User populate(Cursor cursor){ // Popula o objeto "User" com os dados do cursor
         User model = new User(
                 cursor.getInt(cursor.getColumnIndex(_ID)),
                 cursor.getString(cursor.getColumnIndex(COLUMN_USER_NAME)),
@@ -44,7 +44,7 @@ public class userDAO extends PromozContract.User {
         return model;
     }
 
-    public long saveUser(User user){ // salva os campos do objeto na tabela - atualiza ou cria um novo caso não exista
+    public long save(User user){ // salva os campos do objeto na tabela - atualiza ou cria um novo caso não exista
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_USER_NAME, user.getNome());
@@ -59,18 +59,18 @@ public class userDAO extends PromozContract.User {
         return getDatabase().insert(TABLE_NAME, null, values);
     }
 
-    public List<User> listUser(){
+    public List<User> list(){
         Cursor cursor = getDatabase().query(TABLE_NAME, allFields, null, null, null, null, null);
 
 //        cursor.moveToFirst();
         List<User> lst = new ArrayList<User>();
         while (cursor.moveToNext())
-            lst.add(populateUser(cursor));
+            lst.add(populate(cursor));
         cursor.close();
         return lst;
     }
 
-    public boolean removeUser(int id){
+    public boolean remove(int id){
         return getDatabase().delete(TABLE_NAME, "_id = ?", new String[]{ Integer.toString(id) }) > 0;
     }
 }
