@@ -43,6 +43,7 @@ public class WalletDAO extends PromozContract.Wallet {
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_USER_ID, hist.getUserId());
+        values.put(COLUMN_AMOUNT_COIN, hist.getAmountCoin());
 
         if(hist.get_id() != null){
             return getDatabase().update(TABLE_NAME, values, "_id = ?", new String[]{ hist.get_id().toString() });

@@ -14,8 +14,8 @@ public class User implements Serializable {
     private String email;
     private String cpf;
     private byte img[];
-    private String abreTag = "<";
-    private String fechaTag = ">";
+    String abreTag = "<";
+    String fechaTag = ">";
 
     public User(Integer _id, String nome, String password, String email, byte[] img) {
         this._id = _id;
@@ -83,6 +83,6 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return this.nome + " " + this.abreTag + this.email + this.fechaTag;
+        return this.nome + " " + abreTag + this.email + fechaTag;
     }
 }

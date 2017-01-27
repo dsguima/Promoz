@@ -30,7 +30,7 @@
            android:layout_height="?attr/actionBarSize"
            android:background="?attr/colorBackgroundFloating"
            app:popupTheme="@style/AppTheme.PopupOverlay"
-           android:layout_margin="20dp"
-           android:elevation="8dp"
+           android:layout_margin="10dp"
+           android:elevation="5dp"
            android:fadingEdgeLength="@dimen/nav_header_height"/>
 </android.support.design.widget.CoordinatorLayout>
