@@ -4,4 +4,17 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
+
+    <!-- Nav Menu -->
+    <string name="menu_perfil">Perfil</string>
+    <string name="menu_wallet">Carteira</string>
+    <string name="menu_missions">Missões</string>
+    <string name="menu_shop">Loja</string>
+    <string name="menu_config">Configurações</string>
+    <string name="menu_help">Ajuda</string>
+    <string name="menu_feedback">Enviar feedback</string>
+    <string name="menu_terms">Termos de Serviço</string>
+    <string name="title_activity_carteira">CarteiraActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
 </resources>
