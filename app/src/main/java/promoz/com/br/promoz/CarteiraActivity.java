@@ -6,6 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
+import java.util.List;
+import promoz.com.br.promoz.dao.WalletDAO;
+import promoz.com.br.promoz.model.Wallet;
 
 public class CarteiraActivity extends AppCompatActivity {
 
@@ -33,7 +37,6 @@ public class CarteiraActivity extends AppCompatActivity {
         // Give the TabLayout the ViewPager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
-
     }
 
     @Override

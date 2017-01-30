@@ -18,7 +18,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ActTeste" />
         <activity android:name=".CarteiraActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
