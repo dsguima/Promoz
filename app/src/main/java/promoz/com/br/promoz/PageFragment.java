@@ -33,10 +33,16 @@ public class PageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_page, container, false);
-        TextView textView = (TextView) view;
-        textView.setText("Fragment #" + mPage);
-        return view;
+
+        //Caso Tab SALDO
+        if (mPage == 1) {
+            View view = inflater.inflate(R.layout.saldo_layout, container, false);
+            return view;
+        } else {
+            //Caso Tab CUPOM
+            View view = inflater.inflate(R.layout.cupom_layout, container, false);
+            return view;
+        }
     }
 }
 

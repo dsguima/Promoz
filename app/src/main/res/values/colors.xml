@@ -9,5 +9,8 @@
     <color name="colorSecondary">#FFFFFF</color>
     <color name="colorNotselect">#aa3227</color>
     <color name="colorFundoQuaseBranco">#ededed</color>
+    <color name="colorCinzaSaldo">#ababab</color>
+    <color name="colorCinzaHistorico">#878787</color>
+    <color name="colorVerdeMoeda">#24a11d</color>
 
 </resources>
