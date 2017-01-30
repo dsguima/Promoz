@@ -1,9 +1,9 @@
 package promoz.com.br.promoz;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -14,7 +14,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.Toast;
+
+import promoz.com.br.promoz.dao.db.MySQLiteDatabase;
 
 public class ActMain extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -55,41 +57,23 @@ public class ActMain extends AppCompatActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.act_main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+    /*
         if (id == R.id.nav_camera) {
             Log.v("TESTE","Chama Activity");
             Intent intent = new Intent(this, ActTeste.class);
             startActivity(intent);
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-
+            MySQLiteDatabase database = new MySQLiteDatabase(this);
+            database = null;
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
@@ -97,6 +81,60 @@ public class ActMain extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
+
+        }*/
+        if (id == R.id.nav_perfil) {
+            Context contexto = getApplicationContext();
+            String texto = "PERFIL";
+            int duracao = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(contexto, texto,duracao);
+            toast.show();
+
+        } else if (id == R.id.nav_wallet) {
+            Intent i = new Intent(this,CarteiraActivity.class);
+            this.startActivity(i);
+
+        } else if (id == R.id.nav_missions) {
+            Context contexto = getApplicationContext();
+            String texto = "MISSÔES";
+            int duracao = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(contexto, texto,duracao);
+            toast.show();
+
+        } else if (id == R.id.nav_shop) {
+            Context contexto = getApplicationContext();
+            String texto = "LOJA";
+            int duracao = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(contexto, texto,duracao);
+            toast.show();
+
+        } else if (id == R.id.nav_config) {
+            Context contexto = getApplicationContext();
+            String texto = "CONFIGURAÇÕES";
+            int duracao = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(contexto, texto,duracao);
+            toast.show();
+
+        } else if (id == R.id.nav_help) {
+            Context contexto = getApplicationContext();
+            String texto = "AJUDA";
+            int duracao = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(contexto, texto,duracao);
+            toast.show();
+
+        } else if (id == R.id.nav_feedback) {
+            Context contexto = getApplicationContext();
+            String texto = "FEEDBACK";
+            int duracao = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(contexto, texto,duracao);
+            toast.show();
+
+        } else if (id == R.id.nav_terms) {
+            Context contexto = getApplicationContext();
+            String texto = "TERMOS";
+            int duracao = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(contexto, texto,duracao);
+            toast.show();
 
         }
 

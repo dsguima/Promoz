@@ -18,11 +18,11 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:src="@drawable/wll_white_pequeno" />
 
        <android.support.v7.widget.Toolbar
            android:id="@+id/toolbar"
@@ -30,7 +30,7 @@
            android:layout_height="?attr/actionBarSize"
            android:background="?attr/colorBackgroundFloating"
            app:popupTheme="@style/AppTheme.PopupOverlay"
-           android:layout_margin="20dp"
-           android:elevation="8dp"
+           android:layout_margin="10dp"
+           android:elevation="5dp"
            android:fadingEdgeLength="@dimen/nav_header_height"/>
 </android.support.design.widget.CoordinatorLayout>
