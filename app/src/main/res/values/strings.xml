@@ -17,7 +17,36 @@
     <string name="title_activity_carteira">CarteiraActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
+    <!-- Carteira -->
+    <string name="saldo_atual">Saldo atual</string>
+    <string name="out_of_money">0</string>
+    <string name="sete_dias">7 DIAS</string>
+    <string name="quinze_dias">15 DIAS</string>
+    <string name="trinta_dias">30 DIAS</string>
+
+    <!-- Start Screen -->
+    <string name="promoz">PromoZ</string>
+    <string name="facebook">Facebook</string>
+    <string name="google">Google</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="entrar">Entrar</string>
+    <string name="terms">Ao me cadastrar, eu concordo com os Termos de Serviço e Termos de Política de Privacidade do PromoZ.</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
 
 </resources>

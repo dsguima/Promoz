@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import promoz.com.br.promoz.dao.db.MySQLiteDatabase;
@@ -27,6 +28,7 @@ public class ActMain extends AppCompatActivity
         setContentView(R.layout.act_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -34,8 +36,6 @@ public class ActMain extends AppCompatActivity
             public void onClick(View view) {
                 Intent i = new Intent(ActMain.this,CarteiraActivity.class);
                 ActMain.this.startActivity(i);
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
             }
         });
 
@@ -87,10 +87,12 @@ public class ActMain extends AppCompatActivity
         }*/
         if (id == R.id.nav_perfil) {
             Context contexto = getApplicationContext();
-            String texto = "PERFIL";
+            String texto = "Perfil";
             int duracao = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(contexto, texto,duracao);
             toast.show();
+
+
 
         } else if (id == R.id.nav_wallet) {
             Intent i = new Intent(this,CarteiraActivity.class);
