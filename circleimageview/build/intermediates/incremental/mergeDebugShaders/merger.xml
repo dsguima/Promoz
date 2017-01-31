@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/home/vallux/workspace/Promoz/circleimageview/src/main/shaders"/></dataSet><dataSet config="debug"><source path="/home/vallux/workspace/Promoz/circleimageview/src/debug/shaders"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/Users/dsguima/Desktop/DevAndroid/Projetos/Promoz/circleimageview/src/main/shaders"/></dataSet><dataSet config="debug"><source path="/Users/dsguima/Desktop/DevAndroid/Projetos/Promoz/circleimageview/src/debug/shaders"/></dataSet></merger>

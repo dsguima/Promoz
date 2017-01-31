@@ -6,7 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
-import promoz.com.br.promoz.dao.db.MySQLiteDatabase;
+
+import promoz.com.br.promoz.dao.db.DatabaseHelper;
 import promoz.com.br.promoz.dao.db.PromozContract;
 import promoz.com.br.promoz.model.User;
 
@@ -16,13 +17,13 @@ import promoz.com.br.promoz.model.User;
  * Classe para manipulação de dados da tabela USER
  */
 
-public class userDAO extends PromozContract.User {
+public class UserDAO extends PromozContract.User {
 
-    private MySQLiteDatabase myDatabaseHelper;
+    private DatabaseHelper myDatabaseHelper;
     private SQLiteDatabase database;
 
-    public userDAO(Context context) {
-        this.myDatabaseHelper = new MySQLiteDatabase(context);
+    public UserDAO(Context context) {
+        this.myDatabaseHelper = new DatabaseHelper(context);
     }
 
     private SQLiteDatabase getDatabase(){

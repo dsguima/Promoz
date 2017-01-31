@@ -4,19 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
-
-import promoz.com.br.promoz.dao.db.MySQLiteDatabase;
 
 public class ActMain extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -47,6 +44,10 @@ public class ActMain extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Log.d("createdb", "testando ===========================================");
+        //DatabaseHelper myDatabaseHelper = new DatabaseHelper(this);
+        //SQLiteDatabase database = myDatabaseHelper.getReadableDatabase();
     }
 
     @Override
@@ -74,7 +75,7 @@ public class ActMain extends AppCompatActivity
             startActivity(intent);
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-            MySQLiteDatabase database = new MySQLiteDatabase(this);
+            DatabaseHelper database = new DatabaseHelper(this);
             database = null;
         } else if (id == R.id.nav_slideshow) {
 

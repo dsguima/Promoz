@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
-import promoz.com.br.promoz.dao.db.MySQLiteDatabase;
+import promoz.com.br.promoz.dao.db.DatabaseHelper;
 import promoz.com.br.promoz.dao.db.PromozContract;
 import promoz.com.br.promoz.model.HistoricTypeCoin;
 
@@ -16,11 +16,11 @@ import promoz.com.br.promoz.model.HistoricTypeCoin;
 
 public class HistoricTypeCoinDAO extends PromozContract.HistoricTypeCoin {
 
-    private MySQLiteDatabase myDatabaseHelper;
+    private DatabaseHelper myDatabaseHelper;
     private SQLiteDatabase database;
 
     public HistoricTypeCoinDAO(Context context) {
-        this.myDatabaseHelper = new MySQLiteDatabase(context);
+        this.myDatabaseHelper = new DatabaseHelper(context);
     }
 
     private SQLiteDatabase getDatabase(){

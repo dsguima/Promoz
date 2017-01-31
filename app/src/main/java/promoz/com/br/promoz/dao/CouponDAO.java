@@ -6,7 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
-import promoz.com.br.promoz.dao.db.MySQLiteDatabase;
+
+import promoz.com.br.promoz.dao.db.DatabaseHelper;
 import promoz.com.br.promoz.dao.db.PromozContract;
 import promoz.com.br.promoz.model.Coupon;
 
@@ -16,11 +17,11 @@ import promoz.com.br.promoz.model.Coupon;
 
 public class CouponDAO extends PromozContract.Coupon {
 
-    private MySQLiteDatabase myDatabaseHelper;
+    private DatabaseHelper myDatabaseHelper;
     private SQLiteDatabase database;
 
     public CouponDAO(Context context) {
-        this.myDatabaseHelper = new MySQLiteDatabase(context);
+        this.myDatabaseHelper = new DatabaseHelper(context);
     }
 
     private SQLiteDatabase getDatabase(){
