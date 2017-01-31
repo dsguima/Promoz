@@ -14,13 +14,11 @@ public final class PromozContract {
     private static final String CREATE_STM = "CREATE TABLE ";
     private static final String TEXT_TYPE = " TEXT";
     private static final String INTEGER_TYPE = " INTEGER";
-    private static final String UNIQUE_TYPE = " UNIQUE";
     private static final String BLOB_TYPE = " BLOB";
-    private static final String NOT_NULL_TYPE = " NOT NULL";
-    private static final String PK_TYPE = " INTEGER PRIMARY KEY";
+    private static final String PK_TYPE = " INTEGER NOT NULL PRIMARY KEY ASC AUTOINCREMENT";
     private static final String FK_TYPE = " FOREIGN KEY(";
     private static final String COMMA_SEP = ", ";
-    private static final String END_STM = ");";
+    private static final String END_STM = ")";
 
     public static class User implements BaseColumns {
         public static final String TABLE_NAME = "user";
@@ -31,11 +29,11 @@ public final class PromozContract {
         public static final String COLUMN_USER_IMG = "user_img";
 
         public static final String SQL_CREATE_USER = CREATE_STM + User.TABLE_NAME + " (" +
-                User._ID + NOT_NULL_TYPE + PK_TYPE + COMMA_SEP +
+                User._ID + PK_TYPE + COMMA_SEP +
                 User.COLUMN_USER_NAME + TEXT_TYPE + COMMA_SEP +
                 User.COLUMN_USER_PASSWORD + TEXT_TYPE + COMMA_SEP +
-                User.COLUMN_USER_EMAIL + UNIQUE_TYPE + TEXT_TYPE + COMMA_SEP +
-                User.COLUMN_USER_CPF + UNIQUE_TYPE + TEXT_TYPE + COMMA_SEP +
+                User.COLUMN_USER_EMAIL + TEXT_TYPE + COMMA_SEP +
+                User.COLUMN_USER_CPF + TEXT_TYPE + COMMA_SEP +
                 User.COLUMN_USER_IMG + BLOB_TYPE + END_STM;
 
         public static final String allFields[] = {
@@ -50,13 +48,16 @@ public final class PromozContract {
 
     public static class Wallet implements BaseColumns {
         public static final String TABLE_NAME = "wallet";
-        public static final String COLUMN_USER_ID = "user_id)  REFERENCES " + User.TABLE_NAME + "("+User._ID+")";
+        public static final String COLUMN_USER_ID = "user_id";
+        public static final String COLUMN_FK_USER_ID = "user_id)  REFERENCES " + User.TABLE_NAME + "("+User._ID+")";
         public static final String COLUMN_AMOUNT_COIN = "amount_coin";
 
         public static final String SQL_CREATE_WALLET = CREATE_STM + Wallet.TABLE_NAME + " (" +
-                Wallet._ID + NOT_NULL_TYPE + PK_TYPE + COMMA_SEP +
-                FK_TYPE + Wallet.COLUMN_USER_ID + COMMA_SEP +
-                Wallet.COLUMN_AMOUNT_COIN + INTEGER_TYPE + END_STM;
+                Wallet._ID + PK_TYPE + COMMA_SEP +
+                Wallet.COLUMN_AMOUNT_COIN + INTEGER_TYPE + COMMA_SEP +
+                Wallet.COLUMN_USER_ID + INTEGER_TYPE + COMMA_SEP +
+                FK_TYPE + Wallet.COLUMN_FK_USER_ID +
+                END_STM;
 
         public static final String allFields[] = {
                 Wallet._ID,
@@ -67,7 +68,8 @@ public final class PromozContract {
 
     public static class Coupon implements BaseColumns {
         public static final String TABLE_NAME = "coupon";
-        public static final String COLUMN_WALLET_ID = "wallet_id)  REFERENCES " + Wallet.TABLE_NAME + "("+Wallet._ID+")";
+        public static final String COLUMN_WALLET_ID = "wallet_id";
+        public static final String COLUMN_FK_WALLET_ID = "wallet_id)  REFERENCES " + Wallet.TABLE_NAME + "("+Wallet._ID+")";
         public static final String COLUMN_CPN_TITLE = "cpn_title";
         public static final String COLUMN_CPN_SUBTITLE = "cpn_subtitle";
         public static final String COLUMN_CPN_IMG = "cpn_img";
@@ -78,8 +80,8 @@ public final class PromozContract {
         public static final String COLUMN_CPN_PRICE = "cpn_price";
 
         public static final String SQL_CREATE_COUPON = CREATE_STM + Coupon.TABLE_NAME + " (" +
-                Coupon._ID + NOT_NULL_TYPE + PK_TYPE + COMMA_SEP +
-                FK_TYPE + Coupon.COLUMN_WALLET_ID + COMMA_SEP +
+                Coupon._ID + PK_TYPE + COMMA_SEP +
+                Coupon.COLUMN_WALLET_ID + INTEGER_TYPE + COMMA_SEP +
                 Coupon.COLUMN_CPN_TITLE + TEXT_TYPE + COMMA_SEP +
                 Coupon.COLUMN_CPN_SUBTITLE + TEXT_TYPE + COMMA_SEP +
                 Coupon.COLUMN_CPN_IMG + BLOB_TYPE + COMMA_SEP +
@@ -87,7 +89,9 @@ public final class PromozContract {
                 Coupon.COLUMN_CPN_DT_USE + TEXT_TYPE + COMMA_SEP +
                 Coupon.COLUMN_CPN_DT_EXP + TEXT_TYPE + COMMA_SEP +
                 Coupon.COLUMN_CPN_PRICE + INTEGER_TYPE + COMMA_SEP +
-                Coupon.COLUMN_CPN_IND_VALID + INTEGER_TYPE + END_STM;
+                Coupon.COLUMN_CPN_IND_VALID + INTEGER_TYPE + COMMA_SEP +
+                FK_TYPE + Coupon.COLUMN_FK_WALLET_ID +
+                END_STM;
 
         public static final String allFields[] = {
                 Coupon._ID,
@@ -107,12 +111,12 @@ public final class PromozContract {
         public static final String TABLE_NAME = "virtual_store";
         public static final String COLUMN_VRT_STR_TITLE = "vrt_str_title";
         public static final String COLUMN_VRT_STR_INFO = "vrt_str_info";
-        public static final String COLUMN_VRT_STR_IMG = "vrt_str_info";
+        public static final String COLUMN_VRT_STR_IMG = "vrt_str_img";
         public static final String COLUMN_VRT_STR_PRICE = "vrt_str_price";
         public static final String COLUMN_VRT_STR_IND_VALID = "vrt_str_ind_valid";
 
         private static final String SQL_CREATE_VIRTUAL_STORE = CREATE_STM + VirtualStore.TABLE_NAME + " (" +
-                VirtualStore._ID + NOT_NULL_TYPE + PK_TYPE + COMMA_SEP +
+                VirtualStore._ID + PK_TYPE + COMMA_SEP +
                 VirtualStore.COLUMN_VRT_STR_TITLE + TEXT_TYPE + COMMA_SEP +
                 VirtualStore.COLUMN_VRT_STR_INFO + TEXT_TYPE + COMMA_SEP +
                 VirtualStore.COLUMN_VRT_STR_IMG + BLOB_TYPE + COMMA_SEP +
@@ -131,17 +135,22 @@ public final class PromozContract {
 
     public static class HistoricCoin implements BaseColumns {
         public static final String TABLE_NAME = "historic_coin";
-        public static final String COLUMN_WALLET_ID = "wallet_id)  REFERENCES " + Wallet.TABLE_NAME + "("+Wallet._ID+")";;
-        public static final String COLUMN_HST_TP_ID = "hst_tp_id)  REFERENCES " + HistoricTypeCoin.TABLE_NAME + "("+HistoricTypeCoin._ID+")";;
+        public static final String COLUMN_WALLET_ID = "wallet_id";
+        public static final String COLUMN_FK_WALLET_ID = "wallet_id)  REFERENCES " + Wallet.TABLE_NAME + "("+Wallet._ID+")";
+        public static final String COLUMN_HST_TP_ID = "hst_tp_id";
+        public static final String COLUMN_FK_HST_TP_ID = "hst_tp_id)  REFERENCES " + HistoricTypeCoin.TABLE_NAME + "("+HistoricTypeCoin._ID+")";
         public static final String COLUMN_HST_DT_OPER = "hst_dt_oper";
         public static final String COLUMN_AMOUNT_COIN = "amount_coin";
 
         public static final String SQL_CREATE_HISTORIC_COIN = CREATE_STM + HistoricCoin.TABLE_NAME + " (" +
-                HistoricCoin._ID + NOT_NULL_TYPE + PK_TYPE + COMMA_SEP +
-                FK_TYPE + HistoricCoin.COLUMN_WALLET_ID + COMMA_SEP +
-                FK_TYPE + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP +
+                HistoricCoin._ID + PK_TYPE + COMMA_SEP +
                 HistoricCoin.COLUMN_HST_DT_OPER + TEXT_TYPE + COMMA_SEP +
-                HistoricCoin.COLUMN_AMOUNT_COIN + INTEGER_TYPE + END_STM;
+                HistoricCoin.COLUMN_AMOUNT_COIN + INTEGER_TYPE + COMMA_SEP +
+                HistoricCoin.COLUMN_WALLET_ID + INTEGER_TYPE + COMMA_SEP +
+                HistoricCoin.COLUMN_HST_TP_ID + INTEGER_TYPE + COMMA_SEP +
+                FK_TYPE + HistoricCoin.COLUMN_FK_WALLET_ID + COMMA_SEP +
+                FK_TYPE + HistoricCoin.COLUMN_FK_HST_TP_ID +
+                END_STM;
 
         public static final String allFields[] = {
                 HistoricCoin._ID,

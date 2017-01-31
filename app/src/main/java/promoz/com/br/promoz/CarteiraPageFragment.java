@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
+import promoz.com.br.promoz.dao.WalletDAO;
+import promoz.com.br.promoz.model.Wallet;
 
 public class CarteiraPageFragment extends Fragment {
     public static final String ARG_PAGE = "ARG_PAGE";
@@ -35,6 +39,16 @@ public class CarteiraPageFragment extends Fragment {
         //Caso Tab SALDO
         if (mPage == 1) {
             View view = inflater.inflate(R.layout.saldo_layout, container, false);
+            WalletDAO wallet = new WalletDAO(view.getContext());
+            List<Wallet> lstWallet = wallet.list();
+            TextView textoSaldo = (TextView) view.findViewById(R.id.saldoCarteira);
+
+            int idCarteira = 0; // deve haver uma consulta para recuperar o ID da carteira com base no id do usuário que está atualmente conectado!
+
+            if(!lstWallet.isEmpty())
+                textoSaldo.setText(wallet.list().get(idCarteira).getAmountCoin());
+            else
+              textoSaldo.setText("1"); // apenas par teste de funcionamento
             return view;
 
         } else {
