@@ -7,8 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-public class CarteiraActivity extends AppCompatActivity {
-
+public class CarteiraActivity extends AppCompatActivity {;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,15 +26,20 @@ public class CarteiraActivity extends AppCompatActivity {
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager(),
-                CarteiraActivity.this));
-
+        viewPager.setAdapter(new CarteiraFragmentPagerAdapter(getSupportFragmentManager(),
+                CarteiraActivity.this,2,new String[]{"SALDO","CUPOM"}));
         // Give the TabLayout the ViewPager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
-
     }
 
+   /* public void startSaldo(){
+        ViewPager viewPager2 = (ViewPager) findViewById(R.id.viewpager2);
+        viewPager2.setAdapter(new SaldoCarteiraFragmentPagerAdapter(getSupportFragmentManager(),
+                CarteiraActivity.this,3,new String[]{"7 DIAS","15 DIAS","30 DIAS"}));
+        TabLayout tabLayout2 = (TabLayout) findViewById(R.id.his_tabs);
+          tabLayout2.setupWithViewPager(viewPager2);
+    }*/
     @Override
     public void onBackPressed() {
         super.onBackPressed();

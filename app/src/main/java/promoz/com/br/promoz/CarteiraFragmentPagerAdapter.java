@@ -1,27 +1,24 @@
 package promoz.com.br.promoz;
 
-/**
- * Created by rafae on 29/01/2017.
- */
-
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-
 /**
- * Created by rafae on 27/01/2017.
+ * Created by rafae on 30/01/2017.
  */
 
-public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
-    final int PAGE_COUNT = 2;
-    private String tabTitles[] = new String[] { "SALDO", "CUPONS" };
+public class CarteiraFragmentPagerAdapter  extends FragmentPagerAdapter {
+    private int PAGE_COUNT;
+    private String tabTitles[];
     private Context context;
 
-    public SampleFragmentPagerAdapter(FragmentManager fm, Context context) {
+    public CarteiraFragmentPagerAdapter(FragmentManager fm, Context context, int pagec, String[] titles) {
         super(fm);
         this.context = context;
+        PAGE_COUNT = pagec;
+        tabTitles=titles;
     }
 
     @Override
@@ -31,7 +28,7 @@ public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return PageFragment.newInstance(position + 1);
+        return CarteiraPageFragment.newInstance(position + 1);
     }
 
     @Override

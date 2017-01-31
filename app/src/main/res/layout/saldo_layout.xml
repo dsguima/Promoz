@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="top">
 
-    android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,7 +43,81 @@
             android:layout_height="25dp"
             android:src="@drawable/moeda"
             />
+    </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="23dp"
+            android:text="Histórico"
+            android:layout_marginLeft="30dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_background"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:orientation="horizontal"
+        android:gravity="top|center"
+        >
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:checkedButton="@+id/seteDias"
+                                                >
+            <RadioButton
+            android:id="@+id/seteDias"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:text="7 DIAS"
+            android:textSize="20dp"
+            android:layout_weight="1"
+            android:textColor="@drawable/text_buttom_color"
+            android:background="@drawable/buttom_sete_background"
+            android:padding="10dp"
+            android:textAlignment="center"
+                                                    />
+            <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:text="15 DIAS"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:padding="10dp"
+            android:textColor="@drawable/text_buttom_color"
+            android:background="@drawable/buttom_quinze_background"/>
+
+            <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:layout_weight="1"
+            android:text="30 DIAS"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:padding="10dp"
+            android:textColor="@drawable/text_buttom_color"
+            android:background="@drawable/buttom_trinta_background"/>
+
+        </RadioGroup>
 
     </LinearLayout>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/hist"
+        android:background="@color/colorSecondary"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin">
+    </ListView>
+
 
 </LinearLayout>

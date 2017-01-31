@@ -10,16 +10,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-
-public class PageFragment extends Fragment {
+public class CarteiraPageFragment extends Fragment {
     public static final String ARG_PAGE = "ARG_PAGE";
 
     private int mPage;
 
-    public static PageFragment newInstance(int page) {
+    public static CarteiraPageFragment newInstance(int page) {
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, page);
-        PageFragment fragment = new PageFragment();
+        CarteiraPageFragment fragment = new CarteiraPageFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -33,11 +32,11 @@ public class PageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         //Caso Tab SALDO
         if (mPage == 1) {
             View view = inflater.inflate(R.layout.saldo_layout, container, false);
             return view;
+
         } else {
             //Caso Tab CUPOM
             View view = inflater.inflate(R.layout.cupom_layout, container, false);
