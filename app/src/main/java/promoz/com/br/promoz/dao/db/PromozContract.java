@@ -54,7 +54,7 @@ public final class PromozContract {
 
         public static final String SQL_CREATE_WALLET = CREATE_STM + Wallet.TABLE_NAME + " (" +
                 Wallet._ID + PK_TYPE + COMMA_SEP +
-                Wallet.COLUMN_AMOUNT_COIN + INTEGER_TYPE + COMMA_SEP +
+                Wallet.COLUMN_AMOUNT_COIN + INTEGER_TYPE + " DEFAULT 0" + COMMA_SEP +
                 Wallet.COLUMN_USER_ID + INTEGER_TYPE + COMMA_SEP +
                 FK_TYPE + Wallet.COLUMN_FK_USER_ID +
                 END_STM;
@@ -175,5 +175,20 @@ public final class PromozContract {
         };
     }
 
+    public static class populateBasicTables {
+        private static final String INSERT_STM = "INSERT INTO ";
+        private static final String VALUE_TABLE_HISTORIC_TYPE_COIN = INSERT_STM + HistoricTypeCoin.TABLE_NAME + " (" + HistoricTypeCoin.COLUMN_HST_TP_DESC +
+                ") VALUES('Moeda Verde')";
+
+        private static final String VALUE_TABLE_USER = INSERT_STM + User.TABLE_NAME + " (" + User.COLUMN_USER_NAME +
+                ", "+ User.COLUMN_USER_PASSWORD + " ," + User.COLUMN_USER_EMAIL+ ") VALUES('promoz',1,'promoz@promoz.com.br')";
+
+        private static final String VALUE_TABLE_WALLET = INSERT_STM + Wallet.TABLE_NAME + " (" + Wallet.COLUMN_USER_ID +
+                ") VALUES(1)";
+    }
+
+    public static final String valuesToPopulate[] = {populateBasicTables.VALUE_TABLE_HISTORIC_TYPE_COIN, populateBasicTables.VALUE_TABLE_USER, populateBasicTables.VALUE_TABLE_WALLET};
+
     public static final String tablesCreationList[] = {User.SQL_CREATE_USER,Wallet.SQL_CREATE_WALLET,HistoricTypeCoin.SQL_CREATE_HISTORIC_TYPE_COIN, HistoricCoin.SQL_CREATE_HISTORIC_COIN,VirtualStore.SQL_CREATE_VIRTUAL_STORE, Coupon.SQL_CREATE_COUPON};
+
 }

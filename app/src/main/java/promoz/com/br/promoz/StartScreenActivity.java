@@ -18,8 +18,17 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
+import promoz.com.br.promoz.dao.UserDAO;
+import promoz.com.br.promoz.dao.db.DatabaseHelper;
+import promoz.com.br.promoz.model.User;
+
 
 public class StartScreenActivity extends AppCompatActivity {
+
+    private UserDAO userDAO;
+    private Integer idUser = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,28 +52,32 @@ public class StartScreenActivity extends AppCompatActivity {
             }
         };
 
-        Log.d("oi","ONCLICK");
+     //   Log.d("oi","ONCLICK");
         ss.setSpan(clickableSpan, 36, 89, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        Log.d("oi","serSPAN");
+     //   Log.d("oi","serSPAN");
         TextView trms = (TextView) findViewById(R.id.text_bellow);
-        Log.d("oi","TV");
+     //   Log.d("oi","TV");
         trms.setText(ss);
-        Log.d("oi","setText");
+     //   Log.d("oi","setText");
         trms.setMovementMethod(LinkMovementMethod.getInstance());
-        Log.d("oi","set LINK");
-       trms.setHighlightColor(Color.TRANSPARENT);
-
-
+     //   Log.d("oi","set LINK");
+        trms.setHighlightColor(Color.TRANSPARENT);
 
         TextView promoz = (TextView) findViewById(R.id.promoztv);
         Typeface customFont = Typeface.createFromAsset(getAssets(),"fonts/ITCKRIST.TTF");
-        Log.d("oi","custom font ok");
+     //   Log.d("oi","custom font ok");
         promoz.setTypeface(customFont);
-        Log.d("oi","set face ok");
-        Log.d("oi","layout");
+     //   Log.d("oi","set face ok");
+     //   Log.d("oi","layout");
 
+        userDAO = new UserDAO(this);
+        List<User> usuario = userDAO.list();
+        if(!usuario.isEmpty()){
+            idUser = usuario.get(0).get_id();
+            Log.v("ID USUARIO",idUser.toString());
+        }
+    }
 
-}
     public void faceBookBt(View v){
         Context contexto = getApplicationContext();
         String texto = "Fucionalidade do facebook não criada";
@@ -81,8 +94,9 @@ public class StartScreenActivity extends AppCompatActivity {
     }
 
     public void cadastro(View v) {
-        Intent i = new Intent(this,ActMain.class);
-        this.startActivity(i);
+        Intent intent = new Intent(this,ActMain.class);
+        intent.putExtra(User.getChave_ID(),idUser);
+        this.startActivity(intent);
     }
     public void logar(View v) {
         Context contexto = getApplicationContext();
@@ -93,5 +107,4 @@ public class StartScreenActivity extends AppCompatActivity {
         Intent i = new Intent(this,LoginActivity.class);
         this.startActivity(i);
     }
-
 }

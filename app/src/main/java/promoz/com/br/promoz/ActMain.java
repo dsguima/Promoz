@@ -12,11 +12,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
-import promoz.com.br.promoz.dao.db.MySQLiteDatabase;
 
 public class ActMain extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -25,6 +22,7 @@ public class ActMain extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -93,6 +91,7 @@ public class ActMain extends AppCompatActivity
             toast.show();
 
         } else if (id == R.id.nav_wallet) {
+            Log.v("MENU","chama tela");
             Intent i = new Intent(this,CarteiraActivity.class);
             this.startActivity(i);
 

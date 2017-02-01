@@ -27,13 +27,12 @@ public class HistoricTypeCoin implements Serializable {
         this.description = description;
     }
 
-    public HistoricTypeCoin() {
-
-    }
-
     public HistoricTypeCoin(Integer _id, String description) {
         this._id = _id;
         this.description = description;
+    }
+
+    public HistoricTypeCoin() {
     }
 
     @Override

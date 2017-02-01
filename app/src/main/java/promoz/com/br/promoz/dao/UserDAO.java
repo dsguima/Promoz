@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
-
 import promoz.com.br.promoz.dao.db.DatabaseHelper;
 import promoz.com.br.promoz.dao.db.PromozContract;
 import promoz.com.br.promoz.model.User;
@@ -65,8 +64,11 @@ public class UserDAO extends PromozContract.User {
 
 //        cursor.moveToFirst();
         List<User> lst = new ArrayList<User>();
-        while (cursor.moveToNext())
-            lst.add(populate(cursor));
+        if(cursor.moveToFirst())
+            do{
+                lst.add(populate(cursor));
+            }while (cursor.moveToNext());
+
         cursor.close();
         return lst;
     }

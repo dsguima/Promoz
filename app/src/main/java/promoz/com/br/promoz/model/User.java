@@ -14,8 +14,12 @@ public class User implements Serializable {
     private String email;
     private String cpf;
     private byte img[];
+    private static String chaveID = "_ID";
     String abreTag = "<";
     String fechaTag = ">";
+
+    public User() {
+    }
 
     public User(Integer _id, String nome, String password, String email, byte[] img) {
         this._id = _id;
@@ -79,6 +83,10 @@ public class User implements Serializable {
 
     public void setImg(byte[] img) {
         this.img = img;
+    }
+
+    public static String getChave_ID(){
+        return chaveID;
     }
 
     @Override
