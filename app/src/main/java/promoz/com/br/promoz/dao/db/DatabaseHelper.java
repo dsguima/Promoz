@@ -29,6 +29,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         for(int i = 0; i < PromozContract.tablesCreationList.length; i++)
             db.execSQL(PromozContract.tablesCreationList[i]);
 
+        Log.v("SQL", "\n\nPOPULANDO TABELAS\n\n");
+
         for(int i = 0; i < PromozContract.valuesToPopulate.length; i++)
             db.execSQL(PromozContract.valuesToPopulate[i]);
     }

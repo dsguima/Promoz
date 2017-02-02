@@ -181,14 +181,30 @@ public final class PromozContract {
                 ") VALUES('Moeda Verde')";
 
         private static final String VALUE_TABLE_USER = INSERT_STM + User.TABLE_NAME + " (" + User.COLUMN_USER_NAME +
-                ", "+ User.COLUMN_USER_PASSWORD + " ," + User.COLUMN_USER_EMAIL+ ") VALUES('promoz',1,'promoz@promoz.com.br')";
+                ", "+ User.COLUMN_USER_PASSWORD + " ," + User.COLUMN_USER_EMAIL+ ") VALUES('promoz','','promoz@promoz.com.br')";
 
-        private static final String VALUE_TABLE_WALLET = INSERT_STM + Wallet.TABLE_NAME + " (" + Wallet.COLUMN_USER_ID +
-                ") VALUES(1)";
+        private static final String VALUE_TABLE_COUPON_CENTAURO = INSERT_STM + Coupon.TABLE_NAME + " (" + Coupon.COLUMN_CPN_TITLE +
+                ", " + Coupon.COLUMN_CPN_SUBTITLE + ", " + Coupon.COLUMN_CPN_INFO + ", " + Coupon.COLUMN_CPN_DT_EXP +
+                ", " + Coupon.COLUMN_CPN_PRICE + ", " + Coupon.COLUMN_CPN_IND_VALID +
+                ") VALUES('Mês do Fitness','R$50,00 de desconto em compras acima de R$200,00','Neste mês de Fevereiro, a " +
+                "Centauro traz para você promoções imperdíveis: Toda linha fitness com até 50% de desconto.','28/02/2017',10, 1)";
+
+        private static final String VALUE_TABLE_COUPON_CIA = INSERT_STM + Coupon.TABLE_NAME + " (" + Coupon.COLUMN_CPN_TITLE +
+                ", " + Coupon.COLUMN_CPN_SUBTITLE + ", " + Coupon.COLUMN_CPN_INFO + ", " + Coupon.COLUMN_CPN_DT_EXP +
+                ", " + Coupon.COLUMN_CPN_PRICE + ", " + Coupon.COLUMN_CPN_IND_VALID +
+                ") VALUES('Abuse e use no mês do carnaval','R$60,00 de desconto em compras acima de R$300,00','Nos mêses de " +
+                "Fevereiro e Março, a C&a está abusando com preços imperdíveis: Toda a loja com até 50% de desconto.','28/02/2017',10, 1)";
+
+        private static  final String TRIGER_USER_WALLET = "CREATE TRIGGER trigger_user_wallet " +
+                " AFTER INSERT" + " ON " + User.TABLE_NAME + " BEGIN " + INSERT_STM + Wallet.TABLE_NAME +
+                " (" + Wallet.COLUMN_USER_ID + ") VALUES (" + " last_insert_rowid() " + ");" + "END;";
+
+
     }
 
-    public static final String valuesToPopulate[] = {populateBasicTables.VALUE_TABLE_HISTORIC_TYPE_COIN, populateBasicTables.VALUE_TABLE_USER, populateBasicTables.VALUE_TABLE_WALLET};
+    public static final String valuesToPopulate[] = {populateBasicTables.VALUE_TABLE_HISTORIC_TYPE_COIN, populateBasicTables.VALUE_TABLE_USER, populateBasicTables.VALUE_TABLE_COUPON_CENTAURO};
+    //public static final String valuesToPopulate[] = {populateBasicTables.VALUE_TABLE_HISTORIC_TYPE_COIN, populateBasicTables.VALUE_TABLE_USER};
+//    public static final String valuesToPopulate[] = {populateBasicTables.VALUE_TABLE_HISTORIC_TYPE_COIN, populateBasicTables.VALUE_TABLE_USER, populateBasicTables.VALUE_TABLE_USER, populateBasicTables.VALUE_TABLE_USER};
 
-    public static final String tablesCreationList[] = {User.SQL_CREATE_USER,Wallet.SQL_CREATE_WALLET,HistoricTypeCoin.SQL_CREATE_HISTORIC_TYPE_COIN, HistoricCoin.SQL_CREATE_HISTORIC_COIN,VirtualStore.SQL_CREATE_VIRTUAL_STORE, Coupon.SQL_CREATE_COUPON};
-
+    public static final String tablesCreationList[] = {User.SQL_CREATE_USER,Wallet.SQL_CREATE_WALLET,HistoricTypeCoin.SQL_CREATE_HISTORIC_TYPE_COIN, HistoricCoin.SQL_CREATE_HISTORIC_COIN,VirtualStore.SQL_CREATE_VIRTUAL_STORE, Coupon.SQL_CREATE_COUPON, populateBasicTables.TRIGER_USER_WALLET};
 }

@@ -19,7 +19,8 @@ public class CarteiraPageFragment extends Fragment {
     public static final String ARG_PAGE = "ARG_PAGE";
 
     private int mPage;
-    private int idCarteira = 1; // deve haver uma consulta para recuperar o ID da carteira com base no id do usuário que está atualmente conectado!
+    private int idCarteira = 1; // TODO: deve haver uma consulta para recuperar o ID da carteira com base no id do usuário que está atualmente conectado!
+    private WalletDAO walletDAO;
 
     public static CarteiraPageFragment newInstance(int page) {
         Bundle args = new Bundle();
@@ -30,21 +31,30 @@ public class CarteiraPageFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) { // pegar id carteira do bundle
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPage = getArguments().getInt(ARG_PAGE);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public void onDestroy() {
+        walletDAO.closeDatabase();
+        super.onDestroy();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //Caso Tab SALDO
         if (mPage == 1) {
             View view = inflater.inflate(R.layout.saldo_layout, container, false);
-            WalletDAO walletDAO = new WalletDAO(view.getContext());
+            if(walletDAO == null)
+                walletDAO = new WalletDAO(view.getContext());
+
             Wallet wallet = walletDAO.walletById(idCarteira);
             TextView textoSaldo = (TextView) view.findViewById(R.id.saldoCarteira);
             textoSaldo.setText(wallet.getAmountCoin().toString());
+
+            List<Wallet> lst = walletDAO.list();
             return view;
 
         } else {
