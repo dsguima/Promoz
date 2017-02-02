@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class ActMain extends AppCompatActivity
@@ -58,7 +59,10 @@ public class ActMain extends AppCompatActivity
         }
     }
 
-
+    public void fotoPerfil(View v){
+        Intent i = new Intent(this,PerfilActivity.class);
+        this.startActivity(i);
+    }
 
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -85,11 +89,8 @@ public class ActMain extends AppCompatActivity
 
         }*/
         if (id == R.id.nav_perfil) {
-            Context contexto = getApplicationContext();
-            String texto = "PERFIL";
-            int duracao = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(contexto, texto,duracao);
-            toast.show();
+            Intent i = new Intent(this,PerfilActivity.class);
+            this.startActivity(i);
 
         } else if (id == R.id.nav_wallet) {
             Log.v("MENU","chama tela");
