@@ -17,6 +17,8 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ActMain extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -34,10 +36,12 @@ public class ActMain extends AppCompatActivity
             public void onClick(View view) {
                 Intent i = new Intent(ActMain.this,CarteiraActivity.class);
                 ActMain.this.startActivity(i);
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
             }
         });
+
+        final CircleImageView ci= (CircleImageView)findViewById(R.id.foto);
+        //TODO implementar colocar foto do usuário nav_Draw EX: "ci.setImageResource(R.drawable.scarletmenor);"
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

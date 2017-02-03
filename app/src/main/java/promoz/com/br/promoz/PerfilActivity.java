@@ -3,6 +3,7 @@ package promoz.com.br.promoz;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class PerfilActivity extends AppCompatActivity {
 
     final Context context = this;
@@ -24,6 +27,10 @@ public class PerfilActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         setContentView(R.layout.activity_perfil);
+
+
+        final CircleImageView ci= (CircleImageView)findViewById(R.id.foto);
+        //TODO implementar colocar foto do usuário no Perfil  EX: "ci.setImageResource(R.drawable.scarletmenor);"
         Button button = (Button) findViewById(R.id.logoutbt);
 
         // add button listener
@@ -44,6 +51,7 @@ public class PerfilActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
+
                     }
                 });
                 btY.setOnClickListener(new View.OnClickListener() {
