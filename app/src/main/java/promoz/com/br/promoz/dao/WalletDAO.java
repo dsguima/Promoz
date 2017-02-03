@@ -46,7 +46,7 @@ public class WalletDAO extends PromozContract.Wallet {
     }
 
     public Wallet walletById(Integer id){
-        Cursor cursor = database.query(TABLE_NAME, allFields, null, null, null, null, null);
+        Cursor cursor = database.query(TABLE_NAME, allFields, _ID+"=?", new String[]{id.toString()}, null, null, null);
 
         Wallet wlt = new Wallet(null,null,null);
         if(cursor.moveToFirst())

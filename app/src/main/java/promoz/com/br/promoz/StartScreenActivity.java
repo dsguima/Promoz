@@ -12,27 +12,21 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.List;
-
-import promoz.com.br.promoz.dao.UserDAO;
-import promoz.com.br.promoz.dao.db.DatabaseHelper;
 import promoz.com.br.promoz.model.User;
 
 
 public class StartScreenActivity extends AppCompatActivity {
 
-    private UserDAO userDAO;
-    private Integer idUser = -1;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        checkLogged();
+
         setContentView(R.layout.activity_start_screen);
 
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -69,13 +63,17 @@ public class StartScreenActivity extends AppCompatActivity {
         promoz.setTypeface(customFont);
      //   Log.d("oi","set face ok");
      //   Log.d("oi","layout");
+    }
 
-        userDAO = new UserDAO(this);
-        List<User> usuario = userDAO.list();
-        if(!usuario.isEmpty()){
-            idUser = usuario.get(0).get_id();
-            Log.v("ID USUARIO",idUser.toString());
-        }
+    @Override
+    protected void onRestart() {
+        checkLogged();
+        super.onRestart();
+    }
+
+    private void checkLogged(){
+        if(getSharedPreferences(getResources().getString(R.string.app_name), Context.MODE_PRIVATE).getInt(User.getChave_ID(),0) != 0)
+            loadMain();
     }
 
     public void faceBookBt(View v){
@@ -93,10 +91,13 @@ public class StartScreenActivity extends AppCompatActivity {
         toast.show();
     }
 
-    public void cadastro(View v) {
+    private void loadMain(){
         Intent intent = new Intent(this,ActMain.class);
-        intent.putExtra(User.getChave_ID(),idUser);
         this.startActivity(intent);
+    }
+
+    public void cadastro(View v) {
+        //loadMain();
     }
     public void logar(View v) {
         Context contexto = getApplicationContext();

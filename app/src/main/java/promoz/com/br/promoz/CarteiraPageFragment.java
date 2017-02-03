@@ -12,14 +12,16 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import promoz.com.br.promoz.dao.CouponDAO;
 import promoz.com.br.promoz.dao.WalletDAO;
+import promoz.com.br.promoz.model.Coupon;
 import promoz.com.br.promoz.model.Wallet;
 
 public class CarteiraPageFragment extends Fragment {
     public static final String ARG_PAGE = "ARG_PAGE";
 
     private int mPage;
-    private int idCarteira = 1; // TODO: deve haver uma consulta para recuperar o ID da carteira com base no id do usuário que está atualmente conectado!
+    private int idCarteira;
     private WalletDAO walletDAO;
 
     public static CarteiraPageFragment newInstance(int page) {
@@ -34,6 +36,10 @@ public class CarteiraPageFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPage = getArguments().getInt(ARG_PAGE);
+        if(walletDAO == null)
+            walletDAO = new WalletDAO(getContext());
+
+        idCarteira = 1; // TODO: deve haver uma consulta para recuperar o ID da carteira com base no id do usuário que está atualmente conectado!
     }
 
     @Override
@@ -47,14 +53,16 @@ public class CarteiraPageFragment extends Fragment {
         //Caso Tab SALDO
         if (mPage == 1) {
             View view = inflater.inflate(R.layout.saldo_layout, container, false);
-            if(walletDAO == null)
-                walletDAO = new WalletDAO(view.getContext());
 
-            Wallet wallet = walletDAO.walletById(idCarteira);
             TextView textoSaldo = (TextView) view.findViewById(R.id.saldoCarteira);
-            textoSaldo.setText(wallet.getAmountCoin().toString());
+            textoSaldo.setText(walletDAO.walletById(idCarteira).getAmountCoin().toString());
 
-            List<Wallet> lst = walletDAO.list();
+            CouponDAO cupom = new CouponDAO(getContext());
+            List<Coupon> lst = cupom.list();
+            Log.e("CUPOM","" + lst.get(0).getInfo());
+            Log.e("CUPOM","" + lst.get(1).getInfo());
+            cupom.closeDatabase();
+
             return view;
 
         } else {

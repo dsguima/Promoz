@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import promoz.com.br.promoz.dao.db.AppDatabase;
 import promoz.com.br.promoz.dao.db.DatabaseHelper;
 import promoz.com.br.promoz.dao.db.PromozContract;
 import promoz.com.br.promoz.model.Coupon;
@@ -17,18 +18,12 @@ import promoz.com.br.promoz.model.Coupon;
 
 public class CouponDAO extends PromozContract.Coupon {
 
-    private DatabaseHelper myDatabaseHelper;
+    private AppDatabase dbHelper;
     private SQLiteDatabase database;
 
     public CouponDAO(Context context) {
-        this.myDatabaseHelper = new DatabaseHelper(context);
-    }
-
-    private SQLiteDatabase getDatabase(){
-        if (database == null){
-            database = myDatabaseHelper.getWritableDatabase();
-        }
-        return database;
+        dbHelper = new AppDatabase(context);
+        database = dbHelper.getDatabase();
     }
 
     private Coupon populate(Cursor cursor){ // Popula o objeto "Coupon" com os dados do cursor
@@ -61,13 +56,13 @@ public class CouponDAO extends PromozContract.Coupon {
         values.put(COLUMN_CPN_IND_VALID, coupon.getValid());
 
         if(coupon.get_id() != null){
-            return getDatabase().update(TABLE_NAME, values, "_id = ?", new String[]{ coupon.get_id().toString() });
+            return database.update(TABLE_NAME, values, "_id = ?", new String[]{ coupon.get_id().toString() });
         }
-        return getDatabase().insert(TABLE_NAME, null, values);
+        return database.insert(TABLE_NAME, null, values);
     }
 
     public List<Coupon> list(){
-        Cursor cursor = getDatabase().query(TABLE_NAME, allFields, null, null, null, null, null);
+        Cursor cursor = database.query(TABLE_NAME, allFields, null, null, null, null, null);
 
 //        cursor.moveToFirst();
         List<Coupon> lst = new ArrayList<Coupon>();
@@ -77,7 +72,11 @@ public class CouponDAO extends PromozContract.Coupon {
         return lst;
     }
 
+    public void closeDatabase(){
+        database.close();
+    }
+
     public boolean remove(int id){
-        return getDatabase().delete(TABLE_NAME, "_id = ?", new String[]{ Integer.toString(id) }) > 0;
+        return database.delete(TABLE_NAME, "_id = ?", new String[]{ Integer.toString(id) }) > 0;
     }
 }

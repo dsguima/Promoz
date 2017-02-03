@@ -3,6 +3,8 @@ package promoz.com.br.promoz;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -28,6 +30,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
+import promoz.com.br.promoz.dao.UserDAO;
+import promoz.com.br.promoz.model.User;
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
@@ -296,6 +301,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mEmail;
         private final String mPassword;
+        private User user = new User();
 
         UserLoginTask(String email, String password) {
             mEmail = email;
@@ -313,15 +319,28 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
+            UserDAO users = new UserDAO(getApplicationContext());
+            List<User> userList = users.list();
+
+            for (User u : userList){
+                if (u.getEmail().equals(mEmail)) {
+                    if(u.getPassword().equals(mPassword)){
+                        user = u;
+                        users.closeDatabase();
+                        return true;
+                    }else{
+                        return false;
+                    }
                 }
             }
 
-            // TODO: register the new account here.
+            // registrar novo usuário
+            user.setEmail(mEmail);
+            user.setPassword(mPassword);
+            Long id = users.save(user);
+            user.set_id(id.intValue());
+            users.closeDatabase();
+
             return true;
         }
 
@@ -331,6 +350,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
+                SharedPreferences.Editor editor = getSharedPreferences(getResources().getString(R.string.app_name), Context.MODE_PRIVATE).edit();
+                editor.putInt(User.getChave_ID(), user.get_id());
+                editor.commit();
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

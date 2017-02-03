@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
+
+import promoz.com.br.promoz.dao.db.AppDatabase;
 import promoz.com.br.promoz.dao.db.DatabaseHelper;
 import promoz.com.br.promoz.dao.db.PromozContract;
 import promoz.com.br.promoz.model.User;
@@ -18,18 +20,12 @@ import promoz.com.br.promoz.model.User;
 
 public class UserDAO extends PromozContract.User {
 
-    private DatabaseHelper myDatabaseHelper;
+    private AppDatabase dbHelper;
     private SQLiteDatabase database;
 
     public UserDAO(Context context) {
-        this.myDatabaseHelper = new DatabaseHelper(context);
-    }
-
-    private SQLiteDatabase getDatabase(){
-        if (database == null){
-            database = myDatabaseHelper.getWritableDatabase();
-        }
-        return database;
+        dbHelper = new AppDatabase(context);
+        database = dbHelper.getDatabase();
     }
 
     private User populate(Cursor cursor){ // Popula o objeto "User" com os dados do cursor
@@ -54,15 +50,20 @@ public class UserDAO extends PromozContract.User {
         values.put(COLUMN_USER_IMG, user.getImg());
 
         if(user.get_id() != null){
-            return getDatabase().update(TABLE_NAME, values, "_id = ?", new String[]{ user.get_id().toString() });
+            return database.update(TABLE_NAME, values, "_id = ?", new String[]{ user.get_id().toString() });
         }
-        return getDatabase().insert(TABLE_NAME, null, values);
+        return database.insert(TABLE_NAME, null, values);
+    }
+
+    public Integer getIdByEmail(String email){
+        Cursor cursor = database.query(TABLE_NAME,new String[]{_ID},COLUMN_USER_EMAIL+"=?",new String[]{email},null,null,null);
+
+        return cursor.getInt(cursor.getColumnIndex(_ID));
     }
 
     public List<User> list(){
-        Cursor cursor = getDatabase().query(TABLE_NAME, allFields, null, null, null, null, null);
+        Cursor cursor = database.query(TABLE_NAME, allFields, null, null, null, null, null);
 
-//        cursor.moveToFirst();
         List<User> lst = new ArrayList<User>();
         if(cursor.moveToFirst())
             do{
@@ -73,7 +74,12 @@ public class UserDAO extends PromozContract.User {
         return lst;
     }
 
+
+    public void closeDatabase(){
+        database.close();
+    }
+
     public boolean remove(int id){
-        return getDatabase().delete(TABLE_NAME, "_id = ?", new String[]{ Integer.toString(id) }) > 0;
+        return database.delete(TABLE_NAME, "_id = ?", new String[]{ Integer.toString(id) }) > 0;
     }
 }

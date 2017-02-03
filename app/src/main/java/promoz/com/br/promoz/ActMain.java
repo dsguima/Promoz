@@ -2,6 +2,7 @@ package promoz.com.br.promoz;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
@@ -14,10 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import de.hdodenhof.circleimageview.CircleImageView;
+import promoz.com.br.promoz.model.User;
 
 public class ActMain extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -36,12 +36,10 @@ public class ActMain extends AppCompatActivity
             public void onClick(View view) {
                 Intent i = new Intent(ActMain.this,CarteiraActivity.class);
                 ActMain.this.startActivity(i);
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
             }
         });
-
-        final CircleImageView ci= (CircleImageView)findViewById(R.id.foto);
-        //TODO implementar colocar foto do usuário nav_Draw EX: "ci.setImageResource(R.drawable.scarletmenor);"
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -63,10 +61,7 @@ public class ActMain extends AppCompatActivity
         }
     }
 
-    public void fotoPerfil(View v){
-        Intent i = new Intent(this,PerfilActivity.class);
-        this.startActivity(i);
-    }
+
 
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -93,8 +88,11 @@ public class ActMain extends AppCompatActivity
 
         }*/
         if (id == R.id.nav_perfil) {
-            Intent i = new Intent(this,PerfilActivity.class);
-            this.startActivity(i);
+            Context contexto = getApplicationContext();
+            String texto = "PERFIL";
+            int duracao = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(contexto, texto,duracao);
+            toast.show();
 
         } else if (id == R.id.nav_wallet) {
             Log.v("MENU","chama tela");
@@ -137,11 +135,15 @@ public class ActMain extends AppCompatActivity
             toast.show();
 
         } else if (id == R.id.nav_terms) {
-            Context contexto = getApplicationContext();
-            String texto = "TERMOS";
-            int duracao = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(contexto, texto,duracao);
-            toast.show();
+            SharedPreferences.Editor editor = getSharedPreferences(getResources().getString(R.string.app_name), Context.MODE_PRIVATE).edit();
+            editor.putInt(User.getChave_ID(), 0);
+            editor.commit();
+            finish();
+           // Context contexto = getApplicationContext();
+           // String texto = "TERMOS";
+           // int duracao = Toast.LENGTH_SHORT;
+           // Toast toast = Toast.makeText(contexto, texto,duracao);
+          //  toast.show();
 
         }
 

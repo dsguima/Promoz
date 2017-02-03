@@ -28,6 +28,7 @@ public final class PromozContract {
         public static final String COLUMN_USER_CPF = "user_cpf";
         public static final String COLUMN_USER_IMG = "user_img";
 
+
         public static final String SQL_CREATE_USER = CREATE_STM + User.TABLE_NAME + " (" +
                 User._ID + PK_TYPE + COMMA_SEP +
                 User.COLUMN_USER_NAME + TEXT_TYPE + COMMA_SEP +
@@ -193,18 +194,13 @@ public final class PromozContract {
                 ", " + Coupon.COLUMN_CPN_SUBTITLE + ", " + Coupon.COLUMN_CPN_INFO + ", " + Coupon.COLUMN_CPN_DT_EXP +
                 ", " + Coupon.COLUMN_CPN_PRICE + ", " + Coupon.COLUMN_CPN_IND_VALID +
                 ") VALUES('Abuse e use no mês do carnaval','R$60,00 de desconto em compras acima de R$300,00','Nos mêses de " +
-                "Fevereiro e Março, a C&a está abusando com preços imperdíveis: Toda a loja com até 50% de desconto.','28/02/2017',10, 1)";
+                "Fevereiro e Março, a C&A está abusando com preços imperdíveis: Toda a loja com até 50% de desconto.','28/02/2017',10, 1)";
 
         private static  final String TRIGER_USER_WALLET = "CREATE TRIGGER trigger_user_wallet " +
                 " AFTER INSERT" + " ON " + User.TABLE_NAME + " BEGIN " + INSERT_STM + Wallet.TABLE_NAME +
                 " (" + Wallet.COLUMN_USER_ID + ") VALUES (" + " last_insert_rowid() " + ");" + "END;";
-
-
     }
 
-    public static final String valuesToPopulate[] = {populateBasicTables.VALUE_TABLE_HISTORIC_TYPE_COIN, populateBasicTables.VALUE_TABLE_USER, populateBasicTables.VALUE_TABLE_COUPON_CENTAURO};
-    //public static final String valuesToPopulate[] = {populateBasicTables.VALUE_TABLE_HISTORIC_TYPE_COIN, populateBasicTables.VALUE_TABLE_USER};
-//    public static final String valuesToPopulate[] = {populateBasicTables.VALUE_TABLE_HISTORIC_TYPE_COIN, populateBasicTables.VALUE_TABLE_USER, populateBasicTables.VALUE_TABLE_USER, populateBasicTables.VALUE_TABLE_USER};
-
+    public static final String valuesToPopulate[] = {populateBasicTables.VALUE_TABLE_HISTORIC_TYPE_COIN, populateBasicTables.VALUE_TABLE_USER, populateBasicTables.VALUE_TABLE_COUPON_CENTAURO, populateBasicTables.VALUE_TABLE_COUPON_CIA};
     public static final String tablesCreationList[] = {User.SQL_CREATE_USER,Wallet.SQL_CREATE_WALLET,HistoricTypeCoin.SQL_CREATE_HISTORIC_TYPE_COIN, HistoricCoin.SQL_CREATE_HISTORIC_COIN,VirtualStore.SQL_CREATE_VIRTUAL_STORE, Coupon.SQL_CREATE_COUPON, populateBasicTables.TRIGER_USER_WALLET};
 }
