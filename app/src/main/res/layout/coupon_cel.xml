@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/colorSecondary">
 
 
 
@@ -30,10 +31,10 @@
                 android:layout_weight="1"
                 />
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 app:srcCompat="@drawable/info_cupom"
-                android:id="@+id/imageButton3"
+                android:id="@+id/info_button"
                 android:background="@null"
 
                 android:scaleType="fitCenter"/>
@@ -77,18 +78,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:gravity="center">
 
 
         <TextView
             android:text="IR PARA LOJA"
-            android:textColor="#ec0808"
+            android:textColor="@color/colorPrimary"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:gravity="center|left"
+            android:layout_height="wrap_content"
+            />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@android:color/transparent"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             />
-
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -97,11 +103,13 @@
             />
 
         <ImageButton
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:background="@null"
             android:scaleType="fitCenter"
+            android:id="@+id/share_button"
             app:srcCompat="@drawable/share_button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
               />
     </LinearLayout>
 
