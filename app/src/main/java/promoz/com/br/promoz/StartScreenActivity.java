@@ -97,10 +97,10 @@ public class StartScreenActivity extends AppCompatActivity {
     }
 
     public void cadastro(View v) {
-        loadMain();
+        //loadMain();
     }
     public void logar(View v) {
-        Intent i = new Intent(this,LoginActivity.class);
-        this.startActivity(i);
+        Intent intent = new Intent(this,LoginActivity.class);
+        this.startActivity(intent);
     }
 }

@@ -69,24 +69,7 @@ public class ActMain extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-    /*
-        if (id == R.id.nav_camera) {
-            Log.v("TESTE","Chama Activity");
-            Intent intent = new Intent(this, ActTeste.class);
-            startActivity(intent);
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-            MySQLiteDatabase database = new MySQLiteDatabase(this);
-            database = null;
-        } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }*/
         if (id == R.id.nav_perfil) {
             Intent i = new Intent(this,PerfilActivity.class);
             this.startActivity(i);
