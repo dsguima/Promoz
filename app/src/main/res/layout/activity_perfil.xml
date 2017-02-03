@@ -10,15 +10,11 @@
     tools:context="promoz.com.br.promoz.PerfilActivity"
     android:fitsSystemWindows="true">
 
-      <!--  <ScrollView
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:background="@drawable/rounded_background_perfil"
-            > -->
+            >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -64,10 +60,42 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textSize="15dp"
+                android:layout_marginBottom="15dp"
                 android:layout_weight="1"
                 android:textColor="@color/colorPrimary"
                 android:text="nathdill@gmail.com"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="@android:color/transparent" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_margin="@dimen/activity_horizontal_margin">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trocar senha"
+                android:id="@+id/change_pass"
+                android:padding="10dp"
+                android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                android:textColor="@drawable/text_buttom_color_logout_perfil"
+                android:background="@drawable/buttom_logout_perfil" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@android:color/transparent" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -77,7 +105,7 @@
                 android:layout_marginBottom="@dimen/activity_horizontal_margin"
                 android:textColor="@drawable/text_buttom_color_logout_perfil"
                 android:background="@drawable/buttom_logout_perfil" />
-
+            </LinearLayout>
         </LinearLayout>
-       <!-- </ScrollView>-->
+      </ScrollView>
 </LinearLayout>
