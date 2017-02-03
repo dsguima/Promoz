@@ -307,7 +307,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             try {
                 // Simulate network access.
-                Thread.sleep(2000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 return false;
             }
@@ -317,6 +317,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             for (User u : userList){
                 if (u.getEmail().equals(mEmail)) {
+
                     if(u.getPassword().equals(mPassword)){
                         user = u;
                         users.closeDatabase();

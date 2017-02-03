@@ -57,7 +57,6 @@ public class PerfilActivity extends AppCompatActivity {
                 btY.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                         SharedPreferences.Editor editor = getSharedPreferences(getResources().getString(R.string.app_name), Context.MODE_PRIVATE).edit();
                         editor.putInt(User.getChave_ID(), 0);
                         editor.commit();

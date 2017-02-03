@@ -68,6 +68,7 @@ public class CarteiraPageFragment extends Fragment {
         } else {
             //Caso Tab CUPOM
             View view = inflater.inflate(R.layout.cupom_layout, container, false);
+
             return view;
         }
     }
