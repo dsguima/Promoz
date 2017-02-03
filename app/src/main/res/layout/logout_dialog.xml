@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@drawable/rounded_buttom_logout_perfil">
+    android:background="@drawable/rounded_background_popup">
 
 
     <TextView
         android:id="@+id/confirm_logout"
-        android:text="Você etm certeza de que quer perder a oportunidade de continuar usando o PromoZ"
+        android:text="Você tem certeza de que quer perder a oportunidade de continuar usando o PromoZ?"
         android:textAlignment="center"
         android:textColor="@color/colorPrimary"
         android:layout_width="wrap_content"

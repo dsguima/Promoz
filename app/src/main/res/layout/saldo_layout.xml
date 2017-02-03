@@ -25,7 +25,7 @@
             android:textSize="20dp"
             android:textColor="@color/colorCinzaSaldo"/>
         <View
-            android:layout_width="100dp"
+            android:layout_width="0dp"
             android:layout_height="1dp"
             android:background="@color/colorCinzaSaldo"
             android:layout_marginRight="10dp"
@@ -112,6 +112,7 @@
         </RadioGroup>
 
     </LinearLayout>
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

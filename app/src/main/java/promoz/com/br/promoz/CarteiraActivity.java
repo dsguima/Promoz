@@ -17,6 +17,7 @@ public class CarteiraActivity extends AppCompatActivity {;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carteira);
+
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         //Back button on header
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -37,14 +38,6 @@ public class CarteiraActivity extends AppCompatActivity {;
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
     }
-
-   /* public void startSaldo(){
-        ViewPager viewPager2 = (ViewPager) findViewById(R.id.viewpager2);
-        viewPager2.setAdapter(new SaldoCarteiraFragmentPagerAdapter(getSupportFragmentManager(),
-                CarteiraActivity.this,3,new String[]{"7 DIAS","15 DIAS","30 DIAS"}));
-        TabLayout tabLayout2 = (TabLayout) findViewById(R.id.his_tabs);
-          tabLayout2.setupWithViewPager(viewPager2);
-    }*/
     @Override
     public void onBackPressed() {
         super.onBackPressed();
