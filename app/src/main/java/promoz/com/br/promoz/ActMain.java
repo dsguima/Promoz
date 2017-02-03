@@ -61,8 +61,16 @@ public class ActMain extends AppCompatActivity
         }
     }
 
+    private void checkLogged(){
+        if(getSharedPreferences(getResources().getString(R.string.app_name), Context.MODE_PRIVATE).getInt(User.getChave_ID(),0) == 0)
+            finish();
+    }
 
-
+    @Override
+    protected void onRestart() {
+        checkLogged();
+        super.onRestart();
+    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -115,16 +123,11 @@ public class ActMain extends AppCompatActivity
             toast.show();
 
         } else if (id == R.id.nav_terms) {
-            SharedPreferences.Editor editor = getSharedPreferences(getResources().getString(R.string.app_name), Context.MODE_PRIVATE).edit();
-            editor.putInt(User.getChave_ID(), 0);
-            editor.commit();
-            finish();
-           // Context contexto = getApplicationContext();
-           // String texto = "TERMOS";
-           // int duracao = Toast.LENGTH_SHORT;
-           // Toast toast = Toast.makeText(contexto, texto,duracao);
-          //  toast.show();
-
+            Context contexto = getApplicationContext();
+            String texto = "TERMOS";
+            int duracao = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(contexto, texto,duracao);
+            toast.show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

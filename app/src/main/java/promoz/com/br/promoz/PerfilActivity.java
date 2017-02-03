@@ -3,6 +3,7 @@ package promoz.com.br.promoz;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import promoz.com.br.promoz.model.User;
 
 public class PerfilActivity extends AppCompatActivity {
 
@@ -56,10 +58,14 @@ public class PerfilActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        //TODO:IMPLEMENTAR LOGOUT PELO BANCO DE DADOS AQUI
+                        SharedPreferences.Editor editor = getSharedPreferences(getResources().getString(R.string.app_name), Context.MODE_PRIVATE).edit();
+                        editor.putInt(User.getChave_ID(), 0);
+                        editor.commit();
                         dialog.dismiss();
-                       Intent i = new Intent(context,StartScreenActivity.class);
-                       context.startActivity(i);
+                        finish();
+                        //TODO:IMPLEMENTAR LOGOUT PELO BANCO DE DADOS AQU
+                       //Intent i = new Intent(context,StartScreenActivity.class);
+                       //context.startActivity(i);
                     }
                 });
 
