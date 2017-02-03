@@ -88,11 +88,8 @@ public class ActMain extends AppCompatActivity
 
         }*/
         if (id == R.id.nav_perfil) {
-            Context contexto = getApplicationContext();
-            String texto = "PERFIL";
-            int duracao = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(contexto, texto,duracao);
-            toast.show();
+            Intent i = new Intent(this,PerfilActivity.class);
+            this.startActivity(i);
 
         } else if (id == R.id.nav_wallet) {
             Log.v("MENU","chama tela");

@@ -28,7 +28,6 @@ public class PerfilActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         setContentView(R.layout.activity_perfil);
 
-
         final CircleImageView ci= (CircleImageView)findViewById(R.id.foto);
         //TODO implementar colocar foto do usuário no Perfil  EX: "ci.setImageResource(R.drawable.scarletmenor);"
         Button button = (Button) findViewById(R.id.logoutbt);
@@ -51,7 +50,6 @@ public class PerfilActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
-
                     }
                 });
                 btY.setOnClickListener(new View.OnClickListener() {
@@ -60,8 +58,8 @@ public class PerfilActivity extends AppCompatActivity {
 
                         //TODO:IMPLEMENTAR LOGOUT PELO BANCO DE DADOS AQUI
                         dialog.dismiss();
-                        Intent i = new Intent(context,StartScreenActivity.class);
-                        context.startActivity(i);
+                       Intent i = new Intent(context,StartScreenActivity.class);
+                       context.startActivity(i);
                     }
                 });
 

@@ -97,14 +97,9 @@ public class StartScreenActivity extends AppCompatActivity {
     }
 
     public void cadastro(View v) {
-        //loadMain();
+        loadMain();
     }
     public void logar(View v) {
-        Context contexto = getApplicationContext();
-        String texto = "Chamar classe login";
-        int duracao = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(contexto, texto,duracao);
-        toast.show();
         Intent i = new Intent(this,LoginActivity.class);
         this.startActivity(i);
     }
