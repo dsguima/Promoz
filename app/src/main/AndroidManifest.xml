@@ -50,8 +50,8 @@
 
         <activity android:name=".PerfilActivity"
                     android:configChanges="orientation|screenSize"
-                android:label="Perfil"
-                android:parentActivityName=".ActMain" />
+                    android:label="Perfil"
+                    android:parentActivityName=".ActMain" />
     </application>
 
 </manifest>
