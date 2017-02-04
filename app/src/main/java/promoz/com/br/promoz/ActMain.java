@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import promoz.com.br.promoz.model.User;
 
 public class ActMain extends AppCompatActivity
@@ -49,6 +50,13 @@ public class ActMain extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //TODO A IMAGEM TROCA AQUI
+        View hView =  navigationView.getHeaderView(0);
+        CircleImageView foto =  (CircleImageView) hView.findViewById(R.id.foto_nav);
+        foto.setImageResource(R.drawable.scarletmenor);;
+
+
     }
 
     @Override
