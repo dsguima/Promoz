@@ -50,6 +50,17 @@ public class CarteiraActivity extends AppCompatActivity {;
             Message.msgInfo(this,cpn.getTitle(),cpn.getInfo(),android.R.drawable.ic_dialog_info);
     }
 
+    public void useCupom(View view){ // TODO: rotina para utilização do cupom
+        CouponDAO cpnDAO = new CouponDAO(getApplicationContext());
+        Coupon cpn = cpnDAO.couponById((Integer) view.getTag());
+
+        if(cpn.getValid() == 1){
+            Message.msgInfo(this,"Usar Cupom","Rotina de utilização do cupom",android.R.drawable.ic_dialog_info);
+            cpn.setValid(0);
+            cpnDAO.save(cpn);
+        }
+    }
+
 
     @Override
     public void onBackPressed() {

@@ -68,9 +68,9 @@ public class CouponDAO extends PromozContract.Coupon {
         Cursor cursor = database.query(TABLE_NAME, allFields, _ID+"=?", new String[]{id.toString()}, null, null, null);
 
         Coupon cpn = new Coupon();
-        cpn.set_id(-1);
         if(cursor.moveToFirst())
             cpn = populate(cursor);
+
         cursor.close();
 
         return cpn;

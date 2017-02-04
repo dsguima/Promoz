@@ -107,6 +107,7 @@
             android:layout_height="wrap_content"
             android:button="@null"
             android:id="@+id/cupom_use"
+            android:onClick="useCupom"
             android:background="@drawable/buttom_usar_cupom"
             />
 

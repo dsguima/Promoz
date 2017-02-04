@@ -204,7 +204,7 @@ public final class PromozContract {
                 COMMA_SEP + Coupon.COLUMN_CPN_PRICE + COMMA_SEP + Coupon.COLUMN_CPN_IND_VALID + COMMA_SEP + Coupon.COLUMN_CPN_STR_ID +
                 COMMA_SEP + Coupon.COLUMN_CPN_IMG +
                 ") VALUES('Abuse e use no mês do carnaval','R$60,00 de desconto em compras acima de R$300,00','Nos mêses de " +
-                "Fevereiro e Março, a C&A está abusando com preços imperdíveis: Toda a loja com até 50% de desconto.','31/03/2017',10, 1, 2, "+R.drawable.cia_logo+")";
+                "Fevereiro e Março, a C&A está abusando com preços imperdíveis: Toda a loja com até 50% de desconto.','31/03/2017',30, 1, 2, "+R.drawable.cia_logo+")";
 
         private static  final String TRIGER_USER_WALLET = "CREATE TRIGGER trigger_user_wallet " +
                 " AFTER INSERT" + " ON " + User.TABLE_NAME + " BEGIN " + INSERT_STM + Wallet.TABLE_NAME +
