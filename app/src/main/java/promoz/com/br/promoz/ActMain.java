@@ -2,7 +2,6 @@ package promoz.com.br.promoz;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
@@ -99,11 +98,9 @@ public class ActMain extends AppCompatActivity
             toast.show();
 
         } else if (id == R.id.nav_shop) {
-            Context contexto = getApplicationContext();
-            String texto = "LOJA";
-            int duracao = Toast.LENGTH_SHORT;
-            Toast toast = Toast.makeText(contexto, texto,duracao);
-            toast.show();
+            Log.v("MENU","chama Loja");
+            Intent i = new Intent(this,LojaActivity.class);
+            this.startActivity(i);
 
         } else if (id == R.id.nav_config) {
             Context contexto = getApplicationContext();
