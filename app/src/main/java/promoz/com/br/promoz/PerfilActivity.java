@@ -95,10 +95,11 @@ public class PerfilActivity extends AppCompatActivity {
                 btconfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         //TODO:IMPLEMENTAR TROCAR SENHAR
-                        SharedPreferences.Editor editor = getSharedPreferences(getResources().getString(R.string.app_name), Context.MODE_PRIVATE).edit();
-                        editor.putInt(User.getChave_ID(), 0);
-                        editor.commit();
+                        EditText lastpass = (EditText) dialog.findViewById(R.id.last_pass);
+                        EditText newpass = (EditText) dialog.findViewById(R.id.new_pass);
+                        EditText confirmpass = (EditText) dialog.findViewById(R.id.new_pass_confirm);
                         dialog.dismiss();
                         finish();
 
