@@ -55,11 +55,9 @@ public class CarteiraActivity extends AppCompatActivity {
         Coupon cpn = cpnDAO.couponById((Integer) view.getTag());
 
         if(cpn.getValid() == 1){
-            Message.msgInfo(this,"Usar Cupom","Rotina de utilização do cupom",android.R.drawable.ic_dialog_info); // TODO: somente para protótipo
+            Message.msgInfo(this,"Usar Cupom","Rotina de utilização do cupom da loja com ID = " + view.getTag(),android.R.drawable.ic_dialog_info); // TODO: somente para protótipo
             cpn.setValid(0);
-            cpn.setDateUse(DateUtil.returnDate(DateUtil.day(),DateUtil.month(),DateUtil.year(),DateUtil.DDMMYYYY));
             cpnDAO.save(cpn);
-            Log.e("UPDATE", "UPDATE");
             CarteiraPageFragment.handler.sendEmptyMessage(100);
         }
     }

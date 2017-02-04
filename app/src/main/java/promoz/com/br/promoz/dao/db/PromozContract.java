@@ -206,11 +206,18 @@ public final class PromozContract {
                 ") VALUES('Abuse e use no mês do carnaval','R$60,00 de desconto em compras acima de R$300,00','Nos mêses de " +
                 "Fevereiro e Março, a C&A está abusando com preços imperdíveis: Toda a loja com até 50% de desconto.','31/03/2017',30, 1, 2, "+R.drawable.cia_logo+")";
 
+        // TRIGER PARA CRIAR CARTEIRA PARA O USUÁRIO
         private static  final String TRIGER_USER_WALLET = "CREATE TRIGGER trigger_user_wallet " +
                 " AFTER INSERT" + " ON " + User.TABLE_NAME + " BEGIN " + INSERT_STM + Wallet.TABLE_NAME +
                 " (" + Wallet.COLUMN_USER_ID + ") VALUES (" + " last_insert_rowid() " + ");" + "END;";
+
+
+        // TRIGER PARA ATUALIZAR DATA DE UTILIZAÇÃO DO CUPOM
+        private static  final String TRIGER_UPDATE_COUPON = "CREATE TRIGGER trigger_update_coupon " +
+                " AFTER UPDATE" + " OF " + Coupon.COLUMN_CPN_IND_VALID + " ON " + Coupon.TABLE_NAME + " BEGIN UPDATE " + Coupon.TABLE_NAME +
+                " SET " + Coupon.COLUMN_CPN_DT_USE + " = " + " strftime('%d/%m/%Y')" + " WHERE " + Coupon._ID + " = old." + Coupon._ID +"; END;";
     }
 
     public static final String valuesToPopulate[] = {populateBasicTables.VALUE_TABLE_HISTORIC_TYPE_COIN, populateBasicTables.VALUE_TABLE_USER, populateBasicTables.VALUE_TABLE_COUPON_CENTAURO, populateBasicTables.VALUE_TABLE_COUPON_CIA};
-    public static final String tablesCreationList[] = {User.SQL_CREATE_USER,Wallet.SQL_CREATE_WALLET,HistoricTypeCoin.SQL_CREATE_HISTORIC_TYPE_COIN, HistoricCoin.SQL_CREATE_HISTORIC_COIN,VirtualStore.SQL_CREATE_VIRTUAL_STORE, Coupon.SQL_CREATE_COUPON, populateBasicTables.TRIGER_USER_WALLET};
+    public static final String tablesCreationList[] = {User.SQL_CREATE_USER,Wallet.SQL_CREATE_WALLET,HistoricTypeCoin.SQL_CREATE_HISTORIC_TYPE_COIN, HistoricCoin.SQL_CREATE_HISTORIC_COIN,VirtualStore.SQL_CREATE_VIRTUAL_STORE, Coupon.SQL_CREATE_COUPON, populateBasicTables.TRIGER_USER_WALLET,populateBasicTables.TRIGER_UPDATE_COUPON};
 }

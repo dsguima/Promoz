@@ -82,13 +82,7 @@ public class CouponAdapter extends BaseAdapter {
 
         RadioButton use = (RadioButton) view.findViewById(R.id.cupom_use);
         use.setTag(object.get_id()); // associa tag para buscar status do cupom adequado
-      //  Log.e("CHECK", ""+object.getValid());
         use.setChecked(object.getValid()==0);
-
-        if(use.isChecked())
-            Log.e("==========ADAPTER=","CHECADO");
-        else
-            Log.e("==========ADAPTER=","NAO ============= CHECADO");
 
         return view;
     }

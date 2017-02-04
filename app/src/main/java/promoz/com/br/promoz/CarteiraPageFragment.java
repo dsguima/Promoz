@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ public class CarteiraPageFragment extends Fragment{
     private CouponDAO couponDAO;
     private List<Coupon> couponList;
     private CouponAdapter couponAdapter;
+    private ListView listcoupon;
     public static Handler handler;
 
     public static CarteiraPageFragment newInstance(int page) {
@@ -38,6 +40,7 @@ public class CarteiraPageFragment extends Fragment{
     private void updateList(){
         couponList = couponDAO.list(PromozContract.Coupon.COLUMN_CPN_IND_VALID + " DESC, " + PromozContract.Coupon.COLUMN_CPN_DT_EXP + " ASC, " + PromozContract.Coupon.COLUMN_CPN_DT_USE + " DESC");
         couponAdapter = new CouponAdapter(getContext(),couponList);
+        listcoupon.setAdapter(couponAdapter);
     }
 
     @Override
@@ -54,7 +57,7 @@ public class CarteiraPageFragment extends Fragment{
             public void handleMessage(Message msg) {
                 //super.handleMessage(msg);
                 if( msg.what == 100 ){
-                   // updateList();
+                    updateList();
                     couponAdapter.notifyDataSetChanged();
                 }
             }
@@ -87,10 +90,9 @@ public class CarteiraPageFragment extends Fragment{
         } else {
             //Caso Tab CUPOM
             View view = inflater.inflate(R.layout.cupom_layout, container, false);
-            ListView listcoupon = (ListView) view.findViewById(R.id.lstCoupon);
-            listcoupon.setDividerHeight(10);
+            listcoupon = (ListView) view.findViewById(R.id.lstCoupon);
+            listcoupon.setDividerHeight(5);
             updateList();
-            listcoupon.setAdapter(couponAdapter);
             return view;
         }
     }
