@@ -27,16 +27,14 @@
             </intent-filter>
             -->
         </activity>
-
         <activity
             android:name=".CarteiraActivity"
             android:configChanges="orientation|screenSize"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".StartScreenActivity"
-            android:screenOrientation="portrait"
             android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,11 +45,15 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
-
-        <activity android:name=".PerfilActivity"
-                    android:configChanges="orientation|screenSize"
-                    android:label="Perfil"
-                    android:parentActivityName=".ActMain" />
+        <activity
+            android:name=".PerfilActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="Perfil"
+            android:parentActivityName=".ActMain" />
+        <activity android:name=".LojaActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="Loja"
+            android:parentActivityName=".ActMain" ></activity>
     </application>
 
 </manifest>
