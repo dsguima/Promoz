@@ -22,7 +22,7 @@
         >
         <Spinner
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
+            android:layout_height="30dp"
             android:background="@drawable/rounded_spinner"
             android:spinnerMode="dropdown"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
@@ -32,9 +32,9 @@
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="25dp"
+            android:layout_height="30dp"
             android:textColor="@drawable/text_buttom_color_loja_filtrar"
-            android:text="filtrar"
+            android:text="Filtrar"
             android:background="@drawable/buttom_loja_filtrar"
             />
 
