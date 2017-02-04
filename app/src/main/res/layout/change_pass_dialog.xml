@@ -18,8 +18,8 @@
             android:id="@+id/last_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Digite sua senha antiga"
-            android:imeActionLabel="Senha antiga"
+            android:hint="Digite sua senha atual"
+            android:imeActionLabel="Senha atual"
             android:imeOptions="actionUnspecified"
             android:inputType="textPassword"
             android:maxLines="1"
@@ -71,7 +71,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="10dp">
-
+        <Button
+            android:id="@+id/cancel_change"
+            android:layout_marginTop="15dp"
+            android:onClick="btNo"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:textColor="@drawable/text_buttom_color_logout_perfil"
+            android:background="@drawable/buttom_logout_perfil"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Cancelar" />
         <Button
             android:id="@+id/confirm_change"
             android:layout_marginTop="15dp"
@@ -85,18 +96,7 @@
             android:layout_height="wrap_content"
             android:text="Confirmar" />
 
-        <Button
-            android:id="@+id/cancel_change"
-            android:layout_marginTop="15dp"
-            android:onClick="btNo"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:layout_weight="1"
-            android:padding="10dp"
-            android:textColor="@drawable/text_buttom_color_logout_perfil"
-            android:background="@drawable/buttom_logout_perfil"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Cancelar" />
+
 
     </LinearLayout>
 </LinearLayout>

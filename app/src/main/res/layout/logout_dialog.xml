@@ -26,6 +26,17 @@
         android:layout_marginTop="10dp">
 
         <Button
+            android:id="@+id/no"
+            android:layout_marginTop="15dp"
+            android:onClick="btNo"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:layout_weight="1"
+            android:textColor="@drawable/text_buttom_color_logout_perfil"
+            android:background="@drawable/buttom_logout_perfil"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="NÃO" />
+        <Button
             android:id="@+id/yes"
             android:layout_marginTop="15dp"
             android:layout_weight="1"
@@ -37,17 +48,7 @@
             android:layout_height="wrap_content"
             android:text="SIM" />
 
-        <Button
-            android:id="@+id/no"
-            android:layout_marginTop="15dp"
-            android:onClick="btNo"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:layout_weight="1"
-            android:textColor="@drawable/text_buttom_color_logout_perfil"
-            android:background="@drawable/buttom_logout_perfil"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="NÃO" />
+
 
     </LinearLayout>
 </LinearLayout>
