@@ -11,6 +11,7 @@ import promoz.com.br.promoz.dao.db.AppDatabase;
 import promoz.com.br.promoz.dao.db.DatabaseHelper;
 import promoz.com.br.promoz.dao.db.PromozContract;
 import promoz.com.br.promoz.model.Coupon;
+import promoz.com.br.promoz.model.Wallet;
 
 /**
  * Created by vallux on 27/01/17.
@@ -32,12 +33,14 @@ public class CouponDAO extends PromozContract.Coupon {
                 cursor.getInt(cursor.getColumnIndex(COLUMN_WALLET_ID)),
                 cursor.getString(cursor.getColumnIndex(COLUMN_CPN_TITLE)),
                 cursor.getString(cursor.getColumnIndex(COLUMN_CPN_SUBTITLE)),
-                cursor.getBlob(cursor.getColumnIndex(COLUMN_CPN_IMG)),
+                //cursor.getBlob(cursor.getColumnIndex(COLUMN_CPN_IMG)),
+                cursor.getInt(cursor.getColumnIndex(COLUMN_CPN_IMG)), // modificado apenas para protótipo
                 cursor.getString(cursor.getColumnIndex(COLUMN_CPN_INFO)),
                 cursor.getString(cursor.getColumnIndex(COLUMN_CPN_DT_USE)),
                 cursor.getString(cursor.getColumnIndex(COLUMN_CPN_DT_EXP)),
                 cursor.getInt(cursor.getColumnIndex(COLUMN_CPN_PRICE)),
-                cursor.getInt(cursor.getColumnIndex(COLUMN_CPN_IND_VALID))
+                cursor.getInt(cursor.getColumnIndex(COLUMN_CPN_IND_VALID)),
+                cursor.getInt(cursor.getColumnIndex(COLUMN_CPN_STR_ID))
         );
         return model;
     }
@@ -61,6 +64,18 @@ public class CouponDAO extends PromozContract.Coupon {
         return database.insert(TABLE_NAME, null, values);
     }
 
+    public Coupon couponById(Integer id){
+        Cursor cursor = database.query(TABLE_NAME, allFields, _ID+"=?", new String[]{id.toString()}, null, null, null);
+
+        Coupon cpn = new Coupon();
+        cpn.set_id(-1);
+        if(cursor.moveToFirst())
+            cpn = populate(cursor);
+        cursor.close();
+
+        return cpn;
+    }
+
     public List<Coupon> list(){
         Cursor cursor = database.query(TABLE_NAME, allFields, null, null, null, null, null);
 
@@ -73,7 +88,8 @@ public class CouponDAO extends PromozContract.Coupon {
     }
 
     public void closeDatabase(){
-        database.close();
+        if(database.isOpen())
+            database.close();
     }
 
     public boolean remove(int id){

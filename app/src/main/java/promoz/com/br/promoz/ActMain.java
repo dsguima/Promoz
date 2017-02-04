@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.View;
@@ -55,9 +56,12 @@ public class ActMain extends AppCompatActivity
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+            drawer.closeDrawer(GravityCompat.START); // recolhe o menu caso esteja "aberto"
         } else {
-            super.onBackPressed();
+            // TODO : inserir popup para confirmar saída
+            moveTaskToBack(true);
+            finish();
+            //super.onBackPressed();
         }
     }
 

@@ -12,14 +12,19 @@ public class Coupon implements Serializable {
     private Integer walletId;
     private String title;
     private String subTitle;
-    private byte[] img;
+    //private byte[] img;
+    private int img;
     private String info;
     private String dateUse;
     private String dateExp;
     private Integer price;
     private Integer valid;
+    private Integer storeId;
 
-    public Coupon(Integer _id, Integer walletId, String title, String subTitle, byte[] img, String info, String dateUse, String dateExp, Integer price, Integer valid) {
+    public Coupon(){
+    }
+
+    public Coupon(Integer _id, Integer walletId, String title, String subTitle, int img, String info, String dateUse, String dateExp, Integer price, Integer valid, Integer storeID) {
         this._id = _id;
         this.walletId = walletId;
         this.title = title;
@@ -30,6 +35,7 @@ public class Coupon implements Serializable {
         this.dateExp = dateExp;
         this.price = price;
         this.valid = valid;
+        this.storeId = storeID;
     }
 
     public Integer get_id() {
@@ -64,11 +70,11 @@ public class Coupon implements Serializable {
         this.subTitle = subTitle;
     }
 
-    public byte[] getImg() {
+    public int getImg() {
         return img;
     }
 
-    public void setImg(byte[] img) {
+    public void setImg(int img) {
         this.img = img;
     }
 
@@ -110,6 +116,14 @@ public class Coupon implements Serializable {
 
     public void setValid(Integer valid) {
         this.valid = valid;
+    }
+
+    public Integer getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(Integer storeId) {
+        this.storeId = storeId;
     }
 
     @Override

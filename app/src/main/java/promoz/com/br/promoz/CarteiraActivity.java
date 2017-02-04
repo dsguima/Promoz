@@ -5,14 +5,16 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.TextView;
-import java.util.List;
-import promoz.com.br.promoz.dao.WalletDAO;
-import promoz.com.br.promoz.model.Wallet;
+
+import promoz.com.br.promoz.dao.CouponDAO;
+import promoz.com.br.promoz.model.Coupon;
+import promoz.com.br.promoz.util.Message;
 
 public class CarteiraActivity extends AppCompatActivity {;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +40,17 @@ public class CarteiraActivity extends AppCompatActivity {;
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
     }
+
+    public void showInfo(View view){
+
+        CouponDAO cpnDAO = new CouponDAO(getApplicationContext());
+        Coupon cpn = cpnDAO.couponById((Integer) view.getTag());
+
+        if(cpn.get_id() != -1)
+            Message.msgInfo(this,cpn.getTitle(),cpn.getInfo(),android.R.drawable.ic_dialog_info);
+    }
+
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

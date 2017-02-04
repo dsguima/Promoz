@@ -1,6 +1,10 @@
 package promoz.com.br.promoz.dao.db;
 
+import android.app.Application;
 import android.provider.BaseColumns;
+
+import promoz.com.br.promoz.R;
+import promoz.com.br.promoz.util.ImageUtil;
 
 /**
  * Created by vallux on 23/01/17.
@@ -79,18 +83,21 @@ public final class PromozContract {
         public static final String COLUMN_CPN_DT_EXP = "cpn_dt_exp";
         public static final String COLUMN_CPN_IND_VALID = "cpn_ind_valid";
         public static final String COLUMN_CPN_PRICE = "cpn_price";
+        public static final String COLUMN_CPN_STR_ID = "cpn_str_id";
 
         public static final String SQL_CREATE_COUPON = CREATE_STM + Coupon.TABLE_NAME + " (" +
                 Coupon._ID + PK_TYPE + COMMA_SEP +
                 Coupon.COLUMN_WALLET_ID + INTEGER_TYPE + COMMA_SEP +
                 Coupon.COLUMN_CPN_TITLE + TEXT_TYPE + COMMA_SEP +
                 Coupon.COLUMN_CPN_SUBTITLE + TEXT_TYPE + COMMA_SEP +
-                Coupon.COLUMN_CPN_IMG + BLOB_TYPE + COMMA_SEP +
+          //      Coupon.COLUMN_CPN_IMG + BLOB_TYPE + COMMA_SEP +
+                Coupon.COLUMN_CPN_IMG + INTEGER_TYPE + COMMA_SEP + // modificado para int apenas para o protótipo
                 Coupon.COLUMN_CPN_INFO + TEXT_TYPE + COMMA_SEP +
                 Coupon.COLUMN_CPN_DT_USE + TEXT_TYPE + COMMA_SEP +
                 Coupon.COLUMN_CPN_DT_EXP + TEXT_TYPE + COMMA_SEP +
                 Coupon.COLUMN_CPN_PRICE + INTEGER_TYPE + COMMA_SEP +
                 Coupon.COLUMN_CPN_IND_VALID + INTEGER_TYPE + COMMA_SEP +
+                Coupon.COLUMN_CPN_STR_ID + INTEGER_TYPE + COMMA_SEP +
                 FK_TYPE + Coupon.COLUMN_FK_WALLET_ID +
                 END_STM;
 
@@ -104,7 +111,8 @@ public final class PromozContract {
                 Coupon.COLUMN_CPN_DT_USE,
                 Coupon.COLUMN_CPN_DT_EXP,
                 Coupon.COLUMN_CPN_PRICE,
-                Coupon.COLUMN_CPN_IND_VALID
+                Coupon.COLUMN_CPN_IND_VALID,
+                Coupon.COLUMN_CPN_STR_ID
         };
     }
 
@@ -182,19 +190,21 @@ public final class PromozContract {
                 ") VALUES('Moeda Verde')";
 
         private static final String VALUE_TABLE_USER = INSERT_STM + User.TABLE_NAME + " (" + User.COLUMN_USER_NAME +
-                ", "+ User.COLUMN_USER_PASSWORD + " ," + User.COLUMN_USER_EMAIL+ ") VALUES('promoz','','promoz@promoz.com.br')";
+                COMMA_SEP + User.COLUMN_USER_PASSWORD + COMMA_SEP + User.COLUMN_USER_EMAIL+ ") VALUES('promoz','','promoz@promoz.com.br')";
 
         private static final String VALUE_TABLE_COUPON_CENTAURO = INSERT_STM + Coupon.TABLE_NAME + " (" + Coupon.COLUMN_CPN_TITLE +
-                ", " + Coupon.COLUMN_CPN_SUBTITLE + ", " + Coupon.COLUMN_CPN_INFO + ", " + Coupon.COLUMN_CPN_DT_EXP +
-                ", " + Coupon.COLUMN_CPN_PRICE + ", " + Coupon.COLUMN_CPN_IND_VALID +
+                COMMA_SEP + Coupon.COLUMN_CPN_SUBTITLE + COMMA_SEP + Coupon.COLUMN_CPN_INFO + COMMA_SEP + Coupon.COLUMN_CPN_DT_EXP +
+                COMMA_SEP + Coupon.COLUMN_CPN_PRICE + COMMA_SEP + Coupon.COLUMN_CPN_IND_VALID + COMMA_SEP + Coupon.COLUMN_CPN_STR_ID +
+                COMMA_SEP + Coupon.COLUMN_CPN_IMG +
                 ") VALUES('Mês do Fitness','R$50,00 de desconto em compras acima de R$200,00','Neste mês de Fevereiro, a " +
-                "Centauro traz para você promoções imperdíveis: Toda linha fitness com até 50% de desconto.','28/02/2017',10, 1)";
+                "Centauro traz para você promoções imperdíveis: Toda linha fitness com até 50% de desconto.','28/02/2017',10, 1, 1, "+R.drawable.centauro_logo+")";
 
         private static final String VALUE_TABLE_COUPON_CIA = INSERT_STM + Coupon.TABLE_NAME + " (" + Coupon.COLUMN_CPN_TITLE +
-                ", " + Coupon.COLUMN_CPN_SUBTITLE + ", " + Coupon.COLUMN_CPN_INFO + ", " + Coupon.COLUMN_CPN_DT_EXP +
-                ", " + Coupon.COLUMN_CPN_PRICE + ", " + Coupon.COLUMN_CPN_IND_VALID +
+                COMMA_SEP + Coupon.COLUMN_CPN_SUBTITLE + COMMA_SEP + Coupon.COLUMN_CPN_INFO + COMMA_SEP + Coupon.COLUMN_CPN_DT_EXP +
+                COMMA_SEP + Coupon.COLUMN_CPN_PRICE + COMMA_SEP + Coupon.COLUMN_CPN_IND_VALID + COMMA_SEP + Coupon.COLUMN_CPN_STR_ID +
+                COMMA_SEP + Coupon.COLUMN_CPN_IMG +
                 ") VALUES('Abuse e use no mês do carnaval','R$60,00 de desconto em compras acima de R$300,00','Nos mêses de " +
-                "Fevereiro e Março, a C&A está abusando com preços imperdíveis: Toda a loja com até 50% de desconto.','28/02/2017',10, 1)";
+                "Fevereiro e Março, a C&A está abusando com preços imperdíveis: Toda a loja com até 50% de desconto.','31/03/2017',10, 1, 2, "+R.drawable.cia_logo+")";
 
         private static  final String TRIGER_USER_WALLET = "CREATE TRIGGER trigger_user_wallet " +
                 " AFTER INSERT" + " ON " + User.TABLE_NAME + " BEGIN " + INSERT_STM + Wallet.TABLE_NAME +
