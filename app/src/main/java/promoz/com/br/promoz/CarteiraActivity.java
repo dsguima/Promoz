@@ -60,7 +60,7 @@ public class CarteiraActivity extends AppCompatActivity {
             cpn.setDateUse(DateUtil.returnDate(DateUtil.day(),DateUtil.month(),DateUtil.year(),DateUtil.DDMMYYYY));
             cpnDAO.save(cpn);
             Log.e("UPDATE", "UPDATE");
-            CarteiraPageFragment.updateDB();
+            CarteiraPageFragment.handler.sendEmptyMessage(100);
         }
     }
 
