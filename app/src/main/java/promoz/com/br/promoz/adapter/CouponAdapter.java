@@ -71,15 +71,18 @@ public class CouponAdapter extends BaseAdapter {
         subTitle.setText(object.getSubTitle());
 
         TextView date = (TextView) view.findViewById(R.id.cupom_date);
-        date.setText("Expira em: " + object.getDateExp());
+
+        if(object.getValid() == 1)
+            date.setText("Expira em: " + object.getDateExp());
+        else
+            date.setText("Usado em: " + object.getDateUse());
 
         TextView gostore = (TextView) view.findViewById(R.id.goto_loja);
         gostore.setTag(object.getStoreId());
 
         RadioButton use = (RadioButton) view.findViewById(R.id.cupom_use);
         use.setTag(object.get_id()); // associa tag para buscar status do cupom adequado
-       // Log.e("USO CUPOM","ATIVO = " + (object.getValid()==0));
-
+        Log.e("CHECK", ""+object.getValid());
         use.setChecked(object.getValid()==0);
 
         return view;

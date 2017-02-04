@@ -1,8 +1,10 @@
 package promoz.com.br.promoz;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +14,10 @@ import java.util.List;
 import promoz.com.br.promoz.adapter.CouponAdapter;
 import promoz.com.br.promoz.dao.CouponDAO;
 import promoz.com.br.promoz.dao.WalletDAO;
+import promoz.com.br.promoz.dao.db.PromozContract;
 import promoz.com.br.promoz.model.Coupon;
 
-public class CarteiraPageFragment extends Fragment {
+public class CarteiraPageFragment extends Fragment{
     public static final String ARG_PAGE = "ARG_PAGE";
 
     private int mPage;
@@ -22,7 +25,7 @@ public class CarteiraPageFragment extends Fragment {
     private WalletDAO walletDAO;
     private CouponDAO couponDAO;
     private List<Coupon> couponList;
-    private CouponAdapter couponAdapter;
+    private static CouponAdapter couponAdapter;
 
     public static CarteiraPageFragment newInstance(int page) {
         Bundle args = new Bundle();
@@ -30,6 +33,10 @@ public class CarteiraPageFragment extends Fragment {
         CarteiraPageFragment fragment = new CarteiraPageFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public static void updateDB() {
+        couponAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -61,18 +68,17 @@ public class CarteiraPageFragment extends Fragment {
             textoSaldo.setText(walletDAO.walletById(idCarteira).getAmountCoin().toString());
 
             CouponDAO cupom = new CouponDAO(getContext());
-            List<Coupon> lst = cupom.list();
+            List<Coupon> lst = cupom.list("");
             cupom.closeDatabase();
             return view;
 
         } else {
             //Caso Tab CUPOM
-            Log.e("CUPOM","TAB CUPOM");
             View view = inflater.inflate(R.layout.cupom_layout, container, false);
             ListView listcoupon = (ListView) view.findViewById(R.id.lstCoupon);
             listcoupon.setDividerHeight(10);
-            couponList = couponDAO.list();
-            couponAdapter = new CouponAdapter(this.getContext(),couponList);
+            couponList = couponDAO.list(PromozContract.Coupon.COLUMN_CPN_IND_VALID + " DESC, " + PromozContract.Coupon.COLUMN_CPN_DT_EXP + " ASC, " + PromozContract.Coupon.COLUMN_CPN_DT_USE + " DESC");
+            couponAdapter = new CouponAdapter(getContext(),couponList);
             listcoupon.setAdapter(couponAdapter);
             return view;
         }

@@ -8,12 +8,12 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-
 import promoz.com.br.promoz.dao.CouponDAO;
 import promoz.com.br.promoz.model.Coupon;
+import promoz.com.br.promoz.util.DateUtil;
 import promoz.com.br.promoz.util.Message;
 
-public class CarteiraActivity extends AppCompatActivity {;
+public class CarteiraActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +55,14 @@ public class CarteiraActivity extends AppCompatActivity {;
         Coupon cpn = cpnDAO.couponById((Integer) view.getTag());
 
         if(cpn.getValid() == 1){
-            Message.msgInfo(this,"Usar Cupom","Rotina de utilização do cupom",android.R.drawable.ic_dialog_info);
+            Message.msgInfo(this,"Usar Cupom","Rotina de utilização do cupom",android.R.drawable.ic_dialog_info); // TODO: somente para protótipo
             cpn.setValid(0);
+            cpn.setDateUse(DateUtil.returnDate(DateUtil.day(),DateUtil.month(),DateUtil.year(),DateUtil.DDMMYYYY));
             cpnDAO.save(cpn);
+            Log.e("UPDATE", "UPDATE");
+            CarteiraPageFragment.updateDB();
         }
     }
-
 
     @Override
     public void onBackPressed() {

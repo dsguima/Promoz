@@ -15,7 +15,7 @@ public class Message {
         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         alert.setTitle(title);
         alert.setMessage(msg);
-        alert.setNeutralButton("OK", null);
+        alert.setPositiveButton("OK", null);
         alert.setIcon(iconId);
         alert.show();
     }

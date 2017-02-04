@@ -76,8 +76,8 @@ public class CouponDAO extends PromozContract.Coupon {
         return cpn;
     }
 
-    public List<Coupon> list(){
-        Cursor cursor = database.query(TABLE_NAME, allFields, null, null, null, null, null);
+    public List<Coupon> list(String order){
+        Cursor cursor = database.query(TABLE_NAME, allFields, null, null, null, null, order);
 
 //        cursor.moveToFirst();
         List<Coupon> lst = new ArrayList<Coupon>();
