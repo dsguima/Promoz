@@ -41,8 +41,10 @@ public class AppDatabase {
 
             Log.v("SQL", "\n\nCRIANDO DB\n\n");
 
-            for(int i = 0; i < PromozContract.tablesCreationList.length; i++)
+            for(int i = 0; i < PromozContract.tablesCreationList.length; i++) {
+                Log.e("CREATE", PromozContract.tablesCreationList[i]);
                 db.execSQL(PromozContract.tablesCreationList[i]);
+            }
 
             //Log.v("SQL", "\n\nPOPULANDO TABELAS\n\n");
 
@@ -50,6 +52,7 @@ public class AppDatabase {
               //  Log.e("INSERT", PromozContract.valuesToPopulate[i]);
                 db.execSQL(PromozContract.valuesToPopulate[i]);
             }
+            //Log.e("TRIGGER", PromozContract.triger.TRIGER_WALLET_BALANCE);
         }
 
         @Override

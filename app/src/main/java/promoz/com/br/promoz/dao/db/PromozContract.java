@@ -1,7 +1,6 @@
 package promoz.com.br.promoz.dao.db;
 
 import android.provider.BaseColumns;
-
 import promoz.com.br.promoz.R;
 
 /**
@@ -148,6 +147,7 @@ public final class PromozContract {
         public static final String COLUMN_FK_HST_TP_ID = "hst_tp_id)  REFERENCES " + HistoricTypeCoin.TABLE_NAME + "("+HistoricTypeCoin._ID+")";
         public static final String COLUMN_HST_DT_OPER = "hst_dt_oper";
         public static final String COLUMN_AMOUNT_COIN = "amount_coin";
+        public static final String COLUMN_DESC_OPER = "desc_oper";
 
         public static final String SQL_CREATE_HISTORIC_COIN = CREATE_STM + HistoricCoin.TABLE_NAME + " (" +
                 HistoricCoin._ID + PK_TYPE + COMMA_SEP +
@@ -155,6 +155,7 @@ public final class PromozContract {
                 HistoricCoin.COLUMN_AMOUNT_COIN + INTEGER_TYPE + COMMA_SEP +
                 HistoricCoin.COLUMN_WALLET_ID + INTEGER_TYPE + COMMA_SEP +
                 HistoricCoin.COLUMN_HST_TP_ID + INTEGER_TYPE + COMMA_SEP +
+                HistoricCoin.COLUMN_DESC_OPER + TEXT_TYPE + COMMA_SEP +
                 FK_TYPE + HistoricCoin.COLUMN_FK_WALLET_ID + COMMA_SEP +
                 FK_TYPE + HistoricCoin.COLUMN_FK_HST_TP_ID +
                 END_STM;
@@ -164,7 +165,8 @@ public final class PromozContract {
                 HistoricCoin.COLUMN_WALLET_ID,
                 HistoricCoin.COLUMN_HST_TP_ID,
                 HistoricCoin.COLUMN_HST_DT_OPER,
-                HistoricCoin.COLUMN_AMOUNT_COIN
+                HistoricCoin.COLUMN_AMOUNT_COIN,
+                HistoricCoin.COLUMN_DESC_OPER
         };
     }
 
@@ -195,27 +197,87 @@ public final class PromozContract {
                 COMMA_SEP + Coupon.COLUMN_CPN_PRICE + COMMA_SEP + Coupon.COLUMN_CPN_IND_VALID + COMMA_SEP + Coupon.COLUMN_CPN_STR_ID +
                 COMMA_SEP + Coupon.COLUMN_CPN_IMG + COMMA_SEP + Coupon.COLUMN_WALLET_ID +
                 ") VALUES('Mês do Fitness','R$50,00 de desconto em compras acima de R$200,00','Neste mês de Fevereiro, a " +
-                "Centauro traz para você promoções imperdíveis: Toda linha fitness com até 50% de desconto.','28/02/2017',10, 1, 1, "+R.drawable.centauro_logo + ", 1)";
+                "Centauro traz para você promoções imperdíveis: Toda linha fitness com até 50% de desconto.','28/02/2017',3, 1, 1, "+R.drawable.centauro_logo + ", 1)";
 
         private static final String VALUE_TABLE_COUPON_CIA = INSERT_STM + Coupon.TABLE_NAME + " (" + Coupon.COLUMN_CPN_TITLE +
                 COMMA_SEP + Coupon.COLUMN_CPN_SUBTITLE + COMMA_SEP + Coupon.COLUMN_CPN_INFO + COMMA_SEP + Coupon.COLUMN_CPN_DT_EXP +
                 COMMA_SEP + Coupon.COLUMN_CPN_PRICE + COMMA_SEP + Coupon.COLUMN_CPN_IND_VALID + COMMA_SEP + Coupon.COLUMN_CPN_STR_ID +
                 COMMA_SEP + Coupon.COLUMN_CPN_IMG + COMMA_SEP + Coupon.COLUMN_WALLET_ID +
                 ") VALUES('Abuse e use no mês do carnaval','R$60,00 de desconto em compras acima de R$300,00','Nos mêses de " +
-                "Fevereiro e Março, a C&A está abusando com preços imperdíveis: Toda a loja com até 50% de desconto.','31/03/2017',30, 1, 2, "+R.drawable.cia_logo + ", 1)";
+                "Fevereiro e Março, a C&A está abusando com preços imperdíveis: Toda a loja com até 50% de desconto.','31/03/2017',3, 1, 2, "+R.drawable.cia_logo + ", 1)";
 
+        private static final String VALUE_TABLE_HISTORIC_COIN_1 = INSERT_STM + HistoricCoin.TABLE_NAME + " (" + HistoricCoin.COLUMN_HST_DT_OPER +
+                COMMA_SEP + HistoricCoin.COLUMN_AMOUNT_COIN + COMMA_SEP + HistoricCoin.COLUMN_WALLET_ID +
+                COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_DESC_OPER +
+                ") VALUES('13/1/2017',1,1,1,'Ganhou Moeda')";
+
+        private static final String VALUE_TABLE_HISTORIC_COIN_2 = INSERT_STM + HistoricCoin.TABLE_NAME + " (" + HistoricCoin.COLUMN_HST_DT_OPER +
+                COMMA_SEP + HistoricCoin.COLUMN_AMOUNT_COIN + COMMA_SEP + HistoricCoin.COLUMN_WALLET_ID +
+                COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_DESC_OPER +
+                ") VALUES('20/1/2017',1,1,1,'Ganhou Moeda')";
+
+        private static final String VALUE_TABLE_HISTORIC_COIN_3 = INSERT_STM + HistoricCoin.TABLE_NAME + " (" + HistoricCoin.COLUMN_HST_DT_OPER +
+                COMMA_SEP + HistoricCoin.COLUMN_AMOUNT_COIN + COMMA_SEP + HistoricCoin.COLUMN_WALLET_ID +
+                COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_DESC_OPER +
+                ") VALUES('29/1/2017',3,1,1,'Ganhou Moeda')";
+
+        private static final String VALUE_TABLE_HISTORIC_BUY_COUPON_1 = INSERT_STM + HistoricCoin.TABLE_NAME + " (" + HistoricCoin.COLUMN_HST_DT_OPER +
+                COMMA_SEP + HistoricCoin.COLUMN_AMOUNT_COIN + COMMA_SEP + HistoricCoin.COLUMN_WALLET_ID +
+                COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_DESC_OPER +
+                ") VALUES('1/1/2017',-3,1,1,'Comprou Cupom')";
+
+        private static final String VALUE_TABLE_HISTORIC_COIN_4 = INSERT_STM + HistoricCoin.TABLE_NAME + " (" + HistoricCoin.COLUMN_HST_DT_OPER +
+                COMMA_SEP + HistoricCoin.COLUMN_AMOUNT_COIN + COMMA_SEP + HistoricCoin.COLUMN_WALLET_ID +
+                COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_DESC_OPER +
+                ") VALUES('1/1/2017',5,1,1,'Ganhou Moeda')";
+
+        private static final String VALUE_TABLE_HISTORIC_BUY_COUPON_2 = INSERT_STM + HistoricCoin.TABLE_NAME + " (" + HistoricCoin.COLUMN_HST_DT_OPER +
+                COMMA_SEP + HistoricCoin.COLUMN_AMOUNT_COIN + COMMA_SEP + HistoricCoin.COLUMN_WALLET_ID +
+                COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_DESC_OPER +
+                ") VALUES('1/1/2017',-3,1,1,'Comprou Cupom')";
+
+        private static final String VALUE_TABLE_HISTORIC_COIN_5 = INSERT_STM + HistoricCoin.TABLE_NAME + " (" + HistoricCoin.COLUMN_HST_DT_OPER +
+                COMMA_SEP + HistoricCoin.COLUMN_AMOUNT_COIN + COMMA_SEP + HistoricCoin.COLUMN_WALLET_ID +
+                COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_DESC_OPER +
+                ") VALUES('8/2/2017',5,1,1,'Ganhou Moeda')";
+
+        private static final String VALUE_TABLE_HISTORIC_BUY_COUPON_3 = INSERT_STM + HistoricCoin.TABLE_NAME + " (" + HistoricCoin.COLUMN_HST_DT_OPER +
+                COMMA_SEP + HistoricCoin.COLUMN_AMOUNT_COIN + COMMA_SEP + HistoricCoin.COLUMN_WALLET_ID +
+                COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_DESC_OPER +
+                ") VALUES('1/1/2017',-3,1,1,'Comprou Cupom')";
+    }
+
+    public static class triger {
         // TRIGER PARA CRIAR CARTEIRA PARA O USUÁRIO
         private static  final String TRIGER_USER_WALLET = "CREATE TRIGGER trigger_user_wallet " +
-                " AFTER INSERT" + " ON " + User.TABLE_NAME + " BEGIN " + INSERT_STM + Wallet.TABLE_NAME +
+                "AFTER INSERT" + " ON " + User.TABLE_NAME + " BEGIN " + populateBasicTables.INSERT_STM + Wallet.TABLE_NAME +
                 " (" + Wallet.COLUMN_USER_ID + ") VALUES (" + " last_insert_rowid() " + ");" + "END;";
-
 
         // TRIGER PARA ATUALIZAR DATA DE UTILIZAÇÃO DO CUPOM
         private static  final String TRIGER_UPDATE_COUPON = "CREATE TRIGGER trigger_update_coupon " +
-                " AFTER UPDATE" + " OF " + Coupon.COLUMN_CPN_IND_VALID + " ON " + Coupon.TABLE_NAME + " BEGIN UPDATE " + Coupon.TABLE_NAME +
+                "AFTER UPDATE" + " OF " + Coupon.COLUMN_CPN_IND_VALID + " ON " + Coupon.TABLE_NAME + " BEGIN UPDATE " + Coupon.TABLE_NAME +
                 " SET " + Coupon.COLUMN_CPN_DT_USE + " = " + " strftime('%d/%m/%Y')" + " WHERE " + Coupon._ID + " = old." + Coupon._ID +"; END;";
+
+        // TRIGER PARA ATUALIZAR SALDO DA CARTEIRA
+        private static  final String TRIGER_WALLET_BALANCE = "CREATE TRIGGER trigger_wallet_balance " +
+                "AFTER INSERT ON " + HistoricCoin.TABLE_NAME + " BEGIN UPDATE " + Wallet.TABLE_NAME +
+                " SET " + Wallet.COLUMN_AMOUNT_COIN + " = ( " + "new." + HistoricCoin.COLUMN_AMOUNT_COIN + " + " +
+                Wallet.COLUMN_AMOUNT_COIN + " ) WHERE " + "new." + HistoricCoin.COLUMN_WALLET_ID  + " = " + Wallet._ID +"; END;";
     }
 
-    public static final String valuesToPopulate[] = {populateBasicTables.VALUE_TABLE_HISTORIC_TYPE_COIN, populateBasicTables.VALUE_TABLE_USER, populateBasicTables.VALUE_TABLE_COUPON_CENTAURO, populateBasicTables.VALUE_TABLE_COUPON_CIA};
-    public static final String tablesCreationList[] = {User.SQL_CREATE_USER,Wallet.SQL_CREATE_WALLET,HistoricTypeCoin.SQL_CREATE_HISTORIC_TYPE_COIN, HistoricCoin.SQL_CREATE_HISTORIC_COIN,VirtualStore.SQL_CREATE_VIRTUAL_STORE, Coupon.SQL_CREATE_COUPON, populateBasicTables.TRIGER_USER_WALLET,populateBasicTables.TRIGER_UPDATE_COUPON};
+    public static final String valuesToPopulate[] = {
+        populateBasicTables.VALUE_TABLE_HISTORIC_TYPE_COIN,
+        populateBasicTables.VALUE_TABLE_USER, populateBasicTables.VALUE_TABLE_COUPON_CENTAURO,
+        populateBasicTables.VALUE_TABLE_COUPON_CIA, populateBasicTables.VALUE_TABLE_COUPON_CIA,
+        populateBasicTables.VALUE_TABLE_HISTORIC_COIN_1, populateBasicTables.VALUE_TABLE_HISTORIC_COIN_2,
+        populateBasicTables.VALUE_TABLE_HISTORIC_COIN_3, populateBasicTables.VALUE_TABLE_HISTORIC_BUY_COUPON_1,
+        populateBasicTables.VALUE_TABLE_HISTORIC_COIN_4, populateBasicTables.VALUE_TABLE_HISTORIC_BUY_COUPON_2,
+        populateBasicTables.VALUE_TABLE_HISTORIC_COIN_5, populateBasicTables.VALUE_TABLE_HISTORIC_BUY_COUPON_3
+    };
+
+
+    public static final String tablesCreationList[] = {User.SQL_CREATE_USER,Wallet.SQL_CREATE_WALLET,
+            HistoricTypeCoin.SQL_CREATE_HISTORIC_TYPE_COIN, HistoricCoin.SQL_CREATE_HISTORIC_COIN,
+            VirtualStore.SQL_CREATE_VIRTUAL_STORE, Coupon.SQL_CREATE_COUPON, triger.TRIGER_USER_WALLET,
+            triger.TRIGER_UPDATE_COUPON, triger.TRIGER_WALLET_BALANCE};
 }

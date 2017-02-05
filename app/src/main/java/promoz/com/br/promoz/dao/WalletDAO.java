@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 import promoz.com.br.promoz.dao.db.AppDatabase;
@@ -52,6 +54,8 @@ public class WalletDAO extends PromozContract.Wallet {
         if(cursor.moveToFirst())
             wlt = populate(cursor);
         cursor.close();
+
+       // Log.e("WallwtDAO","===============" + wlt.getAmountCoin());
 
         return wlt;
     }

@@ -12,15 +12,23 @@ public class HistoricCoin implements Serializable {
     private Integer walletId;
     private Integer historicTypeId;
     private String historicDateOperation;
+    private String OperationDescription;
     private Integer amountCoin;
 
+    public HistoricCoin(Integer walletId, Integer historicTypeId, String historicDateOperation, Integer amountCoin, String opDesc) {
+        this.walletId = walletId;
+        this.historicTypeId = historicTypeId;
+        this.historicDateOperation = historicDateOperation;
+        this.amountCoin = amountCoin;
+    }
 
-    public HistoricCoin(Integer _id, Integer walletId, Integer historicTypeId, String historicDateOperation, Integer amountCoin) {
+    public HistoricCoin(Integer _id, Integer walletId, Integer historicTypeId, String historicDateOperation, Integer amountCoin, String opDesc) {
         this._id = _id;
         this.walletId = walletId;
         this.historicTypeId = historicTypeId;
         this.historicDateOperation = historicDateOperation;
         this.amountCoin = amountCoin;
+        this.OperationDescription = opDesc;
     }
 
     public Integer get_id() {

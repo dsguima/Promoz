@@ -80,7 +80,7 @@ public class CouponDAO extends PromozContract.Coupon {
     }
 
     public List<Coupon> list(Integer walletId, String order){
-        Cursor cursor = database.query(TABLE_NAME, allFields, null, null, null, null, order);
+        Cursor cursor = database.query(TABLE_NAME, allFields, _ID + " = ?", new String[]{walletId.toString()}, null, null, order);
 
 //        cursor.moveToFirst();
         List<Coupon> lst = new ArrayList<Coupon>();

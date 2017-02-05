@@ -4,11 +4,6 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
-import android.view.View;
-
-import promoz.com.br.promoz.model.Coupon;
-import promoz.com.br.promoz.util.Message;
 
 /**
  * Created by rafae on 30/01/2017.
