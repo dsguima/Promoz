@@ -73,15 +73,16 @@
                 android:textStyle="bold" />
 
             <!--Lembrar senha-->
-            <!--<TextView
+
+            <TextView
+                android:id="@+id/lembrar_senha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/lembrar_senha"
-                android:textColor="@color/colorSecondary"
-                android:gravity="right"
-                android:layout_marginTop="5dp"/>-->
-
-
+                android:gravity="center"
+                android:text="@string/defaultpassword"
+                android:layout_marginTop="5dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                />
 
         </LinearLayout>
     </ScrollView>

@@ -1,19 +1,12 @@
 package promoz.com.br.promoz;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -49,7 +42,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         //TODO lembrar senha
-        //setSpannableString(getString(txt_lembrar_senha), Util.Constants.URI_LEMBRAR_SENHA, (TextView) findViewById(R.id.lembrar_senha));
+        TextView mLembrarSenhaLink = (TextView) findViewById(R.id.lembrar_senha);
+        mLembrarSenhaLink.setMovementMethod(LinkMovementMethod.getInstance());
 
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
 
@@ -139,31 +133,6 @@ public class LoginActivity extends AppCompatActivity {
         //TODO: isPasswordValid
         //return password.length() > 2;
         return true;
-    }
-
-    public void setSpannableString(String span, final String link, TextView txtView){
-
-        SpannableString ss = new SpannableString(span);
-
-        ClickableSpan clickableSpan = new ClickableSpan() {
-            @Override
-            public void onClick(View textView) {
-                Uri uri = Uri.parse(link);
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
-            }
-            @Override
-            public void updateDrawState(TextPaint ds) {
-                super.updateDrawState(ds);
-                ds.setUnderlineText(true);
-            }
-        };
-
-        ss.setSpan(clickableSpan, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        txtView.setText(ss);
-        txtView.setMovementMethod(LinkMovementMethod.getInstance());
-        txtView.setHighlightColor(Color.TRANSPARENT);
     }
 
     /**
