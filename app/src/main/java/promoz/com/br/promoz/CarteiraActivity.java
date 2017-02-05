@@ -63,7 +63,7 @@ public class CarteiraActivity extends AppCompatActivity implements CarteiraPageF
         Coupon cpn = cpnDAO.couponById((Integer) view.getTag());
 
         if(cpn.getValid() == 1){
-            Message.msgInfo(this,"Usar Cupom","Rotina de utilização do cupom da loja com ID = " + view.getTag(),android.R.drawable.ic_dialog_info); // TODO: somente para protótipo
+            Message.msgInfo(this,"Usar Cupom","Rotina de utilização do cupom da loja com ID = " + cpn.getStoreId(),android.R.drawable.ic_dialog_info); // TODO: somente para protótipo
             cpn.setValid(0);
             cpnDAO.save(cpn);
             CarteiraPageFragment.handler.sendEmptyMessage(100);

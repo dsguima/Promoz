@@ -17,6 +17,7 @@ import java.util.List;
 
 import promoz.com.br.promoz.R;
 import promoz.com.br.promoz.model.Coupon;
+import promoz.com.br.promoz.util.DateUtil;
 
 /**
  * Created by vallux on 03/02/17.
@@ -73,9 +74,9 @@ public class CouponAdapter extends BaseAdapter {
         TextView date = (TextView) view.findViewById(R.id.cupom_date);
 
         if(object.getValid() == 1)
-            date.setText("Expira em: " + object.getDateExp());
+            date.setText("Expira em: " + DateUtil.SQLiteDateFormatToBrazilFormat(object.getDateExp()));
         else
-            date.setText("Usado em: " + object.getDateUse());
+            date.setText("Usado em: " + DateUtil.SQLiteDateFormatToBrazilFormat(object.getDateUse()));
 
         TextView gostore = (TextView) view.findViewById(R.id.goto_loja);
         gostore.setTag(object.getStoreId());

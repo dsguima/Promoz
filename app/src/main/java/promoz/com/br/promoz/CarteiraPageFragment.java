@@ -20,6 +20,7 @@ import promoz.com.br.promoz.dao.WalletDAO;
 import promoz.com.br.promoz.dao.db.PromozContract;
 import promoz.com.br.promoz.model.Coupon;
 import promoz.com.br.promoz.model.HistoricCoin;
+import promoz.com.br.promoz.util.DateUtil;
 
 public class CarteiraPageFragment extends Fragment{
     public static final String ARG_PAGE = "ARG_PAGE";
@@ -137,4 +138,3 @@ public class CarteiraPageFragment extends Fragment{
         }
     }
 }
-

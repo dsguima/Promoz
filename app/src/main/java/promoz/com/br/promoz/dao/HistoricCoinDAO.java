@@ -36,6 +36,7 @@ public class HistoricCoinDAO extends PromozContract.HistoricCoin {
                 cursor.getInt(cursor.getColumnIndex(COLUMN_AMOUNT_COIN)),
                 cursor.getString(cursor.getColumnIndex(COLUMN_DESC_OPER))
         );
+
         return model;
     }
 

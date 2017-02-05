@@ -39,10 +39,10 @@ public class AppDatabase {
         @Override
         public void onCreate(SQLiteDatabase db) {
 
-            Log.v("SQL", "\n\nCRIANDO DB\n\n");
+       //     Log.v("SQL", "\n\nCRIANDO DB\n\n");
 
             for(int i = 0; i < PromozContract.tablesCreationList.length; i++) {
-                Log.e("CREATE", PromozContract.tablesCreationList[i]);
+           //     Log.e("CREATE", PromozContract.tablesCreationList[i]);
                 db.execSQL(PromozContract.tablesCreationList[i]);
             }
 

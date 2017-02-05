@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 import promoz.com.br.promoz.R;
 import promoz.com.br.promoz.model.Coupon;
 import promoz.com.br.promoz.model.HistoricCoin;
+import promoz.com.br.promoz.util.DateUtil;
 
 /**
  * Created by vallux on 29/01/17.
@@ -55,15 +57,23 @@ public class HistoricAdapter extends BaseAdapter {
         }
 
         TextView date = (TextView) view.findViewById(R.id.historic_date);
-        date.setText(object.getHistoricDateOperation());
+        date.setText(DateUtil.SQLiteDateFormatToBrazilFormat(object.getHistoricDateOperation()));
 
         TextView desc = (TextView) view.findViewById(R.id.historic_description);
         desc.setText(object.getOperationDescription());
 
         TextView amount = (TextView) view.findViewById(R.id.historic_value);
         Integer value = object.getAmountCoin();
-        Log.e("VALOR", "VALOR = " + value);
-        if(value < 0) amount.setTextColor(view.getResources().getColor(R.color.colorPrimaryDark));
+
+        if(value < 0){
+            amount.setTextColor(view.getResources().getColor(R.color.colorPrimaryDark));
+            ImageView coin = (ImageView) view.findViewById(R.id.historic_coin);
+            coin.setImageDrawable(view.getResources().getDrawable(R.drawable.moeda_gasto));
+        }else{
+            amount.setTextColor(view.getResources().getColor(R.color.colorVerdeMoeda));
+            ImageView coin = (ImageView) view.findViewById(R.id.historic_coin);
+            coin.setImageDrawable(view.getResources().getDrawable(R.drawable.moeda));
+        }
         amount.setText(value.toString());
 
         return view;

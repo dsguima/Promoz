@@ -3,6 +3,8 @@ package promoz.com.br.promoz.util;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by vallux on 04/02/17.
@@ -11,10 +13,23 @@ import java.util.Date;
 public class DateUtil {
 
     public static String DDMMYYYY = "dd/MM/yyyy";
+    private static String SQLiteDateFormat = "([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})";
 
     private static Calendar calendar;
 
     public DateUtil() {
+    }
+
+    public static String SQLiteDateFormatToBrazilFormat(String date){
+
+        Pattern padrao = Pattern.compile(SQLiteDateFormat);
+        Matcher matcher = padrao.matcher(date);
+        if(matcher.matches()){
+            String BrazilFormatDate = matcher.group(3) + "/" + matcher.group(2) + "/" + matcher.group(1);
+            return BrazilFormatDate;
+        }
+
+        return date;
     }
 
     /**

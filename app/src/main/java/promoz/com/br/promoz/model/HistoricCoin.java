@@ -74,7 +74,7 @@ public class HistoricCoin implements Serializable {
     }
 
     public Integer getAmountCoin() {
-        return amountCoin;
+        return this.amountCoin;
     }
 
     public void setAmountCoin(Integer amountCoin) {
