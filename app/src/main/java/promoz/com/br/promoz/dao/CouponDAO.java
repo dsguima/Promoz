@@ -4,16 +4,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import promoz.com.br.promoz.dao.db.AppDatabase;
-import promoz.com.br.promoz.dao.db.DatabaseHelper;
 import promoz.com.br.promoz.dao.db.PromozContract;
 import promoz.com.br.promoz.model.Coupon;
-import promoz.com.br.promoz.model.Wallet;
 
 /**
  * Created by vallux on 27/01/17.
@@ -36,7 +33,7 @@ public class CouponDAO extends PromozContract.Coupon {
                 cursor.getString(cursor.getColumnIndex(COLUMN_CPN_TITLE)),
                 cursor.getString(cursor.getColumnIndex(COLUMN_CPN_SUBTITLE)),
                 //cursor.getBlob(cursor.getColumnIndex(COLUMN_CPN_IMG)),
-                cursor.getInt(cursor.getColumnIndex(COLUMN_CPN_IMG)), // modificado apenas para protótipo
+                cursor.getInt(cursor.getColumnIndex(COLUMN_CPN_IMG)), // TODO modificado apenas para protótipo
                 cursor.getString(cursor.getColumnIndex(COLUMN_CPN_INFO)),
                 cursor.getString(cursor.getColumnIndex(COLUMN_CPN_DT_USE)),
                 cursor.getString(cursor.getColumnIndex(COLUMN_CPN_DT_EXP)),

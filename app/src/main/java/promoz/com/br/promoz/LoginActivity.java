@@ -3,22 +3,29 @@ package promoz.com.br.promoz;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
+import android.content.CursorLoader;
+import android.content.Intent;
+import android.content.Loader;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
-import android.content.CursorLoader;
-import android.content.Loader;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,8 +35,10 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import promoz.com.br.promoz.dao.UserDAO;
 import promoz.com.br.promoz.model.User;
 
@@ -60,8 +69,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        // Set up the login form.
 
+        //TODO lembrar senha
+        //setSpannableString(getString(txt_lembrar_senha), Util.Constants.URI_LEMBRAR_SENHA, (TextView) findViewById(R.id.lembrar_senha));
 
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -187,13 +197,40 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
+        //TODO: isEmailValid
+        return true;
+        //return email.contains("@");
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
+        //TODO: isPasswordValid
+        //return password.length() > 2;
+        return true;
+    }
+
+    public void setSpannableString(String span, final String link, TextView txtView){
+
+        SpannableString ss = new SpannableString(span);
+
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                Uri uri = Uri.parse(link);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(true);
+            }
+        };
+
+        ss.setSpan(clickableSpan, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        txtView.setText(ss);
+        txtView.setMovementMethod(LinkMovementMethod.getInstance());
+        txtView.setHighlightColor(Color.TRANSPARENT);
     }
 
     /**
@@ -294,11 +331,59 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mEmail;
         private final String mPassword;
-        private User user = new User();
+        private User authUser;
 
         UserLoginTask(String email, String password) {
             mEmail = email;
             mPassword = password;
+        }
+
+        /**
+         * Autenticar usuário pelo login e senha
+         * @return true or false
+         */
+        private Boolean authUser(){
+
+            UserDAO userDAO = new UserDAO(getApplicationContext());
+            User result = userDAO.findUserByLogin(mEmail);
+            Boolean sucess;
+
+            if (result != null) {
+                if(result.getPassword() != null && result.getPassword().equals(mPassword)){
+                    authUser = result;
+                    sucess = true;
+                }else{
+                    sucess = false;
+                }
+            } else {
+                createUser(userDAO);
+                sucess = true;
+            }
+
+            userDAO.closeDatabase();
+            return sucess;
+
+        }
+
+        /**
+         * Método para criar um novo usuário
+         * @param userDAO
+         */
+        private void createUser(UserDAO userDAO){
+            authUser = new User();
+            authUser.setEmail(mEmail);
+            authUser.setPassword(mPassword);
+            Long id = userDAO.save(authUser);
+            authUser.set_id(id.intValue());
+        }
+
+        /**
+         * Login automático
+         */
+        private void setSharedPreferences(){
+            SharedPreferences.Editor editor = getSharedPreferences(getResources().getString(R.string.app_name), Context.MODE_PRIVATE).edit();
+            editor.putInt(User.getChave_ID(), authUser.get_id());
+            editor.commit();
         }
 
         @Override
@@ -307,46 +392,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             try {
                 // Simulate network access.
-                Thread.sleep(000);
+                Thread.sleep(1500);
             } catch (InterruptedException e) {
                 return false;
             }
 
-            UserDAO users = new UserDAO(getApplicationContext());
-            List<User> userList = users.list();
-
-            for (User u : userList){
-                if (u.getEmail().equals(mEmail)) {
-
-                    if(u.getPassword().equals(mPassword)){
-                        user = u;
-                        users.closeDatabase();
-                        return true;
-                    }else{
-                        return false;
-                    }
-                }
-            }
-
-            // registrar novo usuário
-            user.setEmail(mEmail);
-            user.setPassword(mPassword);
-            Long id = users.save(user);
-            user.set_id(id.intValue());
-            users.closeDatabase();
-
-            return true;
+            return authUser();
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
-            showProgress(false);
+            showProgress(true);
 
             if (success) {
-                SharedPreferences.Editor editor = getSharedPreferences(getResources().getString(R.string.app_name), Context.MODE_PRIVATE).edit();
-                editor.putInt(User.getChave_ID(), user.get_id());
-                editor.commit();
+                setSharedPreferences();
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

@@ -1,3 +1,4 @@
+/*
 package promoz.com.br.promoz.dao.db;
 
 import android.content.Context;
@@ -8,9 +9,11 @@ import android.util.Log;
 import promoz.com.br.promoz.dao.HistoricTypeCoinDAO;
 import promoz.com.br.promoz.model.HistoricTypeCoin;
 
+*/
 /**
  * Created by vallux on 23/01/17.
- */
+ *//*
+
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -40,3 +43,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 }
+*/
