@@ -3,7 +3,6 @@ package promoz.com.br.promoz;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.View;
@@ -16,12 +15,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import promoz.com.br.promoz.model.User;
 
 public class ActMain extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private Integer userID=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +73,8 @@ public class ActMain extends AppCompatActivity
     }
 
     private void checkLogged(){
-        if(getSharedPreferences(getResources().getString(R.string.app_name), Context.MODE_PRIVATE).getInt(User.getChave_ID(),0) == 0)
+        userID = getSharedPreferences(getResources().getString(R.string.app_name), Context.MODE_PRIVATE).getInt(User.getChave_ID(),0);
+        if(userID == 0)
             finish();
     }
 
@@ -86,7 +87,6 @@ public class ActMain extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_perfil) {
@@ -95,8 +95,9 @@ public class ActMain extends AppCompatActivity
 
         } else if (id == R.id.nav_wallet) {
             Log.v("MENU","chama tela");
-            Intent i = new Intent(this,CarteiraActivity.class);
-            this.startActivity(i);
+            Intent intent = new Intent(this,CarteiraActivity.class);
+            intent.putExtra(User.getChave_ID(),userID);
+            this.startActivity(intent);
 
         } else if (id == R.id.nav_missions) {
             Context contexto = getApplicationContext();

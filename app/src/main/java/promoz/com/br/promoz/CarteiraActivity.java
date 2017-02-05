@@ -1,23 +1,32 @@
 package promoz.com.br.promoz;
 
+import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import promoz.com.br.promoz.dao.CouponDAO;
 import promoz.com.br.promoz.model.Coupon;
-import promoz.com.br.promoz.util.DateUtil;
+import promoz.com.br.promoz.model.User;
 import promoz.com.br.promoz.util.Message;
 
-public class CarteiraActivity extends AppCompatActivity {
+public class CarteiraActivity extends AppCompatActivity implements CarteiraPageFragment.OnHeadlineGetUserID {
+    private Integer userId;
+
+    @Override
+    public Integer getUserId() {
+        return userId;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        userId = getSharedPreferences(getResources().getString(R.string.app_name), Context.MODE_PRIVATE).getInt(User.getChave_ID(),1);
+
         setContentView(R.layout.activity_carteira);
 
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -30,7 +39,6 @@ public class CarteiraActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);

@@ -195,16 +195,16 @@ public final class PromozContract {
         private static final String VALUE_TABLE_COUPON_CENTAURO = INSERT_STM + Coupon.TABLE_NAME + " (" + Coupon.COLUMN_CPN_TITLE +
                 COMMA_SEP + Coupon.COLUMN_CPN_SUBTITLE + COMMA_SEP + Coupon.COLUMN_CPN_INFO + COMMA_SEP + Coupon.COLUMN_CPN_DT_EXP +
                 COMMA_SEP + Coupon.COLUMN_CPN_PRICE + COMMA_SEP + Coupon.COLUMN_CPN_IND_VALID + COMMA_SEP + Coupon.COLUMN_CPN_STR_ID +
-                COMMA_SEP + Coupon.COLUMN_CPN_IMG +
+                COMMA_SEP + Coupon.COLUMN_CPN_IMG + COMMA_SEP + Coupon.COLUMN_WALLET_ID +
                 ") VALUES('Mês do Fitness','R$50,00 de desconto em compras acima de R$200,00','Neste mês de Fevereiro, a " +
-                "Centauro traz para você promoções imperdíveis: Toda linha fitness com até 50% de desconto.','28/02/2017',10, 1, 1, "+R.drawable.centauro_logo+")";
+                "Centauro traz para você promoções imperdíveis: Toda linha fitness com até 50% de desconto.','28/02/2017',10, 1, 1, "+R.drawable.centauro_logo + ", 1)";
 
         private static final String VALUE_TABLE_COUPON_CIA = INSERT_STM + Coupon.TABLE_NAME + " (" + Coupon.COLUMN_CPN_TITLE +
                 COMMA_SEP + Coupon.COLUMN_CPN_SUBTITLE + COMMA_SEP + Coupon.COLUMN_CPN_INFO + COMMA_SEP + Coupon.COLUMN_CPN_DT_EXP +
                 COMMA_SEP + Coupon.COLUMN_CPN_PRICE + COMMA_SEP + Coupon.COLUMN_CPN_IND_VALID + COMMA_SEP + Coupon.COLUMN_CPN_STR_ID +
-                COMMA_SEP + Coupon.COLUMN_CPN_IMG +
+                COMMA_SEP + Coupon.COLUMN_CPN_IMG + COMMA_SEP + Coupon.COLUMN_WALLET_ID +
                 ") VALUES('Abuse e use no mês do carnaval','R$60,00 de desconto em compras acima de R$300,00','Nos mêses de " +
-                "Fevereiro e Março, a C&A está abusando com preços imperdíveis: Toda a loja com até 50% de desconto.','31/03/2017',30, 1, 2, "+R.drawable.cia_logo+")";
+                "Fevereiro e Março, a C&A está abusando com preços imperdíveis: Toda a loja com até 50% de desconto.','31/03/2017',30, 1, 2, "+R.drawable.cia_logo + ", 1)";
 
         // TRIGER PARA CRIAR CARTEIRA PARA O USUÁRIO
         private static  final String TRIGER_USER_WALLET = "CREATE TRIGGER trigger_user_wallet " +

@@ -4,16 +4,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import promoz.com.br.promoz.dao.db.AppDatabase;
-import promoz.com.br.promoz.dao.db.DatabaseHelper;
 import promoz.com.br.promoz.dao.db.PromozContract;
 import promoz.com.br.promoz.model.Coupon;
-import promoz.com.br.promoz.model.Wallet;
 
 /**
  * Created by vallux on 27/01/17.
@@ -78,9 +73,12 @@ public class CouponDAO extends PromozContract.Coupon {
         return cpn;
     }
 
-    public List<Coupon> list(String order){
-        Cursor cursor = database.query(TABLE_NAME, allFields, null, null, null, null, order);
+    public List<Coupon> list(Integer walletId){
+        return list(walletId,"");
+    }
 
+    public List<Coupon> list(Integer walletId, String order){
+        Cursor cursor = database.query(TABLE_NAME, allFields, COLUMN_WALLET_ID + " = ?", new String[]{walletId.toString()}, null, null, order);
 //        cursor.moveToFirst();
         List<Coupon> lst = new ArrayList<Coupon>();
         while (cursor.moveToNext())

@@ -4,13 +4,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import promoz.com.br.promoz.dao.db.AppDatabase;
-import promoz.com.br.promoz.dao.db.DatabaseHelper;
 import promoz.com.br.promoz.dao.db.PromozContract;
 import promoz.com.br.promoz.model.HistoricTypeCoin;
 
