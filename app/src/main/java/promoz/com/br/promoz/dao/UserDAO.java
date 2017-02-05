@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,6 +80,27 @@ public class UserDAO extends PromozContract.User {
 
         cursor.close();
         return lst;
+    }
+
+    /**
+     * Método para buscar usuário pelo login
+     * @param user login do usuário
+     * @return User
+     */
+    public User findUserByLogin(String user){
+        User result = null;
+
+        String selection = COLUMN_USER_EMAIL + " = ?";
+        String[] selectionArgs = { String.valueOf(user.trim())};
+
+        Cursor cursor = database.query(TABLE_NAME, allFields, selection, selectionArgs, null, null, null);
+
+        if(cursor.getCount() == 1) {
+            cursor.moveToFirst();
+            result = populate(cursor);
+        }
+
+        return result;
     }
 
 

@@ -11,7 +11,7 @@ public class Message {
 
 
     public static void msgInfo(Activity activity, String title, String msg, int iconId){
-    //public static void msgInfo(Activity activity, String title, String msg){
+        //public static void msgInfo(Activity activity, String title, String msg){
         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         alert.setTitle(title);
         alert.setMessage(msg);

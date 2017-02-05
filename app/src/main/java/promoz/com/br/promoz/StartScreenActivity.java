@@ -3,10 +3,9 @@ package promoz.com.br.promoz;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -16,7 +15,11 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import promoz.com.br.promoz.model.User;
+import promoz.com.br.promoz.util.Util;
+
+import static promoz.com.br.promoz.R.string.terms;
 
 
 public class StartScreenActivity extends AppCompatActivity {
@@ -31,38 +34,10 @@ public class StartScreenActivity extends AppCompatActivity {
 
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
-        SpannableString ss = new SpannableString("Ao me cadastrar, eu concordo com os Termos de Serviço e Termos de Política de Privacidade do PromoZ.");
-        ClickableSpan clickableSpan = new ClickableSpan() {
-            @Override
-            public void onClick(View textView) {
-                Uri uri = Uri.parse("https://www.google.com/intl/pt-BR/policies/terms/");
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
-            }
-            @Override
-            public void updateDrawState(TextPaint ds) {
-                super.updateDrawState(ds);
-                ds.setUnderlineText(true);
-            }
-        };
+        setSpannableString(getString(terms), Util.Constants.URI_GOOGLE, (TextView) findViewById(R.id.text_bellow));
 
-     //   Log.d("oi","ONCLICK");
-        ss.setSpan(clickableSpan, 36, 89, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-     //   Log.d("oi","serSPAN");
-        TextView trms = (TextView) findViewById(R.id.text_bellow);
-     //   Log.d("oi","TV");
-        trms.setText(ss);
-     //   Log.d("oi","setText");
-        trms.setMovementMethod(LinkMovementMethod.getInstance());
-     //   Log.d("oi","set LINK");
-        trms.setHighlightColor(Color.TRANSPARENT);
+        Util.setFont(getAssets(), (TextView) findViewById(R.id.promoztv), Util.Constants.FONT_ITCKRIST);
 
-        TextView promoz = (TextView) findViewById(R.id.promoztv);
-        Typeface customFont = Typeface.createFromAsset(getAssets(),"fonts/ITCKRIST.TTF");
-     //   Log.d("oi","custom font ok");
-        promoz.setTypeface(customFont);
-     //   Log.d("oi","set face ok");
-     //   Log.d("oi","layout");
     }
 
     @Override
@@ -102,5 +77,30 @@ public class StartScreenActivity extends AppCompatActivity {
     public void logar(View v) {
         Intent intent = new Intent(this,LoginActivity.class);
         this.startActivity(intent);
+    }
+
+    public void setSpannableString(String span, final String link, TextView txtView){
+
+        SpannableString ss = new SpannableString(span);
+
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                Uri uri = Uri.parse(link);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(true);
+            }
+        };
+
+        ss.setSpan(clickableSpan, 36, 89, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        txtView.setText(ss);
+        txtView.setMovementMethod(LinkMovementMethod.getInstance());
+        txtView.setHighlightColor(Color.TRANSPARENT);
     }
 }
