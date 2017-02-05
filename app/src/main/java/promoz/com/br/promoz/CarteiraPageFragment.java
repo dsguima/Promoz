@@ -13,11 +13,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import java.util.List;
 import promoz.com.br.promoz.adapter.CouponAdapter;
+import promoz.com.br.promoz.adapter.HistoricAdapter;
 import promoz.com.br.promoz.dao.CouponDAO;
 import promoz.com.br.promoz.dao.HistoricCoinDAO;
 import promoz.com.br.promoz.dao.WalletDAO;
 import promoz.com.br.promoz.dao.db.PromozContract;
 import promoz.com.br.promoz.model.Coupon;
+import promoz.com.br.promoz.model.HistoricCoin;
 
 public class CarteiraPageFragment extends Fragment{
     public static final String ARG_PAGE = "ARG_PAGE";
@@ -26,9 +28,13 @@ public class CarteiraPageFragment extends Fragment{
     private int walletID=0;
     private WalletDAO walletDAO;
     private CouponDAO couponDAO;
+    private HistoricCoinDAO historicCoinDAO;
     private List<Coupon> couponList;
+    private List<HistoricCoin> historicCoinList;
     private CouponAdapter couponAdapter;
+    private HistoricAdapter historicAdapter;
     private ListView listcoupon;
+    private ListView listhistoric;
     public static Handler handler;
 
 
@@ -62,13 +68,15 @@ public class CarteiraPageFragment extends Fragment{
     }
 
     private void updateCouponList(){
-        couponList = couponDAO.list(walletID, PromozContract.Coupon.COLUMN_CPN_IND_VALID + " DESC, " + PromozContract.Coupon.COLUMN_CPN_DT_EXP + " ASC, " + PromozContract.Coupon.COLUMN_CPN_DT_USE + " DESC");
+        couponList = couponDAO.listById(walletID, PromozContract.Coupon.COLUMN_CPN_IND_VALID + " DESC, " + PromozContract.Coupon.COLUMN_CPN_DT_EXP + " ASC, " + PromozContract.Coupon.COLUMN_CPN_DT_USE + " DESC");
         couponAdapter = new CouponAdapter(getContext(),couponList);
         listcoupon.setAdapter(couponAdapter);
     }
 
-    private void upsateHistoricList(){
-
+    private void updateHistoricList(){
+        historicCoinList = historicCoinDAO.listById(walletID);
+        historicAdapter = new HistoricAdapter(getContext(),historicCoinList);
+        listhistoric.setAdapter(historicAdapter);
     }
 
     @Override
@@ -76,6 +84,9 @@ public class CarteiraPageFragment extends Fragment{
         super.onCreate(savedInstanceState);
 
         mPage = getArguments().getInt(ARG_PAGE);
+
+        if(historicCoinDAO == null)
+            historicCoinDAO = new HistoricCoinDAO(getContext());
 
         if(couponDAO == null)
             couponDAO = new CouponDAO(getContext());
@@ -110,23 +121,14 @@ public class CarteiraPageFragment extends Fragment{
         //Caso Tab SALDO
         if (mPage == 1) {
             View view = inflater.inflate(R.layout.saldo_layout, container, false);
-
-            //HistoricCoinDAO hstDAO = new HistoricCoinDAO(getContext());
-            //HistoricCoin hc = new HistoricCoin(walletID,1,"1/2/2017",2,"Ganhou Moeda");
-            //hstDAO.save(hc);
-
             TextView textoSaldo = (TextView) view.findViewById(R.id.saldoCarteira);
             textoSaldo.setText(walletDAO.walletById(walletID).getAmountCoin().toString());
-           // Log.e("HISTORICO","REGISTROS = " + hstDAO.list().size());
-
-            //Log.e("walletID=" + walletID,"SALDO = " + walletDAO.walletById(walletID).getAmountCoin().toString());
-
+            listhistoric = (ListView) view.findViewById(R.id.historic_list);
+            listhistoric.setDividerHeight(0);
+            updateHistoricList();
             return view;
         } else {
             //Caso Tab CUPOM
-            //CouponDAO cupomDAO = new CouponDAO(getContext());
-            //List<Coupon> lst = cupomDAO.list(walletID);
-           // cupomDAO.closeDatabase();
             View view = inflater.inflate(R.layout.cupom_layout, container, false);
             listcoupon = (ListView) view.findViewById(R.id.lstCoupon);
             listcoupon.setDividerHeight(5);

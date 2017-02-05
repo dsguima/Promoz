@@ -75,18 +75,39 @@ public class CouponDAO extends PromozContract.Coupon {
         return cpn;
     }
 
-    public List<Coupon> list(Integer walletId){
-        return list(walletId, "");
+    public List<Coupon> listById(Integer walletID){
+        return listById(walletID, "");
     }
 
-    public List<Coupon> list(Integer walletId, String order){
-        Cursor cursor = database.query(TABLE_NAME, allFields, _ID + " = ?", new String[]{walletId.toString()}, null, null, order);
+    public List<Coupon> list(){
+        return list("");
+    }
 
-//        cursor.moveToFirst();
+    public List<Coupon> listById(Integer walletID, String order){
+        Cursor cursor = database.query(TABLE_NAME, allFields, COLUMN_WALLET_ID + "=?", new String[]{walletID.toString()}, null, null, order);
+
         List<Coupon> lst = new ArrayList<Coupon>();
-        while (cursor.moveToNext())
-            lst.add(populate(cursor));
+        if (cursor.moveToFirst())
+            do {
+                lst.add(populate(cursor));
+            }while (cursor.moveToNext());
+
         cursor.close();
+
+        return lst;
+    }
+
+    public List<Coupon> list(String order){
+        Cursor cursor = database.query(TABLE_NAME, allFields, null, null, null, null, order);
+
+        List<Coupon> lst = new ArrayList<Coupon>();
+        if (cursor.moveToFirst())
+            do {
+                lst.add(populate(cursor));
+            }while (cursor.moveToNext());
+
+        cursor.close();
+
         return lst;
     }
 

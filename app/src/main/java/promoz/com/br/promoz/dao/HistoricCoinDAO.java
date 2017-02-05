@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +46,7 @@ public class HistoricCoinDAO extends PromozContract.HistoricCoin {
         values.put(COLUMN_HST_TP_ID, historic.getHistoricTypeId());
         values.put(COLUMN_HST_DT_OPER, historic.getHistoricDateOperation());
         values.put(COLUMN_AMOUNT_COIN, historic.getAmountCoin());
+        values.put(COLUMN_DESC_OPER, historic.getOperationDescription());
 
         if(historic.get_id() != null){
             return database.update(TABLE_NAME, values, "_id = ?", new String[]{ historic.get_id().toString() });
@@ -51,13 +54,31 @@ public class HistoricCoinDAO extends PromozContract.HistoricCoin {
         return database.insert(TABLE_NAME, null, values);
     }
 
+
+
+    public List<HistoricCoin> listById(Integer walletId){
+        Cursor cursor = database.query(TABLE_NAME, allFields, COLUMN_WALLET_ID + "=?", new String[]{walletId.toString()}, null, null, null);
+
+        List<HistoricCoin> lst = new ArrayList<HistoricCoin>();
+
+        if(cursor.moveToFirst())
+            do {
+                lst.add(populate(cursor));
+            }while (cursor.moveToNext());
+
+        cursor.close();
+        return lst;
+    }
+
     public List<HistoricCoin> list(){
         Cursor cursor = database.query(TABLE_NAME, allFields, null, null, null, null, null);
 
-//        cursor.moveToFirst();
         List<HistoricCoin> lst = new ArrayList<HistoricCoin>();
-        while (cursor.moveToNext())
-            lst.add(populate(cursor));
+        if(cursor.moveToFirst())
+            do {
+                lst.add(populate(cursor));
+            }while (cursor.moveToNext());
+
         cursor.close();
         return lst;
     }

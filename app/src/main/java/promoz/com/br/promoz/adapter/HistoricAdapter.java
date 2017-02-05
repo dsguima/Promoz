@@ -1,10 +1,18 @@
 package promoz.com.br.promoz.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
+
 import java.util.List;
+
+import promoz.com.br.promoz.R;
+import promoz.com.br.promoz.model.Coupon;
 import promoz.com.br.promoz.model.HistoricCoin;
 
 /**
@@ -16,30 +24,47 @@ public class HistoricAdapter extends BaseAdapter {
     private Context context;
     private List<HistoricCoin> list;
 
-    public HistoricAdapter(Context context, List<HistoricCoin> list) {
+    public HistoricAdapter(Context context, List<HistoricCoin> lst) {
         this.context = context;
-        this.list = list;
+        this.list = lst;
     }
 
     @Override
     public int getCount() {
-        return list.size();
+        return this.list.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return list.get(i);
+        return this.list.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return list.get(i).get_id();
+        return this.list.get(i).get_id();
     }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
         HistoricCoin object = list.get(i);
+
+        if(view == null){
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.history_layout_line, null);
+        }
+
+        TextView date = (TextView) view.findViewById(R.id.historic_date);
+        date.setText(object.getHistoricDateOperation());
+
+        TextView desc = (TextView) view.findViewById(R.id.historic_description);
+        desc.setText(object.getOperationDescription());
+
+        TextView amount = (TextView) view.findViewById(R.id.historic_value);
+        Integer value = object.getAmountCoin();
+        Log.e("VALOR", "VALOR = " + value);
+        if(value < 0) amount.setTextColor(view.getResources().getColor(R.color.colorPrimaryDark));
+        amount.setText(value.toString());
 
         return view;
     }
