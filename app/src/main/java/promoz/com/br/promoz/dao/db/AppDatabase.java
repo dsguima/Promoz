@@ -44,10 +44,12 @@ public class AppDatabase {
             for(int i = 0; i < PromozContract.tablesCreationList.length; i++)
                 db.execSQL(PromozContract.tablesCreationList[i]);
 
-            Log.v("SQL", "\n\nPOPULANDO TABELAS\n\n");
+            //Log.v("SQL", "\n\nPOPULANDO TABELAS\n\n");
 
-            for(int i = 0; i < PromozContract.valuesToPopulate.length; i++)
+            for(int i = 0; i < PromozContract.valuesToPopulate.length; i++) {
+              //  Log.e("INSERT", PromozContract.valuesToPopulate[i]);
                 db.execSQL(PromozContract.valuesToPopulate[i]);
+            }
         }
 
         @Override
