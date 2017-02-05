@@ -2,34 +2,33 @@ package promoz.com.br.promoz;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import promoz.com.br.promoz.dao.UserDAO;
 import promoz.com.br.promoz.model.User;
 
 public class PerfilActivity extends AppCompatActivity {
 
     final Context context = this;
-    private Button button;
+  //  private Button button;
+    private Integer userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         setContentView(R.layout.activity_perfil);
+
+        userId = getSharedPreferences(getResources().getString(R.string.app_name), Context.MODE_PRIVATE).getInt(User.getChave_ID(),1);
 
         final CircleImageView ci= (CircleImageView)findViewById(R.id.foto);
         //TODO implementar colocar foto do usuário no Perfil  EX: "ci.setImageResource(R.drawable.scarletmenor);"
@@ -97,12 +96,29 @@ public class PerfilActivity extends AppCompatActivity {
                     public void onClick(View v) {
 
                         //TODO:IMPLEMENTAR TROCAR SENHAR
+                        UserDAO userDao = new UserDAO(context);
+                        User user = userDao.userById(userId);
+
                         EditText lastpass = (EditText) dialog.findViewById(R.id.last_pass);
                         EditText newpass = (EditText) dialog.findViewById(R.id.new_pass);
                         EditText confirmpass = (EditText) dialog.findViewById(R.id.new_pass_confirm);
-                        dialog.dismiss();
-                        finish();
 
+                        String newPass = newpass.getText().toString();
+                        if(user.getPassword().equals(lastpass.getText().toString())){
+                            if(newPass.equals(confirmpass.getText().toString())){
+                               // Log.e("SENHA",newPass + " == " + lastpass.getText().toString());
+                                user.setPassword(newPass);
+                                userDao.save(user);
+                                Toast.makeText(getApplicationContext(),R.string.senhaAtualizada,Toast.LENGTH_LONG).show();
+                            }else{
+                                Toast.makeText(getApplicationContext(),R.string.camposNovaSenha,Toast.LENGTH_LONG).show();
+                            }
+                        }else{
+                            Toast.makeText(getApplicationContext(),R.string.senhaAtualErrada,Toast.LENGTH_LONG).show();
+                        }
+                        userDao.closeDatabase();
+                        dialog.dismiss();
+                        //finish();
                     }
                 });
 
@@ -110,7 +126,6 @@ public class PerfilActivity extends AppCompatActivity {
             }
         });
     }
-
 
     @Override
     public void onBackPressed() {

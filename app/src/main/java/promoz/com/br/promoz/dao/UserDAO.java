@@ -60,6 +60,14 @@ public class UserDAO extends PromozContract.User {
         return cursor.getInt(cursor.getColumnIndex(_ID));
     }
 
+    public User userById(Integer userId){
+        Cursor cursor = database.query(TABLE_NAME, allFields, _ID + " = ?", new String[]{userId.toString()}, null, null, null);
+        if(cursor.moveToFirst())
+            return populate(cursor);
+
+        return null;
+    }
+
     public List<User> list(){
         Cursor cursor = database.query(TABLE_NAME, allFields, null, null, null, null, null);
 

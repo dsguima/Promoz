@@ -90,15 +90,14 @@ public class ActMain extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_perfil) {
-            Intent i = new Intent(this,PerfilActivity.class);
-            this.startActivity(i);
-
-        } else if (id == R.id.nav_wallet) {
-            Log.v("MENU","chama tela");
-            Intent intent = new Intent(this,CarteiraActivity.class);
+            Intent intent = new Intent(this,PerfilActivity.class);
             intent.putExtra(User.getChave_ID(),userID);
             this.startActivity(intent);
 
+        } else if (id == R.id.nav_wallet) {
+            Intent intent = new Intent(this,CarteiraActivity.class);
+            intent.putExtra(User.getChave_ID(),userID);
+            this.startActivity(intent);
         } else if (id == R.id.nav_missions) {
             Context contexto = getApplicationContext();
             String texto = "MISSÔES";
