@@ -26,7 +26,7 @@ public class CouponDAO extends PromozContract.Coupon {
         database = dbHelper.getDatabase();
     }
 
-    private Coupon populate(Cursor cursor){ // Popula o objeto "Coupon" com os dados do cursor
+    private Coupon populate(Cursor cursor) { // Popula o objeto "Coupon" com os dados do cursor
         Coupon model = new Coupon(
                 cursor.getInt(cursor.getColumnIndex(_ID)),
                 cursor.getInt(cursor.getColumnIndex(COLUMN_WALLET_ID)),
@@ -75,7 +75,11 @@ public class CouponDAO extends PromozContract.Coupon {
         return cpn;
     }
 
-    public List<Coupon> list(String order){
+    public List<Coupon> list(Integer walletId){
+        return list(walletId, "");
+    }
+
+    public List<Coupon> list(Integer walletId, String order){
         Cursor cursor = database.query(TABLE_NAME, allFields, null, null, null, null, order);
 
 //        cursor.moveToFirst();
