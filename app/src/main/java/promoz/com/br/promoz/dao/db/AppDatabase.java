@@ -52,7 +52,7 @@ public class AppDatabase {
               //  Log.e("INSERT", PromozContract.valuesToPopulate[i]);
                 db.execSQL(PromozContract.valuesToPopulate[i]);
             }
-            //Log.e("TRIGGER", PromozContract.triger.TRIGER_WALLET_BALANCE);
+            //Log.e("TRIGGER", PromozContract.Triger.TRIGER_WALLET_BALANCE);
         }
 
         @Override

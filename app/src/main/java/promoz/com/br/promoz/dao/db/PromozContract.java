@@ -21,6 +21,8 @@ public final class PromozContract {
     private static final String COMMA_SEP = ", ";
     private static final String END_STM = ")";
 
+
+    //TABLE USER ###################################################################################
     public static class User implements BaseColumns {
         public static final String TABLE_NAME = "user";
         public static final String COLUMN_USER_NAME = "user_name";
@@ -48,6 +50,7 @@ public final class PromozContract {
         };
     }
 
+    //TABLE WALLET #################################################################################
     public static class Wallet implements BaseColumns {
         public static final String TABLE_NAME = "wallet";
         public static final String COLUMN_USER_ID = "user_id";
@@ -68,6 +71,7 @@ public final class PromozContract {
         };
     }
 
+    //TABLE COUPON #################################################################################
     public static class Coupon implements BaseColumns {
         public static final String TABLE_NAME = "coupon";
         public static final String COLUMN_WALLET_ID = "wallet_id";
@@ -88,7 +92,7 @@ public final class PromozContract {
                 Coupon.COLUMN_CPN_TITLE + TEXT_TYPE + COMMA_SEP +
                 Coupon.COLUMN_CPN_SUBTITLE + TEXT_TYPE + COMMA_SEP +
           //      Coupon.COLUMN_CPN_IMG + BLOB_TYPE + COMMA_SEP +
-                Coupon.COLUMN_CPN_IMG + INTEGER_TYPE + COMMA_SEP + // modificado para int apenas para o protótipo
+                Coupon.COLUMN_CPN_IMG + INTEGER_TYPE + COMMA_SEP + //TODO modificado para int apenas para o protótipo
                 Coupon.COLUMN_CPN_INFO + TEXT_TYPE + COMMA_SEP +
                 Coupon.COLUMN_CPN_DT_USE + TEXT_TYPE + COMMA_SEP +
                 Coupon.COLUMN_CPN_DT_EXP + TEXT_TYPE + COMMA_SEP +
@@ -113,6 +117,7 @@ public final class PromozContract {
         };
     }
 
+    //TABLE VIRTUAL STORE ##########################################################################
     public static class VirtualStore implements BaseColumns {
         public static final String TABLE_NAME = "virtual_store";
         public static final String COLUMN_VRT_STR_TITLE = "vrt_str_title";
@@ -139,6 +144,7 @@ public final class PromozContract {
         };
     }
 
+    //TABLE HISTORIC COIN ##########################################################################
     public static class HistoricCoin implements BaseColumns {
         public static final String TABLE_NAME = "historic_coin";
         public static final String COLUMN_WALLET_ID = "wallet_id";
@@ -170,6 +176,7 @@ public final class PromozContract {
         };
     }
 
+    //TABLE HISTORIC TYPE COIN #####################################################################
     public static class HistoricTypeCoin implements BaseColumns{
         public static final String TABLE_NAME = "historic_type_coin";
         public static final String COLUMN_HST_TP_DESC = "hst_tp_desc";
@@ -184,7 +191,8 @@ public final class PromozContract {
         };
     }
 
-    public static class populateBasicTables {
+    //POPULATE TABLES ##############################################################################
+    public static class PopulateBasicTables {
         private static final String INSERT_STM = "INSERT INTO ";
         private static final String VALUE_TABLE_HISTORIC_TYPE_COIN = INSERT_STM + HistoricTypeCoin.TABLE_NAME + " (" + HistoricTypeCoin.COLUMN_HST_TP_DESC +
                 ") VALUES('Moeda Verde')";
@@ -232,10 +240,11 @@ public final class PromozContract {
                 ") VALUES('2017-02-01 12:03:22',5,1,1,'Ganhou Moeda')";
     }
 
-    public static class triger {
+    //TRIGERS ######################################################################################
+    public static class Triger {
         // TRIGER PARA CRIAR CARTEIRA PARA O USUÁRIO RECEM CRIADO
         private static  final String TRIGER_USER_WALLET = "CREATE TRIGGER trigger_user_wallet " +
-                "AFTER INSERT" + " ON " + User.TABLE_NAME + " BEGIN " + populateBasicTables.INSERT_STM + Wallet.TABLE_NAME +
+                "AFTER INSERT" + " ON " + User.TABLE_NAME + " BEGIN " + PopulateBasicTables.INSERT_STM + Wallet.TABLE_NAME +
                 " (" + Wallet.COLUMN_USER_ID + ") VALUES (" + " last_insert_rowid() " + ");" + "END;";
 
         // TRIGER PARA ATUALIZAR DATA DE UTILIZAÇÃO DO CUPOM
@@ -259,18 +268,19 @@ public final class PromozContract {
                 ", 1, 'Comprou Cupom'); END;";
     }
 
+    //STRINGS CONSTANTS ############################################################################
     public static final String valuesToPopulate[] = {
-        populateBasicTables.VALUE_TABLE_HISTORIC_TYPE_COIN,
-        populateBasicTables.VALUE_TABLE_USER, populateBasicTables.VALUE_TABLE_COUPON_CENTAURO,
-        populateBasicTables.VALUE_TABLE_COUPON_CIA, populateBasicTables.VALUE_TABLE_COUPON_CIA,
-        populateBasicTables.VALUE_TABLE_HISTORIC_COIN_1, populateBasicTables.VALUE_TABLE_HISTORIC_COIN_2,
-        populateBasicTables.VALUE_TABLE_HISTORIC_COIN_3, populateBasicTables.VALUE_TABLE_HISTORIC_COIN_4,
-        populateBasicTables.VALUE_TABLE_HISTORIC_COIN_5
+        PopulateBasicTables.VALUE_TABLE_HISTORIC_TYPE_COIN,
+        PopulateBasicTables.VALUE_TABLE_USER, PopulateBasicTables.VALUE_TABLE_COUPON_CENTAURO,
+        PopulateBasicTables.VALUE_TABLE_COUPON_CIA, PopulateBasicTables.VALUE_TABLE_COUPON_CIA,
+        PopulateBasicTables.VALUE_TABLE_HISTORIC_COIN_1, PopulateBasicTables.VALUE_TABLE_HISTORIC_COIN_2,
+        PopulateBasicTables.VALUE_TABLE_HISTORIC_COIN_3, PopulateBasicTables.VALUE_TABLE_HISTORIC_COIN_4,
+        PopulateBasicTables.VALUE_TABLE_HISTORIC_COIN_5
     };
 
 
     public static final String tablesCreationList[] = {User.SQL_CREATE_USER,Wallet.SQL_CREATE_WALLET,
             HistoricTypeCoin.SQL_CREATE_HISTORIC_TYPE_COIN, HistoricCoin.SQL_CREATE_HISTORIC_COIN,
-            VirtualStore.SQL_CREATE_VIRTUAL_STORE, Coupon.SQL_CREATE_COUPON, triger.TRIGER_USER_WALLET,
-            triger.TRIGER_UPDATE_COUPON, triger.TRIGER_WALLET_BALANCE, triger.TRIGER_COUPON_ADD};
+            VirtualStore.SQL_CREATE_VIRTUAL_STORE, Coupon.SQL_CREATE_COUPON, Triger.TRIGER_USER_WALLET,
+            Triger.TRIGER_UPDATE_COUPON, Triger.TRIGER_WALLET_BALANCE, Triger.TRIGER_COUPON_ADD};
 }
