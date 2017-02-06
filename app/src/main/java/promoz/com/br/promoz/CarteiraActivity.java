@@ -71,6 +71,7 @@ public class CarteiraActivity extends AppCompatActivity implements CarteiraPageF
 
     @Override
     public void onBackPressed() {
+        finish();
         super.onBackPressed();
     }
 }

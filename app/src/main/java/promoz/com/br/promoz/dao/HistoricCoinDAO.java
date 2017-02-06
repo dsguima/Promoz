@@ -53,7 +53,7 @@ public class HistoricCoinDAO extends PromozContract.HistoricCoin {
     }
 
     public List<HistoricCoin> listByDate(Integer walletId, Integer daysBefore) {
-        Cursor cursor = database.query(TABLE_NAME, allFields, COLUMN_WALLET_ID + "=? and " + COLUMN_HST_DT_OPER + " > date('now','"+daysBefore.toString()+" day')", new String[]{walletId.toString()}, null, null, COLUMN_HST_DT_OPER + " ASC");
+        Cursor cursor = database.query(TABLE_NAME, allFields, COLUMN_WALLET_ID + "=? and " + COLUMN_HST_DT_OPER + " > date('now','"+daysBefore.toString()+" day')", new String[]{walletId.toString()}, null, null, COLUMN_HST_DT_OPER + " DESC");
 
         List<HistoricCoin> lst = new ArrayList<HistoricCoin>();
 

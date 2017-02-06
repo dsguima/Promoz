@@ -15,8 +15,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+import promoz.com.br.promoz.dao.HistoricCoinDAO;
+import promoz.com.br.promoz.dao.WalletDAO;
+import promoz.com.br.promoz.model.HistoricCoin;
 import promoz.com.br.promoz.model.User;
+import promoz.com.br.promoz.util.DateUtil;
 
 public class ActMain extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -25,6 +33,7 @@ public class ActMain extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        checkLogged();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_main);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -85,6 +94,15 @@ public class ActMain extends AppCompatActivity
         super.onRestart();
     }
 
+    private void addCoin(Integer amountCoin){ // TODO: Adicionar moedas apenas para protótipo
+        WalletDAO wallet = new WalletDAO(this);
+        Integer walletId = wallet.walletIdByUserId(userID);
+        String date = new SimpleDateFormat(DateUtil.YYYYMMDD_HHmmss).format(new Date());
+        HistoricCoin historicCoin = new HistoricCoin(walletId,1,date,amountCoin,"Ganhou Moeda");
+        HistoricCoinDAO historicCoinDAO = new HistoricCoinDAO(this);
+        historicCoinDAO.save(historicCoin);
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -134,10 +152,11 @@ public class ActMain extends AppCompatActivity
 
         } else if (id == R.id.nav_terms) {
             Context contexto = getApplicationContext();
-            String texto = "TERMOS";
+            String texto = "Ganhou uma moeda";
             int duracao = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(contexto, texto,duracao);
             toast.show();
+            addCoin(1);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -13,7 +13,8 @@ import java.util.regex.Pattern;
 public class DateUtil {
 
     public static String DDMMYYYY = "dd/MM/yyyy";
-    private static String SQLiteDateFormat = "([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})";
+    public static String YYYYMMDD_HHmmss = "yyyy-MM-dd HH:mm:ss";
+    private static String SQLiteDateFormat = "([0-9]{4})-([0-9]{1,2})-([0-9]{1,2}) [0-9]{2}:[0-9]{2}:[0-9]{2}";
 
     private static Calendar calendar;
 
