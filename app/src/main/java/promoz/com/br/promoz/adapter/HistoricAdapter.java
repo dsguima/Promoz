@@ -2,18 +2,14 @@ package promoz.com.br.promoz.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.util.List;
-
 import promoz.com.br.promoz.R;
-import promoz.com.br.promoz.model.Coupon;
 import promoz.com.br.promoz.model.HistoricCoin;
 import promoz.com.br.promoz.util.DateUtil;
 
@@ -64,14 +60,13 @@ public class HistoricAdapter extends BaseAdapter {
 
         TextView amount = (TextView) view.findViewById(R.id.historic_value);
         Integer value = object.getAmountCoin();
+        ImageView coin = (ImageView) view.findViewById(R.id.historic_coin);
 
         if(value < 0){
             amount.setTextColor(view.getResources().getColor(R.color.colorPrimaryDark));
-            ImageView coin = (ImageView) view.findViewById(R.id.historic_coin);
             coin.setImageDrawable(view.getResources().getDrawable(R.drawable.moeda_gasto));
         }else{
             amount.setTextColor(view.getResources().getColor(R.color.colorVerdeMoeda));
-            ImageView coin = (ImageView) view.findViewById(R.id.historic_coin);
             coin.setImageDrawable(view.getResources().getDrawable(R.drawable.moeda));
         }
         amount.setText(value.toString());

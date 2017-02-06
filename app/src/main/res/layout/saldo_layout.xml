@@ -95,7 +95,8 @@
             android:textSize="20dp"
             android:padding="10dp"
             android:textColor="@drawable/text_buttom_color"
-            android:background="@drawable/buttom_quinze_background"/>
+            android:background="@drawable/buttom_quinze_background"
+                android:id="@+id/quinzeDias" />
 
             <RadioButton
             android:layout_width="wrap_content"
@@ -107,7 +108,8 @@
             android:textAlignment="center"
             android:padding="10dp"
             android:textColor="@drawable/text_buttom_color"
-            android:background="@drawable/buttom_trinta_background"/>
+            android:background="@drawable/buttom_trinta_background"
+                android:id="@+id/trintaDias" />
 
         </RadioGroup>
 

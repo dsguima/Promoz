@@ -11,9 +11,8 @@ import android.view.WindowManager;
 import promoz.com.br.promoz.dao.CouponDAO;
 import promoz.com.br.promoz.model.Coupon;
 import promoz.com.br.promoz.model.User;
-import promoz.com.br.promoz.util.Message;
 
-public class CarteiraActivity extends AppCompatActivity implements CarteiraPageFragment.OnHeadlineGetUserID {
+public class CarteiraActivity extends AppCompatActivity implements CarteiraPageFragment.OnGetUserID {
     private Integer userId;
 
     @Override
@@ -55,7 +54,7 @@ public class CarteiraActivity extends AppCompatActivity implements CarteiraPageF
         Coupon cpn = cpnDAO.couponById((Integer) view.getTag());
 
         if(cpn.get_id() != -1)
-            Message.msgInfo(this,cpn.getTitle(),cpn.getInfo(),android.R.drawable.ic_dialog_info);
+            promoz.com.br.promoz.util.Message.msgInfo(this,cpn.getTitle(),cpn.getInfo(),android.R.drawable.ic_dialog_info);
     }
 
     public void useCupom(View view){ // TODO: rotina para utilização do cupom
@@ -63,7 +62,7 @@ public class CarteiraActivity extends AppCompatActivity implements CarteiraPageF
         Coupon cpn = cpnDAO.couponById((Integer) view.getTag());
 
         if(cpn.getValid() == 1){
-            Message.msgInfo(this,"Usar Cupom","Rotina de utilização do cupom da loja com ID = " + cpn.getStoreId(),android.R.drawable.ic_dialog_info); // TODO: somente para protótipo
+            promoz.com.br.promoz.util.Message.msgInfo(this,"Usar Cupom","Rotina de utilização do cupom da loja com ID = " + cpn.getStoreId(),android.R.drawable.ic_dialog_info); // TODO: somente para protótipo
             cpn.setValid(0);
             cpnDAO.save(cpn);
             CarteiraPageFragment.handler.sendEmptyMessage(100);

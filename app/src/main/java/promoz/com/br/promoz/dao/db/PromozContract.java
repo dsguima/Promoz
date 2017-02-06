@@ -214,37 +214,37 @@ public final class PromozContract {
         private static final String VALUE_TABLE_HISTORIC_COIN_2 = INSERT_STM + HistoricCoin.TABLE_NAME + " (" + HistoricCoin.COLUMN_HST_DT_OPER +
                 COMMA_SEP + HistoricCoin.COLUMN_AMOUNT_COIN + COMMA_SEP + HistoricCoin.COLUMN_WALLET_ID +
                 COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_DESC_OPER +
-                ") VALUES('2017-01-20',1,1,1,'Ganhou Moeda')";
+                ") VALUES('2017-01-15',1,1,1,'Ganhou Moeda')";
 
         private static final String VALUE_TABLE_HISTORIC_COIN_3 = INSERT_STM + HistoricCoin.TABLE_NAME + " (" + HistoricCoin.COLUMN_HST_DT_OPER +
                 COMMA_SEP + HistoricCoin.COLUMN_AMOUNT_COIN + COMMA_SEP + HistoricCoin.COLUMN_WALLET_ID +
                 COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_DESC_OPER +
-                ") VALUES('2017-01-29',3,1,1,'Ganhou Moeda')";
+                ") VALUES('2017-01-19',3,1,1,'Ganhou Moeda')";
 
         private static final String VALUE_TABLE_HISTORIC_BUY_COUPON_1 = INSERT_STM + HistoricCoin.TABLE_NAME + " (" + HistoricCoin.COLUMN_HST_DT_OPER +
                 COMMA_SEP + HistoricCoin.COLUMN_AMOUNT_COIN + COMMA_SEP + HistoricCoin.COLUMN_WALLET_ID +
                 COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_DESC_OPER +
-                ") VALUES('2017-01-01',-3,1,1,'Comprou Cupom')";
+                ") VALUES('2017-01-26',-3,1,1,'Comprou Cupom')";
 
         private static final String VALUE_TABLE_HISTORIC_COIN_4 = INSERT_STM + HistoricCoin.TABLE_NAME + " (" + HistoricCoin.COLUMN_HST_DT_OPER +
                 COMMA_SEP + HistoricCoin.COLUMN_AMOUNT_COIN + COMMA_SEP + HistoricCoin.COLUMN_WALLET_ID +
                 COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_DESC_OPER +
-                ") VALUES('2017-01-01',5,1,1,'Ganhou Moeda')";
+                ") VALUES('2017-01-27',5,1,1,'Ganhou Moeda')";
 
         private static final String VALUE_TABLE_HISTORIC_BUY_COUPON_2 = INSERT_STM + HistoricCoin.TABLE_NAME + " (" + HistoricCoin.COLUMN_HST_DT_OPER +
                 COMMA_SEP + HistoricCoin.COLUMN_AMOUNT_COIN + COMMA_SEP + HistoricCoin.COLUMN_WALLET_ID +
                 COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_DESC_OPER +
-                ") VALUES('2017-01-01',-3,1,1,'Comprou Cupom')";
+                ") VALUES('2017-01-29',-3,1,1,'Comprou Cupom')";
 
         private static final String VALUE_TABLE_HISTORIC_COIN_5 = INSERT_STM + HistoricCoin.TABLE_NAME + " (" + HistoricCoin.COLUMN_HST_DT_OPER +
                 COMMA_SEP + HistoricCoin.COLUMN_AMOUNT_COIN + COMMA_SEP + HistoricCoin.COLUMN_WALLET_ID +
                 COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_DESC_OPER +
-                ") VALUES('2017-02-08',5,1,1,'Ganhou Moeda')";
+                ") VALUES('2017-02-01',5,1,1,'Ganhou Moeda')";
 
         private static final String VALUE_TABLE_HISTORIC_BUY_COUPON_3 = INSERT_STM + HistoricCoin.TABLE_NAME + " (" + HistoricCoin.COLUMN_HST_DT_OPER +
                 COMMA_SEP + HistoricCoin.COLUMN_AMOUNT_COIN + COMMA_SEP + HistoricCoin.COLUMN_WALLET_ID +
                 COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_DESC_OPER +
-                ") VALUES('2017-01-01',-3,1,1,'Comprou Cupom')";
+                ") VALUES('2017-02-02',-3,1,1,'Comprou Cupom')";
     }
 
     public static class triger {

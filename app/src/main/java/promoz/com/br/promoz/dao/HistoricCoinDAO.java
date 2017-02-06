@@ -4,11 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import promoz.com.br.promoz.dao.db.AppDatabase;
 import promoz.com.br.promoz.dao.db.PromozContract;
 import promoz.com.br.promoz.model.HistoricCoin;
@@ -55,10 +52,22 @@ public class HistoricCoinDAO extends PromozContract.HistoricCoin {
         return database.insert(TABLE_NAME, null, values);
     }
 
+    public List<HistoricCoin> listByDate(Integer walletId, Integer daysBefore) {
+        Cursor cursor = database.query(TABLE_NAME, allFields, COLUMN_WALLET_ID + "=? and " + COLUMN_HST_DT_OPER + " > date('now','"+daysBefore.toString()+" day')", new String[]{walletId.toString()}, null, null, COLUMN_HST_DT_OPER + " ASC");
 
+        List<HistoricCoin> lst = new ArrayList<HistoricCoin>();
+
+        if(cursor.moveToFirst())
+            do {
+                lst.add(populate(cursor));
+            }while (cursor.moveToNext());
+
+        cursor.close();
+        return lst;
+    }
 
     public List<HistoricCoin> listById(Integer walletId){
-        Cursor cursor = database.query(TABLE_NAME, allFields, COLUMN_WALLET_ID + "=?", new String[]{walletId.toString()}, null, null, null);
+        Cursor cursor = database.query(TABLE_NAME, allFields, COLUMN_WALLET_ID + "=?", new String[]{walletId.toString()}, null, null, COLUMN_HST_DT_OPER + " DESC");
 
         List<HistoricCoin> lst = new ArrayList<HistoricCoin>();
 
