@@ -1,7 +1,9 @@
 package promoz.com.br.promoz;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
@@ -14,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -28,11 +31,12 @@ import promoz.com.br.promoz.util.DateUtil;
 
 public class ActMain extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
     private Integer userID=0;
+    int backButtonCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        backButtonCount = 0;
         checkLogged();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_main);
@@ -74,11 +78,18 @@ public class ActMain extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START); // recolhe o menu caso esteja "aberto"
-        } else {
-            // TODO : inserir popup para confirmar saída
+        }if(backButtonCount >= 1)
+        {
             moveTaskToBack(true);
-            finish();
-            //super.onBackPressed();
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+        else
+        {
+            Toast.makeText(this, "Press the back button once again to close the application.", Toast.LENGTH_SHORT).show();
+            backButtonCount++;
         }
     }
 
@@ -90,6 +101,7 @@ public class ActMain extends AppCompatActivity
 
     @Override
     protected void onRestart() {
+        backButtonCount = 0;
         checkLogged();
         super.onRestart();
     }
@@ -106,6 +118,7 @@ public class ActMain extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        backButtonCount = 0;
         int id = item.getItemId();
 
         if (id == R.id.nav_perfil) {
