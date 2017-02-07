@@ -64,7 +64,7 @@ public class ActMain extends AppCompatActivity
         //TODO A IMAGEM TROCA AQUI
         View hView =  navigationView.getHeaderView(0);
         CircleImageView foto =  (CircleImageView) hView.findViewById(R.id.foto_nav);
-        foto.setImageResource(R.drawable.scarletmenor);;
+      // foto.setImageResource(R.drawable.scarletmenor);;
 
 
     }

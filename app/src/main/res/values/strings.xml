@@ -42,6 +42,13 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_login">Entrar</string>
 
+    <!-- Strings related to Perfil -->
+    <string name="user_name">Nome do Usuário</string>
+    <string name="user_email">usuario@promoz.com.br</string>
+
+
+
+
     <!-- Strings related to login -->
     <string name="prompt_email">Login</string>
     <string name="prompt_user">Email/Usuário</string>
@@ -59,6 +66,7 @@
     <string name="error_incorrect_password">Senha incorreta!</string>
     <string name="error_field_required">Campo obrigatório!</string>
     <string name="title_activity_loja">Loja</string>
+
     <string name="txt_lembrar_senha">Esqueceu a senha?</string>
     <string name="Required_field">*Campo obrigatório</string>
     <string name="why_need_cpf"><a href="http://www.consultec.com.br/inscbd/2005insc/logos/960.jpg">Por que pedimos seu CPF?</a></string>

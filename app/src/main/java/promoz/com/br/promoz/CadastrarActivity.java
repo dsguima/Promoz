@@ -2,12 +2,14 @@ package promoz.com.br.promoz;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -35,27 +37,34 @@ public class CadastrarActivity extends AppCompatActivity {
         TextView mWhyCPF = (TextView) findViewById(R.id.why_cpf);
         mWhyCPF.setMovementMethod(LinkMovementMethod.getInstance());
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.change_photo);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                galleyView();
+            }
+        });
+
+
+
     }
 
     public void cadastrar (View v){
             //TODO Fazer o casdastro
     }
 
-    public void uploadPhoto(View v){
-        if(isReadStorageAllowed()){
-            Log.v("PERM","Já possuo");
-            galleyView();
-        }else {
-            Log.v("PERM","Não possuo");
-            requestStoragePermission();
-        }
-    }
 
     public void galleyView(){
+        if(isReadStorageAllowed()){
+            Log.v("PERM","Já possuo");
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);//
         startActivityForResult(Intent.createChooser(intent, "Select Picture"),SELECT_IMAGE);
+        }else {
+            Log.v("PERM","Não possuo");
+            requestStoragePermission();
+        }
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -70,9 +79,14 @@ public class CadastrarActivity extends AppCompatActivity {
                     try
                     {
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
+
+                        if(bitmap.getHeight()>4000 || bitmap.getWidth()>4000){
+                            promoz.com.br.promoz.util.Message.msgInfo(this,"Imagem muito grande","Por favor escolher uma imagem com resolução menor que 4000px"  ,android.R.drawable.ic_dialog_info);
+                        }else{
                         CircleImageView perfilPhoto = (CircleImageView) findViewById(R.id.choose_photo);
                         perfilPhoto.setImageBitmap(reSizeImage(bitmap));
                         //TODO A foto ta  aqui
+                      }
                     } catch (IOException e)
                     {
                         e.printStackTrace();
@@ -81,7 +95,7 @@ public class CadastrarActivity extends AppCompatActivity {
                 }
             } else if (resultCode == Activity.RESULT_CANCELED)
             {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Cancelado", Toast.LENGTH_SHORT).show();
             }
         }
     }
