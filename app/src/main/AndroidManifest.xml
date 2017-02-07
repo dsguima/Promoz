@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -44,16 +45,24 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login" />
+            android:label="@string/title_activity_login"
+            android:parentActivityName=".StartScreenActivity" />
         <activity
             android:name=".PerfilActivity"
             android:configChanges="orientation|screenSize"
-            android:label="Perfil"
+            android:label="@string/title_activity_perfil"
             android:parentActivityName=".ActMain" />
-        <activity android:name=".LojaActivity"
+        <activity
+            android:name=".LojaActivity"
             android:configChanges="orientation|screenSize"
-            android:label="Loja"
-            android:parentActivityName=".ActMain" ></activity>
+            android:label="@string/title_activity_shop"
+            android:parentActivityName=".ActMain" />
+        <activity
+            android:name=".CadastrarActivity"
+            android:label="@string/title_activity_cadastrar"
+            android:configChanges="orientation|screenSize"
+            android:parentActivityName=".StartScreenActivity" />
+
     </application>
 
 </manifest>

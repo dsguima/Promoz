@@ -72,7 +72,8 @@ public class StartScreenActivity extends AppCompatActivity {
     }
 
     public void cadastro(View v) {
-        //loadMain();
+        Intent intent = new Intent(this,CadastrarActivity.class);
+        this.startActivity(intent);
     }
     public void logar(View v) {
         Intent intent = new Intent(this,LoginActivity.class);

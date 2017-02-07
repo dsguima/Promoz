@@ -15,6 +15,9 @@
     <string name="menu_feedback">Enviar feedback</string>
     <string name="menu_terms">Termos de Serviço</string>
     <string name="title_activity_carteira">CarteiraActivity</string>
+    <string name="title_activity_perfil">Perfil</string>
+    <string name="title_activity_shop">Loja</string>
+    <string name="title_activity_cadastrar">Cadastrar</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
     <!-- Carteira -->
@@ -41,8 +44,15 @@
 
     <!-- Strings related to login -->
     <string name="prompt_email">Login</string>
+    <string name="prompt_user">Email/Usuário</string>
+    <string name="prompt_name">Nome</string>
+    <string name="prompt_cpf">CPF</string>
+    <string name="lost_pass">Esqueceu a senha?</string>
+    <string name="perfil_photo_upload">Escolher foto do Perfil</string>
     <string name="prompt_password">Senha</string>
+    <string name="prompt_password_again">Repita a Senha</string>
     <string name="action_sign_in">Entrar ou cadastrar</string>
+    <string name="action_sign_up">Cadastrar</string>
     <string name="action_sign_in_short">Entrar</string>
     <string name="error_invalid_email">Login inválido!</string>
     <string name="error_invalid_password">Pass</string>
@@ -50,6 +60,8 @@
     <string name="error_field_required">Campo obrigatório!</string>
     <string name="title_activity_loja">Loja</string>
     <string name="txt_lembrar_senha">Esqueceu a senha?</string>
+    <string name="Required_field">*Campo obrigatório</string>
+    <string name="why_need_cpf"><a href="http://www.consultec.com.br/inscbd/2005insc/logos/960.jpg">Por que pedimos seu CPF?</a></string>
     <string name="defaultpassword"><a href="https://goo.gl/fTc4Ae">Esqueceu a senha?</a></string>
 
 </resources>
