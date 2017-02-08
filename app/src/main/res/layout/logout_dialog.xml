@@ -35,7 +35,7 @@
             android:background="@drawable/buttom_logout_perfil"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="NÃO" />
+            android:text="@string/no_bt" />
         <Button
             android:id="@+id/yes"
             android:layout_marginTop="15dp"
@@ -46,7 +46,7 @@
             android:background="@drawable/buttom_logout_perfil"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="SIM" />
+            android:text="@string/yes_bt" />
 
 
 

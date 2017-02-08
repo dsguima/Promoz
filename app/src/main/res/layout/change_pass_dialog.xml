@@ -18,7 +18,7 @@
             android:id="@+id/last_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Digite sua senha atual"
+            android:hint="@string/now_pass"
             android:imeActionLabel="Senha atual"
             android:imeOptions="actionUnspecified"
             android:inputType="textPassword"
@@ -37,7 +37,7 @@
             android:id="@+id/new_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Digite sua nova senha"
+            android:hint="@string/new_pass"
             android:imeActionLabel="Nova senha"
             android:imeOptions="actionUnspecified"
             android:inputType="textPassword"
@@ -56,7 +56,7 @@
             android:id="@+id/new_pass_confirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Confirme novamente sua nova senha"
+            android:hint="@string/new_pass_again"
             android:imeActionLabel="Nova Senha"
             android:imeOptions="actionUnspecified"
             android:inputType="textPassword"
@@ -82,7 +82,7 @@
             android:background="@drawable/buttom_logout_perfil"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Cancelar" />
+            android:text="@string/cancel_bt" />
         <Button
             android:id="@+id/confirm_change"
             android:layout_marginTop="15dp"
@@ -94,7 +94,7 @@
             android:background="@drawable/buttom_logout_perfil"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Confirmar" />
+            android:text="@string/confirm_bt" />
 
 
 

@@ -89,7 +89,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Trocar senha"
+            android:text="@string/change_password"
             android:id="@+id/change_pass"
             android:padding="10dp"
             android:textColor="@drawable/text_buttom_color_logout_perfil"
@@ -98,7 +98,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_weight="1"
-
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="15dp"
                 android:background="@android:color/transparent" />
@@ -106,7 +105,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Log out"
+            android:text="@string/logout"
             android:id="@+id/logoutbt"
             android:textColor="@drawable/text_buttom_color_logout_perfil"
             android:background="@drawable/buttom_logout_perfil" />

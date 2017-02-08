@@ -42,13 +42,21 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_login">Entrar</string>
+    <!-- Strings related to Cupom -->
+    <string name="go_to_shop">IR PARA LOJA</string>
 
     <!-- Strings related to Perfil -->
     <string name="user_name">Nome do Usuário</string>
     <string name="user_email">usuario@promoz.com.br</string>
-
-
-
+    <string name="change_password">Trocar senha</string>
+    <string name="logout">Log out</string>
+    <string name="now_pass">Digite sua senha atual</string>
+    <string name="new_pass">Digite sua nova senha</string>
+    <string name="new_pass_again">Confirme novamente sua nova senha</string>
+    <string name="confirm_bt">Confirmar</string>
+    <string name="cancel_bt">Cancelar</string>
+    <string name="no_bt">Não</string>
+    <string name="yes_bt">Sim</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Login</string>
