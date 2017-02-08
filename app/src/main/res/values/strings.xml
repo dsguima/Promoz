@@ -58,6 +58,9 @@
     <string name="no_bt">Não</string>
     <string name="yes_bt">Sim</string>
 
+    <!-- Strings related to Loja -->
+    <string name="buy">Comprar</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Login</string>
     <string name="prompt_user">Email/Usuário</string>
