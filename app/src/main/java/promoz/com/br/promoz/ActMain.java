@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
@@ -17,11 +19,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import de.hdodenhof.circleimageview.CircleImageView;
 import promoz.com.br.promoz.dao.HistoricCoinDAO;
+import promoz.com.br.promoz.dao.UserDAO;
 import promoz.com.br.promoz.dao.WalletDAO;
 import promoz.com.br.promoz.model.HistoricCoin;
 import promoz.com.br.promoz.model.User;
@@ -30,6 +34,7 @@ import promoz.com.br.promoz.util.DateUtil;
 public class ActMain extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private Integer userID=0;
+    private CircleImageView foto;
     int backButtonCount = 0;
 
     @Override
@@ -60,15 +65,28 @@ public class ActMain extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        setMenu();
+
+//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+//        navigationView.setNavigationItemSelectedListener(this);
 
         //TODO A IMAGEM TROCA AQUI
-        View hView =  navigationView.getHeaderView(0);
-        CircleImageView foto =  (CircleImageView) hView.findViewById(R.id.foto_nav);
-      // foto.setImageResource(R.drawable.scarletmenor);;
+        /*View hView =  navigationView.getHeaderView(0);
+        foto =  (CircleImageView) hView.findViewById(R.id.foto_nav);
 
+        UserDAO userDAO = new UserDAO(this);
+        User user = userDAO.userById(userID);
+        userDAO.closeDatabase();
+        byte[] bitmapdata = user.getImg();
 
+        TextView name = (TextView) hView.findViewById(R.id.navDrawerNome);
+        name.setText(user.getNome());
+
+        if(bitmapdata != null) {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
+            if (bitmap != null)
+                foto.setImageBitmap(bitmap);
+        }*/
     }
 
     @Override
@@ -97,10 +115,32 @@ public class ActMain extends AppCompatActivity
             finish();
     }
 
+    private void setMenu(){
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View hView =  navigationView.getHeaderView(0);
+        foto =  (CircleImageView) hView.findViewById(R.id.foto_nav);
+
+        UserDAO userDAO = new UserDAO(this);
+        User user = userDAO.userById(userID);
+        userDAO.closeDatabase();
+        byte[] bitmapdata = user.getImg();
+
+        TextView name = (TextView) hView.findViewById(R.id.navDrawerNome);
+        name.setText(user.getNome());
+
+        if(bitmapdata != null) {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
+            if (bitmap != null)
+                foto.setImageBitmap(bitmap);
+        }
+    }
+
     @Override
     protected void onRestart() {
         backButtonCount = 0;
         checkLogged();
+        setMenu();
         super.onRestart();
     }
 
