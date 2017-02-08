@@ -52,7 +52,7 @@ public class ShopAdapter extends CustomAdapter {
         buy.setTag(object);
 
         ImageButton info = (ImageButton) view.findViewById(R.id.shopInfo);
-        buy.setTag(object);
+        info.setTag(object);
 
         return view;
     }

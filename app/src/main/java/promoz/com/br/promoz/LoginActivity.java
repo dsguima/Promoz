@@ -183,7 +183,7 @@ public class LoginActivity extends AppCompatActivity {
          */
         private void createUser(UserDAO userDAO){
             authUser = new User();
-            authUser.setEmail(mEmail);
+            authUser.setNome(mEmail);
             authUser.setPassword(mPassword);
             Long id = userDAO.save(authUser);
             authUser.set_id(id.intValue());

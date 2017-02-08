@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +37,7 @@ public class ActMain extends AppCompatActivity
     private Integer userID=0;
     private CircleImageView foto;
     int backButtonCount = 0;
+    int countDown = 10000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,27 +68,6 @@ public class ActMain extends AppCompatActivity
         toggle.syncState();
 
         setMenu();
-
-//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-//        navigationView.setNavigationItemSelectedListener(this);
-
-        //TODO A IMAGEM TROCA AQUI
-        /*View hView =  navigationView.getHeaderView(0);
-        foto =  (CircleImageView) hView.findViewById(R.id.foto_nav);
-
-        UserDAO userDAO = new UserDAO(this);
-        User user = userDAO.userById(userID);
-        userDAO.closeDatabase();
-        byte[] bitmapdata = user.getImg();
-
-        TextView name = (TextView) hView.findViewById(R.id.navDrawerNome);
-        name.setText(user.getNome());
-
-        if(bitmapdata != null) {
-            Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
-            if (bitmap != null)
-                foto.setImageBitmap(bitmap);
-        }*/
     }
 
     @Override
@@ -106,6 +87,17 @@ public class ActMain extends AppCompatActivity
         {
             Toast.makeText(this, "Press the back button once again to close the application.", Toast.LENGTH_SHORT).show();
             backButtonCount++;
+            new CountDownTimer(countDown, 1000) {
+
+                public void onTick(long millisUntilFinished) {
+                }
+
+                public void onFinish() {
+                    backButtonCount = 0;
+                }
+
+            }.start();
+
         }
     }
 
@@ -123,25 +115,27 @@ public class ActMain extends AppCompatActivity
 
         UserDAO userDAO = new UserDAO(this);
         User user = userDAO.userById(userID);
-        userDAO.closeDatabase();
-        byte[] bitmapdata = user.getImg();
+        byte[] bitmapdata;
+        if(user != null) {
+            bitmapdata = user.getImg();
+            TextView name = (TextView) hView.findViewById(R.id.navDrawerNome);
+            name.setText(user.getNome());
 
-        TextView name = (TextView) hView.findViewById(R.id.navDrawerNome);
-        name.setText(user.getNome());
-
-        if(bitmapdata != null) {
-            Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
-            if (bitmap != null)
-                foto.setImageBitmap(bitmap);
+            if(bitmapdata != null) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
+                if (bitmap != null)
+                    foto.setImageBitmap(bitmap);
+            }
         }
+        userDAO.closeDatabase();
     }
 
     @Override
     protected void onRestart() {
         backButtonCount = 0;
         checkLogged();
-        setMenu();
         super.onRestart();
+        setMenu();
     }
 
     private void addCoin(Integer amountCoin){ // TODO: Adicionar moedas apenas para protótipo

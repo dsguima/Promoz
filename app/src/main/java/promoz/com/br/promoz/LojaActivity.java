@@ -46,6 +46,10 @@ public class LojaActivity extends AppCompatActivity {
         updateStoreList();
     }
 
+    public void  info(View view){
+        promoz.com.br.promoz.util.Message.msgInfo(this,((VirtualStore) view.getTag()).getTitle(),((VirtualStore) view.getTag()).getInformation(),android.R.drawable.ic_dialog_info);
+    }
+
     public void buy(View view){
         Integer price = ((VirtualStore) view.getTag()).getPrice();
 

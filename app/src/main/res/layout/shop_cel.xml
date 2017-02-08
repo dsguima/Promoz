@@ -41,7 +41,7 @@
                     app:srcCompat="@drawable/info_cupom"
                     android:scaleType="fitCenter"
                     android:background="@null"
-
+                    android:onClick="info"
                     android:id="@+id/shopInfo" />
             </LinearLayout>
             <LinearLayout
