@@ -71,7 +71,7 @@
                 android:textColor="@drawable/text_buttom_color_logout_perfil"
                 android:background="@drawable/buttom_logout_perfil"
                 android:layout_marginTop="16dp"
-                android:text="@string/action_sign_in"
+                android:text="@string/action_sign_in_short"
                 android:textStyle="bold" />
 
             <!--Lembrar senha-->

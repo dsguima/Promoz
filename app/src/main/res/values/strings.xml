@@ -70,7 +70,6 @@
     <string name="perfil_photo_upload">Escolher foto do Perfil</string>
     <string name="prompt_password">Senha</string>
     <string name="prompt_password_again">Repita a Senha</string>
-    <string name="action_sign_in">Entrar ou cadastrar</string>
     <string name="action_sign_up">Cadastrar</string>
     <string name="action_sign_in_short">Entrar</string>
     <string name="error_invalid_email">Login inválido!</string>
