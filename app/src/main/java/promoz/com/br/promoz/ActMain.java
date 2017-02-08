@@ -18,10 +18,8 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import promoz.com.br.promoz.dao.HistoricCoinDAO;
 import promoz.com.br.promoz.dao.WalletDAO;
@@ -138,9 +136,9 @@ public class ActMain extends AppCompatActivity
             toast.show();
 
         } else if (id == R.id.nav_shop) {
-            Log.v("MENU","chama Loja");
-            Intent i = new Intent(this,LojaActivity.class);
-            this.startActivity(i);
+            Intent intent = new Intent(this,LojaActivity.class);
+            intent.putExtra(User.getChave_ID(), userID);
+            this.startActivity(intent);
 
         } else if (id == R.id.nav_config) {
             Context contexto = getApplicationContext();

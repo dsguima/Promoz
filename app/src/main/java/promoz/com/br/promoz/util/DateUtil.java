@@ -14,7 +14,7 @@ public class DateUtil {
 
     public static String DDMMYYYY = "dd/MM/yyyy";
     public static String YYYYMMDD_HHmmss = "yyyy-MM-dd HH:mm:ss";
-    private static String SQLiteDateFormat = "([0-9]{4})-([0-9]{1,2})-([0-9]{1,2}) [0-9]{2}:[0-9]{2}:[0-9]{2}";
+    private static String SQLiteDateFormat = "([0-9]{4})-([0-9]{1,2})-([0-9]{1,2}).*";
 
     private static Calendar calendar;
 

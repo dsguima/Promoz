@@ -37,6 +37,7 @@
     <string name="camposNovaSenha">Os campos da nova senha devem ser iguais.</string>
     <string name="senhaAtualErrada">A senha atual esta incorreta.</string>
     <string name="senhaAtualizada">Senha atualizada.</string>
+    <string name="saldoInsuficiente">Saldo Insuficiente</string>>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

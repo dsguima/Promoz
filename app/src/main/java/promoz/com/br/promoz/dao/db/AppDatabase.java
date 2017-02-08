@@ -49,7 +49,7 @@ public class AppDatabase {
             //Log.v("SQL", "\n\nPOPULANDO TABELAS\n\n");
 
             for(int i = 0; i < PromozContract.valuesToPopulate.length; i++) {
-              //  Log.e("INSERT", PromozContract.valuesToPopulate[i]);
+             //   Log.e("INSERT", PromozContract.valuesToPopulate[i]);
                 db.execSQL(PromozContract.valuesToPopulate[i]);
             }
             //Log.e("TRIGGER", PromozContract.Triger.TRIGER_WALLET_BALANCE);

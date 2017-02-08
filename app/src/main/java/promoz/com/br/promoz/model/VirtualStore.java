@@ -11,11 +11,12 @@ public class VirtualStore implements Serializable {
     private Integer _id;
     private String title;
     private String information;
-    private byte img[];
+    private Integer img;
+    //private byte img[];
     private Integer price;
     private Integer valid;
 
-    public VirtualStore(Integer _id, String title, String information, byte[] img, Integer price, Integer valid) {
+    public VirtualStore(Integer _id, String title, String information, Integer img, Integer price, Integer valid) {
         this._id = _id;
         this.title = title;
         this.information = information;
@@ -48,11 +49,11 @@ public class VirtualStore implements Serializable {
         this.information = information;
     }
 
-    public byte[] getImg() {
+    public Integer getImg() {
         return img;
     }
 
-    public void setImg(byte[] img) {
+    public void setImg(Integer img) {
         this.img = img;
     }
 

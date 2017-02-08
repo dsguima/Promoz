@@ -132,7 +132,8 @@ public final class PromozContract {
                 VirtualStore.COLUMN_VRT_STR_INFO + TEXT_TYPE + COMMA_SEP +
                 VirtualStore.COLUMN_VRT_STR_IMG + BLOB_TYPE + COMMA_SEP +
                 VirtualStore.COLUMN_VRT_STR_PRICE + INTEGER_TYPE + COMMA_SEP +
-                VirtualStore.COLUMN_VRT_STR_IND_VALID + INTEGER_TYPE + END_STM;
+                VirtualStore.COLUMN_VRT_STR_IND_VALID + INTEGER_TYPE +
+                END_STM;
 
         public static final String allFields[] = {
                 VirtualStore._ID,
@@ -222,12 +223,12 @@ public final class PromozContract {
         private static final String VALUE_TABLE_HISTORIC_COIN_2 = INSERT_STM + HistoricCoin.TABLE_NAME + " (" + HistoricCoin.COLUMN_HST_DT_OPER +
                 COMMA_SEP + HistoricCoin.COLUMN_AMOUNT_COIN + COMMA_SEP + HistoricCoin.COLUMN_WALLET_ID +
                 COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_DESC_OPER +
-                ") VALUES('2017-01-15 13:22:38',1,1,1,'Ganhou Moeda')";
+                ") VALUES('2017-01-22 13:22:38',1,1,1,'Ganhou Moeda')";
 
         private static final String VALUE_TABLE_HISTORIC_COIN_3 = INSERT_STM + HistoricCoin.TABLE_NAME + " (" + HistoricCoin.COLUMN_HST_DT_OPER +
                 COMMA_SEP + HistoricCoin.COLUMN_AMOUNT_COIN + COMMA_SEP + HistoricCoin.COLUMN_WALLET_ID +
                 COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_DESC_OPER +
-                ") VALUES('2017-01-19 17:40:11',3,1,1,'Ganhou Moeda')";
+                ") VALUES('2017-01-23 17:40:11',3,1,1,'Ganhou Moeda')";
 
         private static final String VALUE_TABLE_HISTORIC_COIN_4 = INSERT_STM + HistoricCoin.TABLE_NAME + " (" + HistoricCoin.COLUMN_HST_DT_OPER +
                 COMMA_SEP + HistoricCoin.COLUMN_AMOUNT_COIN + COMMA_SEP + HistoricCoin.COLUMN_WALLET_ID +
@@ -238,6 +239,21 @@ public final class PromozContract {
                 COMMA_SEP + HistoricCoin.COLUMN_AMOUNT_COIN + COMMA_SEP + HistoricCoin.COLUMN_WALLET_ID +
                 COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_DESC_OPER +
                 ") VALUES('2017-02-01 12:03:22',5,1,1,'Ganhou Moeda')";
+
+        private static final String VALUE_TABLE_VIRTUAL_STORE_1 = INSERT_STM + VirtualStore.TABLE_NAME + " (" + VirtualStore.COLUMN_VRT_STR_TITLE +
+                COMMA_SEP + VirtualStore.COLUMN_VRT_STR_INFO + COMMA_SEP + VirtualStore.COLUMN_VRT_STR_IMG +
+                COMMA_SEP + VirtualStore.COLUMN_VRT_STR_PRICE + COMMA_SEP + VirtualStore.COLUMN_VRT_STR_IND_VALID +
+                ") VALUES('Estacionamento','Estacionamento gratis do shopping Salvador',"+ R.drawable.est_item +",3,1)";
+
+        private static final String VALUE_TABLE_VIRTUAL_STORE_2 = INSERT_STM + VirtualStore.TABLE_NAME + " (" + VirtualStore.COLUMN_VRT_STR_TITLE +
+                COMMA_SEP + VirtualStore.COLUMN_VRT_STR_INFO + COMMA_SEP + VirtualStore.COLUMN_VRT_STR_IMG +
+                COMMA_SEP + VirtualStore.COLUMN_VRT_STR_PRICE + COMMA_SEP + VirtualStore.COLUMN_VRT_STR_IND_VALID +
+                ") VALUES('Milke Shake','Milke Shake de balnilha especial do Bobs.',"+ R.drawable.milk_item +",2,1)";
+
+        private static final String VALUE_TABLE_VIRTUAL_STORE_3 = INSERT_STM + VirtualStore.TABLE_NAME + " (" + VirtualStore.COLUMN_VRT_STR_TITLE +
+                COMMA_SEP + VirtualStore.COLUMN_VRT_STR_INFO + COMMA_SEP + VirtualStore.COLUMN_VRT_STR_IMG +
+                COMMA_SEP + VirtualStore.COLUMN_VRT_STR_PRICE + COMMA_SEP + VirtualStore.COLUMN_VRT_STR_IND_VALID +
+                ") VALUES('Entrada cinemark','Vá ao cineme com sua familia, é divertido e seguro.',"+ R.drawable.cinema_item +",1,1)";
     }
 
     //TRIGERS ######################################################################################
@@ -266,6 +282,13 @@ public final class PromozContract {
                 COMMA_SEP + HistoricCoin.COLUMN_DESC_OPER + " ) VALUES ( strftime('%Y-%m-%d %H:%M:%S', 'now', 'localtime'), " +
                 "-1*(new." + Coupon.COLUMN_CPN_PRICE + "), " + " new." + Coupon.COLUMN_WALLET_ID +
                 ", 1, 'Comprou Cupom'); END;";
+
+/*        // TRIGER PARA ATUALIZAR SALDO DA CARTEIRA QUANDO DA COMPRA NA VIRTUALSTORE
+        private static final String TRIGER_STORE_BUY = "CREATE TRIGGER trigger_virtual_store " +
+                "AFTER UPDATE OF " + VirtualStore.COLUMN_WALLET_ID + " ON " + VirtualStore.TABLE_NAME +
+                " BEGIN UPDATE " + Wallet.TABLE_NAME + " SET " + Wallet.COLUMN_AMOUNT_COIN +
+                " = ( " + Wallet.COLUMN_AMOUNT_COIN + " - " + "new." + VirtualStore.COLUMN_VRT_STR_PRICE +
+                 " ) WHERE " + "new." + VirtualStore.COLUMN_WALLET_ID  + " = " + Wallet._ID +"; END;";*/
     }
 
     //STRINGS CONSTANTS ############################################################################
@@ -275,12 +298,14 @@ public final class PromozContract {
         PopulateBasicTables.VALUE_TABLE_COUPON_CIA, PopulateBasicTables.VALUE_TABLE_COUPON_CIA,
         PopulateBasicTables.VALUE_TABLE_HISTORIC_COIN_1, PopulateBasicTables.VALUE_TABLE_HISTORIC_COIN_2,
         PopulateBasicTables.VALUE_TABLE_HISTORIC_COIN_3, PopulateBasicTables.VALUE_TABLE_HISTORIC_COIN_4,
-        PopulateBasicTables.VALUE_TABLE_HISTORIC_COIN_5
+        PopulateBasicTables.VALUE_TABLE_HISTORIC_COIN_5, PopulateBasicTables.VALUE_TABLE_VIRTUAL_STORE_1,
+        PopulateBasicTables.VALUE_TABLE_VIRTUAL_STORE_2, PopulateBasicTables.VALUE_TABLE_VIRTUAL_STORE_3
     };
 
 
     public static final String tablesCreationList[] = {User.SQL_CREATE_USER,Wallet.SQL_CREATE_WALLET,
             HistoricTypeCoin.SQL_CREATE_HISTORIC_TYPE_COIN, HistoricCoin.SQL_CREATE_HISTORIC_COIN,
             VirtualStore.SQL_CREATE_VIRTUAL_STORE, Coupon.SQL_CREATE_COUPON, Triger.TRIGER_USER_WALLET,
-            Triger.TRIGER_UPDATE_COUPON, Triger.TRIGER_WALLET_BALANCE, Triger.TRIGER_COUPON_ADD};
+            Triger.TRIGER_UPDATE_COUPON, Triger.TRIGER_WALLET_BALANCE, Triger.TRIGER_COUPON_ADD
+            };
 }

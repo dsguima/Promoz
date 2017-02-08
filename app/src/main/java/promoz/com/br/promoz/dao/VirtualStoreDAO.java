@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
-
 import promoz.com.br.promoz.dao.db.AppDatabase;
 import promoz.com.br.promoz.dao.db.PromozContract;
 import promoz.com.br.promoz.model.VirtualStore;
@@ -30,7 +29,7 @@ public class VirtualStoreDAO extends PromozContract.VirtualStore {
                 cursor.getInt(cursor.getColumnIndex(_ID)),
                 cursor.getString(cursor.getColumnIndex(COLUMN_VRT_STR_TITLE)),
                 cursor.getString(cursor.getColumnIndex(COLUMN_VRT_STR_INFO)),
-                cursor.getBlob(cursor.getColumnIndex(COLUMN_VRT_STR_IMG)),
+                cursor.getInt(cursor.getColumnIndex(COLUMN_VRT_STR_IMG)),
                 cursor.getInt(cursor.getColumnIndex(COLUMN_VRT_STR_PRICE)),
                 cursor.getInt(cursor.getColumnIndex(COLUMN_VRT_STR_IND_VALID))
         );
@@ -65,7 +64,11 @@ public class VirtualStoreDAO extends PromozContract.VirtualStore {
     }
 
     public void closeDatabase(){
-        database.close();
+
+        dbHelper.closeConnection();
+
+        if(database.isOpen())
+            database.close();
     }
 
     public boolean remove(int id){

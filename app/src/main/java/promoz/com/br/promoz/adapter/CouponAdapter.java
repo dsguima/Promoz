@@ -3,7 +3,6 @@ package promoz.com.br.promoz.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
-
 import java.util.List;
-
 import promoz.com.br.promoz.R;
 import promoz.com.br.promoz.model.Coupon;
 import promoz.com.br.promoz.util.DateUtil;

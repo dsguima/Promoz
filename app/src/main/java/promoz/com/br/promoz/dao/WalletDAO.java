@@ -60,6 +60,15 @@ public class WalletDAO extends PromozContract.Wallet {
         return wlt;
     }
 
+    public Integer getAmountByWalletId(Integer id){
+        Cursor cursor = database.query(TABLE_NAME, new String[]{COLUMN_AMOUNT_COIN}, COLUMN_USER_ID+"=?", new String[]{id.toString()}, null, null, null);
+
+        if(cursor.moveToFirst())
+            return cursor.getInt(0);
+
+        return 0;
+    }
+
     public Integer walletIdByUserId(Integer id){
         Cursor cursor = database.query(TABLE_NAME, new String[]{_ID}, COLUMN_USER_ID+"=?", new String[]{id.toString()}, null, null, null);
 
