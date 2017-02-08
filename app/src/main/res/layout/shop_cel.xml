@@ -46,6 +46,7 @@
                     android:onClick="info"
                     android:id="@+id/shopInfo" />
             </LinearLayout>
+
             <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,8 +77,8 @@
                     android:layout_height="20sp"
                     android:text="@string/buy"
                     android:textSize="13sp"
-                    android:textColor="#FFFFFF"
-                    android:background="@drawable/rounded_background_loja"
+                    android:textColor="@drawable/text_buttom_color_loja"
+                    android:background="@drawable/buttom_loja_comprar"
                     android:layout_marginRight="13dp"
                     android:onClick="buy"
                     android:id="@+id/shopBuy" />
