@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -17,13 +18,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
-
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import promoz.com.br.promoz.dao.UserDAO;
 import promoz.com.br.promoz.model.User;
@@ -52,10 +52,26 @@ public class PerfilActivity extends AppCompatActivity {
                 galleyView();
             }
         });
+        final CircleImageView ci = (CircleImageView)findViewById(R.id.perfil_foto);
+
+        UserDAO userDAO = new UserDAO(this);
+        User user = userDAO.userById(userId);
+        userDAO.closeDatabase();
+        byte[] bitmapdata = user.getImg();
+        if(bitmapdata != null) {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
+            if (bitmap != null)
+                ci.setImageBitmap(bitmap);
+        }
 
 
-        final CircleImageView ci= (CircleImageView)findViewById(R.id.perfil_foto);
-        //TODO implementar colocar foto do usuário no Perfil  EX: "ci.setImageResource(R.drawable.scarletmenor);"
+        TextView email = (TextView) findViewById(R.id.email);
+        email.setText(user.getEmail());
+
+        TextView name = (TextView) findViewById(R.id.nome);
+        name.setText(user.getNome());
+
+
         Button button_logout = (Button) findViewById(R.id.logoutbt);
         Button button_change = (Button) findViewById(R.id.change_pass);
         // add button listener
@@ -142,13 +158,17 @@ public class PerfilActivity extends AppCompatActivity {
                         }
                         userDao.closeDatabase();
                         dialog.dismiss();
-                        //finish();
                     }
                 });
 
                 dialog.show();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
@@ -182,19 +202,26 @@ public class PerfilActivity extends AppCompatActivity {
 
                         if(bitmap.getHeight()>4000 || bitmap.getWidth()>4000){
                             promoz.com.br.promoz.util.Message.msgInfo(this,"Imagem muito grande","Por favor escolher uma imagem com resolução menor que 4000px"  ,android.R.drawable.ic_dialog_info);
-                        }else{
+                        } else {
                             CircleImageView perfilPhoto = (CircleImageView) findViewById(R.id.perfil_foto);
                             perfilPhoto.setImageBitmap(reSizeImage(bitmap));
+
+                            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                            byte[] foto = stream.toByteArray();
+
+                            UserDAO userDAO = new UserDAO(this);
+                            User user = userDAO.userById(userId);
+                            user.setImg(foto);
+                            userDAO.save(user);
                             //TODO A foto ta  aqui
                         }
-                    } catch (IOException e)
-                    {
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
 
                 }
-            } else if (resultCode == Activity.RESULT_CANCELED)
-            {
+            } else if (resultCode == Activity.RESULT_CANCELED) {
                 Toast.makeText(this, "Cancelado", Toast.LENGTH_SHORT).show();
             }
         }

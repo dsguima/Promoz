@@ -58,7 +58,7 @@ public class LojaActivity extends AppCompatActivity {
             historicCoinDAO.save(historicCoin);
             Toast.makeText(this, "Comprou " + desc,Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(this, getResources().getString(R.string.saldoInsuficiente) + " - " + walletAmount,Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getResources().getString(R.string.saldoInsuficiente) + ": " + walletAmount,Toast.LENGTH_SHORT).show();
         }
 
     }

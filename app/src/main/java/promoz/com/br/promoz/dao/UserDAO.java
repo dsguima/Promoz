@@ -90,7 +90,8 @@ public class UserDAO extends PromozContract.User {
     public User findUserByLogin(String user){
         User result = null;
 
-        String selection = COLUMN_USER_EMAIL + " = ?";
+        //String selection = COLUMN_USER_EMAIL + " = ?";
+        String selection = COLUMN_USER_NAME + " = ?";
         String[] selectionArgs = { String.valueOf(user.trim())};
 
         Cursor cursor = database.query(TABLE_NAME, allFields, selection, selectionArgs, null, null, null);
@@ -105,7 +106,9 @@ public class UserDAO extends PromozContract.User {
 
 
     public void closeDatabase(){
-        database.close();
+        dbHelper.closeConnection();
+        if(database.isOpen())
+            database.close();
     }
 
     public boolean remove(int id){
