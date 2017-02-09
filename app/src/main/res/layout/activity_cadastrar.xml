@@ -5,14 +5,12 @@
     android:id="@+id/activity_cadastrar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-
-
     android:orientation="horizontal"
     tools:context="promoz.com.br.promoz.CadastrarActivity">
 
     <ScrollView
         android:id="@+id/login_form"
+        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

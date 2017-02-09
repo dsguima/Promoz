@@ -35,19 +35,31 @@ import promoz.com.br.promoz.util.DateUtil;
 public class ActMain extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private Integer userID=0;
-    private CircleImageView foto;
+    private CircleImageView foto,fotoclick;
     int backButtonCount = 0;
     int countDown = 10000;
-
+    final Context context =this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         backButtonCount = 0;
         checkLogged();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_main);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View hView =  navigationView.getHeaderView(0);
+        fotoclick =  (CircleImageView) hView.findViewById(R.id.foto_nav);
+        fotoclick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context,PerfilActivity.class);
+                context.startActivity(intent);
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

@@ -28,7 +28,6 @@ public class CarteiraActivity extends AppCompatActivity implements CarteiraPageF
 
         setContentView(R.layout.activity_carteira);
 
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         //Back button on header
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 

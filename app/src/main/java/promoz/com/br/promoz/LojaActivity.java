@@ -35,7 +35,7 @@ public class LojaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
 
         setContentView(R.layout.activity_loja);
         listShop = (ListView) findViewById(R.id.lstShop);
