@@ -53,7 +53,6 @@
             android:name=".CadastrarActivity"
             android:label="@string/title_activity_cadastrar"
             android:configChanges="orientation|screenSize"
-
             android:parentActivityName=".StartScreenActivity" />
 
     </application>

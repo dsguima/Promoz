@@ -52,7 +52,7 @@
     <string name="logout">Log out</string>
     <string name="now_pass">Digite sua senha atual</string>
     <string name="new_pass">Digite sua nova senha</string>
-    <string name="new_pass_again">Confirme novamente sua nova senha</string>
+    <string name="new_pass_again">Confirme sua nova senha</string>
     <string name="confirm_bt">Confirmar</string>
     <string name="cancel_bt">Cancelar</string>
     <string name="no_bt">Não</string>
@@ -69,7 +69,7 @@
     <string name="lost_pass">Esqueceu a senha?</string>
     <string name="perfil_photo_upload">Escolher foto do Perfil</string>
     <string name="prompt_password">Senha</string>
-    <string name="prompt_password_again">Repita a Senha</string>
+    <string name="prompt_password_again">Confirme sua senha</string>
     <string name="action_sign_up">Cadastrar</string>
     <string name="action_sign_in_short">Entrar</string>
     <string name="error_invalid_email">Login inválido!</string>
