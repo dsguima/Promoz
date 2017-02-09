@@ -8,42 +8,40 @@
     android:background="@color/colorSecondary">
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        >
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_margin="10dp"
-            >
+            android:tag="cupom_store"
+            app:srcCompat="@drawable/centauro_logo"
+            android:id="@+id/logo"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@android:color/transparent"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            />
+        <ImageButton
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            app:srcCompat="@drawable/info_cupom"
+            android:id="@+id/info_button"
+            android:background="@null"
+            android:onClick="showInfo"
+            android:layout_marginRight="15dp"
+            android:scaleType="fitCenter"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:tag="cupom_store"
-                app:srcCompat="@drawable/centauro_logo"
-                android:id="@+id/logo"
-                android:background="@null"
-                android:scaleType="fitCenter"
-                />
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="@android:color/transparent"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                />
-            <ImageButton
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                app:srcCompat="@drawable/info_cupom"
-                android:id="@+id/info_button"
-                android:background="@null"
-                android:onClick="showInfo"
-                android:layout_marginRight="15dp"
-                android:scaleType="fitCenter"/>
-
-   </LinearLayout>
-
+</LinearLayout>
 
 
     <LinearLayout

@@ -58,7 +58,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_name"
-                    android:inputType="text"
+                    android:inputType="textPersonName|textCapWords"
                     android:maxLines="1" />
 
             </android.support.design.widget.TextInputLayout>
