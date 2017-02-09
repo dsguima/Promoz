@@ -1,5 +1,6 @@
 package promoz.com.br.promoz;
 
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,13 +10,16 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import promoz.com.br.promoz.adapter.ShopAdapter;
+import promoz.com.br.promoz.dao.CouponDAO;
 import promoz.com.br.promoz.dao.HistoricCoinDAO;
 import promoz.com.br.promoz.dao.VirtualStoreDAO;
 import promoz.com.br.promoz.dao.WalletDAO;
+import promoz.com.br.promoz.model.Coupon;
 import promoz.com.br.promoz.model.HistoricCoin;
 import promoz.com.br.promoz.model.User;
 import promoz.com.br.promoz.model.VirtualStore;
@@ -51,20 +55,41 @@ public class LojaActivity extends AppCompatActivity {
     }
 
     public void buy(View view){
-        Integer price = ((VirtualStore) view.getTag()).getPrice();
+
+        VirtualStore virtualStore = (VirtualStore) view.getTag();
+        Integer price = virtualStore.getPrice();
 
         if(price <= walletAmount) {
             walletAmount -= price;
-            String date = new SimpleDateFormat(DateUtil.YYYYMMDD_HHmmss).format(new Date());
-            String desc = ((VirtualStore) view.getTag()).getTitle();
-            HistoricCoinDAO historicCoinDAO = new HistoricCoinDAO(this);
-            HistoricCoin historicCoin = new HistoricCoin(walletId,1,date, -price,desc);
-            historicCoinDAO.save(historicCoin);
-            Toast.makeText(this, "Comprou " + desc,Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this, getResources().getString(R.string.saldoInsuficiente) + ": " + walletAmount,Toast.LENGTH_SHORT).show();
-        }
 
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DAY_OF_MONTH, 10);
+
+            String date = new SimpleDateFormat(DateUtil.YYYYMMDD_HHmmss).format(new Date(cal.getTimeInMillis()));
+            String desc = virtualStore.getTitle();
+
+            CouponDAO couponDAO = new CouponDAO(this);
+            Coupon coupon = new Coupon();
+            coupon.setDateExp(date);
+            coupon.setTitle(desc);
+            coupon.setSubTitle("Compra na Loja Virtual");
+            coupon.setPrice(price);
+            coupon.setInfo(virtualStore.getInformation());
+            coupon.setImg(virtualStore.getImg());
+            coupon.setValid(1);
+            coupon.setWalletId(walletId);
+            coupon.setStoreId(virtualStore.getStoreId());
+            couponDAO.save(coupon);
+            couponDAO.closeDatabase();
+
+            Snackbar.make(view, "Comprou " + desc, Snackbar.LENGTH_SHORT)
+                    .setAction("Action", null).show();
+            //Toast.makeText(this, "Comprou " + desc,Toast.LENGTH_SHORT).show();
+        } else {
+            Snackbar.make(view,getResources().getString(R.string.saldoInsuficiente) + ": " + walletAmount, Snackbar.LENGTH_SHORT)
+                    .setAction("Action", null).show();
+            //Toast.makeText(this, getResources().getString(R.string.saldoInsuficiente) + ": " + walletAmount,Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void updateStoreList(){

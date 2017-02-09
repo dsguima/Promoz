@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,7 @@ public class CouponDAO extends PromozContract.Coupon {
         values.put(COLUMN_CPN_DT_USE, coupon.getDateUse());
         values.put(COLUMN_CPN_DT_EXP, coupon.getDateExp());
         values.put(COLUMN_CPN_PRICE, coupon.getPrice());
+        values.put(COLUMN_CPN_STR_ID, coupon.getStoreId());
         values.put(COLUMN_CPN_IND_VALID, coupon.getValid());
 
         if(coupon.get_id() != null){
@@ -79,10 +81,6 @@ public class CouponDAO extends PromozContract.Coupon {
         return listById(walletID, "");
     }
 
-    public List<Coupon> list(){
-        return list("");
-    }
-
     public List<Coupon> listById(Integer walletID, String order){
         Cursor cursor = database.query(TABLE_NAME, allFields, COLUMN_WALLET_ID + "=?", new String[]{walletID.toString()}, null, null, order);
 
@@ -95,6 +93,10 @@ public class CouponDAO extends PromozContract.Coupon {
         cursor.close();
 
         return lst;
+    }
+
+    public List<Coupon> list(){
+        return list("");
     }
 
     public List<Coupon> list(String order){

@@ -31,6 +31,7 @@ public class VirtualStoreDAO extends PromozContract.VirtualStore {
                 cursor.getString(cursor.getColumnIndex(COLUMN_VRT_STR_INFO)),
                 cursor.getInt(cursor.getColumnIndex(COLUMN_VRT_STR_IMG)),
                 cursor.getInt(cursor.getColumnIndex(COLUMN_VRT_STR_PRICE)),
+                cursor.getInt(cursor.getColumnIndex(COLUMN_VRT_STR_STR_ID)),
                 cursor.getInt(cursor.getColumnIndex(COLUMN_VRT_STR_IND_VALID))
         );
         return model;
@@ -44,6 +45,7 @@ public class VirtualStoreDAO extends PromozContract.VirtualStore {
         values.put(COLUMN_VRT_STR_INFO, virtualStore.getInformation());
         values.put(COLUMN_VRT_STR_IMG, virtualStore.getImg());
         values.put(COLUMN_VRT_STR_PRICE, virtualStore.getPrice());
+        values.put(COLUMN_VRT_STR_STR_ID, virtualStore.getStoreId());
         values.put(COLUMN_VRT_STR_IND_VALID, virtualStore.getValid());
 
         if(virtualStore.get_id() != null){
