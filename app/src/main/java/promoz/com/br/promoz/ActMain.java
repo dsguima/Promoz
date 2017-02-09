@@ -120,7 +120,6 @@ public class ActMain extends AppCompatActivity
             bitmapdata = user.getImg();
             TextView name = (TextView) hView.findViewById(R.id.navDrawerNome);
             name.setText(user.getNome());
-
             if(bitmapdata != null) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
                 if (bitmap != null)

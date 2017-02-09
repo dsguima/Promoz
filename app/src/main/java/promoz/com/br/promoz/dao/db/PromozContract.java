@@ -248,12 +248,12 @@ public final class PromozContract {
         private static final String VALUE_TABLE_VIRTUAL_STORE_2 = INSERT_STM + VirtualStore.TABLE_NAME + " (" + VirtualStore.COLUMN_VRT_STR_TITLE +
                 COMMA_SEP + VirtualStore.COLUMN_VRT_STR_INFO + COMMA_SEP + VirtualStore.COLUMN_VRT_STR_IMG +
                 COMMA_SEP + VirtualStore.COLUMN_VRT_STR_PRICE + COMMA_SEP + VirtualStore.COLUMN_VRT_STR_IND_VALID +
-                ") VALUES('Milke Shake','Milke Shake de balnilha especial do Bobs.',"+ R.drawable.milk_item +",2,1)";
+                ") VALUES('Milke Shake','Milke Shake de baunilha especial do Bobs.',"+ R.drawable.milk_item +",2,1)";
 
         private static final String VALUE_TABLE_VIRTUAL_STORE_3 = INSERT_STM + VirtualStore.TABLE_NAME + " (" + VirtualStore.COLUMN_VRT_STR_TITLE +
                 COMMA_SEP + VirtualStore.COLUMN_VRT_STR_INFO + COMMA_SEP + VirtualStore.COLUMN_VRT_STR_IMG +
                 COMMA_SEP + VirtualStore.COLUMN_VRT_STR_PRICE + COMMA_SEP + VirtualStore.COLUMN_VRT_STR_IND_VALID +
-                ") VALUES('Entrada cinemark','Vá ao cineme com sua familia, é divertido e seguro.',"+ R.drawable.cinema_item +",1,1)";
+                ") VALUES('Entrada cinemark','Vá ao cinema com sua familia, é divertido e seguro.',"+ R.drawable.cinema_item +",1,1)";
     }
 
     //TRIGERS ######################################################################################
