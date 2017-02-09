@@ -21,6 +21,8 @@ public class Util extends AppCompatActivity {
 
         public static String URI_GOOGLE = "https://www.google.com/intl/pt-BR/policies/terms/";
         public static String FONT_ITCKRIST = "fonts/ITCKRIST.TTF";
+        public static int ERROR_LOGIN = -1;
+        public static int ERROR_SENHA = 1;
 
     }
 

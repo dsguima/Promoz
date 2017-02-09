@@ -121,6 +121,7 @@ public class CarteiraPageFragment extends Fragment{
 
         //Caso Tab SALDO
         if (mPage == 1) {
+            //TODO login
             view = inflater.inflate(R.layout.saldo_layout, container, false);
             TextView textoSaldo = (TextView) view.findViewById(R.id.saldoCarteira);
             textoSaldo.setText(walletDAO.walletById(walletID).getAmountCoin().toString());

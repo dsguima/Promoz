@@ -74,9 +74,11 @@
     <string name="action_sign_in_short">Entrar</string>
     <string name="error_invalid_email">Login inválido!</string>
     <string name="error_invalid_password">Pass</string>
+    <string name="error_login">Usuário não cadastrado!</string>
     <string name="error_incorrect_password">Senha incorreta!</string>
     <string name="error_field_required">Campo obrigatório!</string>
     <string name="title_activity_loja">Loja</string>
+    <string name="error_funny">Ops! Aconteceu algo estranho. Tente novamente!</string>
 
     <string name="txt_lembrar_senha">Esqueceu a senha?</string>
     <string name="Required_field">*Campo obrigatório</string>

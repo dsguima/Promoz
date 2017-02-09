@@ -10,12 +10,12 @@ import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import promoz.com.br.promoz.dao.UserDAO;
 import promoz.com.br.promoz.model.User;
@@ -144,6 +144,7 @@ public class LoginActivity extends AppCompatActivity {
 
         private final String mEmail;
         private final String mPassword;
+        private int mError;
         private User authUser;
 
         UserLoginTask(String email, String password) {
@@ -166,28 +167,17 @@ public class LoginActivity extends AppCompatActivity {
                     authUser = result;
                     sucess = true;
                 }else{
+                    mError = Util.Constants.ERROR_SENHA;
                     sucess = false;
                 }
             } else {
-                createUser(userDAO);
-                sucess = true;
+                mError = Util.Constants.ERROR_LOGIN;
+                sucess = false;
             }
 
             userDAO.closeDatabase();
             return sucess;
 
-        }
-
-        /**
-         * Método para criar um novo usuário
-         * @param userDAO
-         */
-        private void createUser(UserDAO userDAO){
-            authUser = new User();
-            authUser.setNome(mEmail);
-            authUser.setPassword(mPassword);
-            Long id = userDAO.save(authUser);
-            authUser.set_id(id.intValue());
         }
 
         /**
@@ -222,8 +212,17 @@ public class LoginActivity extends AppCompatActivity {
                 setSharedPreferences();
                 finish();
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+                Util.showProgress(false, getResources(), mLoginFormView, mProgressView);
+                if(mError == Util.Constants.ERROR_LOGIN){
+                    mEmailView.setError(getString(R.string.error_login));
+                    mEmailView.requestFocus();
+                } else if(mError == Util.Constants.ERROR_SENHA){
+                    mPasswordView.setError(getString(R.string.error_incorrect_password));
+                    mPasswordView.requestFocus();
+                } else {
+                    Toast.makeText(getApplicationContext(), getString(R.string.error_funny), Toast.LENGTH_LONG).show();
+                }
+
             }
         }
 
