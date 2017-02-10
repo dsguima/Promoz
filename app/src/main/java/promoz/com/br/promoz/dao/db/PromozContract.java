@@ -112,8 +112,8 @@ public final class PromozContract {
                 Coupon.COLUMN_CPN_DT_USE,
                 Coupon.COLUMN_CPN_DT_EXP,
                 Coupon.COLUMN_CPN_PRICE,
-                Coupon.COLUMN_CPN_IND_VALID,
-                Coupon.COLUMN_CPN_STR_ID
+                Coupon.COLUMN_CPN_STR_ID,
+                Coupon.COLUMN_CPN_IND_VALID
         };
     }
 
@@ -125,6 +125,7 @@ public final class PromozContract {
         public static final String COLUMN_VRT_STR_IMG = "vrt_str_img";
         public static final String COLUMN_VRT_STR_PRICE = "vrt_str_price";
         public static final String COLUMN_VRT_STR_IND_VALID = "vrt_str_ind_valid";
+        public static final String COLUMN_VRT_STR_STR_ID = "vrt_str_str_id";
 
         private static final String SQL_CREATE_VIRTUAL_STORE = CREATE_STM + VirtualStore.TABLE_NAME + " (" +
                 VirtualStore._ID + PK_TYPE + COMMA_SEP +
@@ -132,6 +133,7 @@ public final class PromozContract {
                 VirtualStore.COLUMN_VRT_STR_INFO + TEXT_TYPE + COMMA_SEP +
                 VirtualStore.COLUMN_VRT_STR_IMG + BLOB_TYPE + COMMA_SEP +
                 VirtualStore.COLUMN_VRT_STR_PRICE + INTEGER_TYPE + COMMA_SEP +
+                VirtualStore.COLUMN_VRT_STR_STR_ID + INTEGER_TYPE + COMMA_SEP +
                 VirtualStore.COLUMN_VRT_STR_IND_VALID + INTEGER_TYPE +
                 END_STM;
 
@@ -141,6 +143,7 @@ public final class PromozContract {
                 VirtualStore.COLUMN_VRT_STR_INFO,
                 VirtualStore.COLUMN_VRT_STR_IMG,
                 VirtualStore.COLUMN_VRT_STR_PRICE,
+                VirtualStore.COLUMN_VRT_STR_STR_ID,
                 VirtualStore.COLUMN_VRT_STR_IND_VALID
         };
     }
@@ -212,7 +215,7 @@ public final class PromozContract {
                 COMMA_SEP + Coupon.COLUMN_CPN_SUBTITLE + COMMA_SEP + Coupon.COLUMN_CPN_INFO + COMMA_SEP + Coupon.COLUMN_CPN_DT_EXP +
                 COMMA_SEP + Coupon.COLUMN_CPN_PRICE + COMMA_SEP + Coupon.COLUMN_CPN_IND_VALID + COMMA_SEP + Coupon.COLUMN_CPN_STR_ID +
                 COMMA_SEP + Coupon.COLUMN_CPN_IMG + COMMA_SEP + Coupon.COLUMN_WALLET_ID +
-                ") VALUES('Abuse e use no mês do carnaval','R$60,00 de desconto em compras acima de R$300,00','Nos mêses de " +
+                ") VALUES('Abuse e use no mês do carnaval','R$60,00 de desconto em compras acima de R$300,00','Nos meses de " +
                 "Fevereiro e Março, a C&A está abusando com preços imperdíveis: Toda a loja com até 50% de desconto.','2017-03-31 15:25:15',3, 1, 2, "+R.drawable.cia_logo + ", 1)";
 
         private static final String VALUE_TABLE_HISTORIC_COIN_1 = INSERT_STM + HistoricCoin.TABLE_NAME + " (" + HistoricCoin.COLUMN_HST_DT_OPER +
@@ -243,17 +246,20 @@ public final class PromozContract {
         private static final String VALUE_TABLE_VIRTUAL_STORE_1 = INSERT_STM + VirtualStore.TABLE_NAME + " (" + VirtualStore.COLUMN_VRT_STR_TITLE +
                 COMMA_SEP + VirtualStore.COLUMN_VRT_STR_INFO + COMMA_SEP + VirtualStore.COLUMN_VRT_STR_IMG +
                 COMMA_SEP + VirtualStore.COLUMN_VRT_STR_PRICE + COMMA_SEP + VirtualStore.COLUMN_VRT_STR_IND_VALID +
-                ") VALUES('Estacionamento','Estacionamento gratis do shopping Salvador',"+ R.drawable.est_item +",3,1)";
+                COMMA_SEP + VirtualStore.COLUMN_VRT_STR_STR_ID +
+                ") VALUES('Estacionamento','Estacionamento gratis do shopping Salvador',"+ R.drawable.est_item +",3,1,3)";
 
         private static final String VALUE_TABLE_VIRTUAL_STORE_2 = INSERT_STM + VirtualStore.TABLE_NAME + " (" + VirtualStore.COLUMN_VRT_STR_TITLE +
                 COMMA_SEP + VirtualStore.COLUMN_VRT_STR_INFO + COMMA_SEP + VirtualStore.COLUMN_VRT_STR_IMG +
                 COMMA_SEP + VirtualStore.COLUMN_VRT_STR_PRICE + COMMA_SEP + VirtualStore.COLUMN_VRT_STR_IND_VALID +
-                ") VALUES('Milke Shake','Milke Shake de baunilha especial do Bobs.',"+ R.drawable.milk_item +",2,1)";
+                COMMA_SEP + VirtualStore.COLUMN_VRT_STR_STR_ID +
+                ") VALUES('Milke Shake','Milke Shake de baunilha especial do Bobs.',"+ R.drawable.milk_item +",2,1,4)";
 
         private static final String VALUE_TABLE_VIRTUAL_STORE_3 = INSERT_STM + VirtualStore.TABLE_NAME + " (" + VirtualStore.COLUMN_VRT_STR_TITLE +
                 COMMA_SEP + VirtualStore.COLUMN_VRT_STR_INFO + COMMA_SEP + VirtualStore.COLUMN_VRT_STR_IMG +
                 COMMA_SEP + VirtualStore.COLUMN_VRT_STR_PRICE + COMMA_SEP + VirtualStore.COLUMN_VRT_STR_IND_VALID +
-                ") VALUES('Entrada cinemark','Vá ao cinema com sua familia, é divertido e seguro.',"+ R.drawable.cinema_item +",1,1)";
+                COMMA_SEP + VirtualStore.COLUMN_VRT_STR_STR_ID +
+                ") VALUES('Entrada cinemark','Vá ao cinema com sua família. É divertido e seguro.',"+ R.drawable.cinema_item +",1,1,5)";
     }
 
     //TRIGERS ######################################################################################
