@@ -28,8 +28,7 @@ import promoz.com.br.promoz.model.HistoricCoin;
 import promoz.com.br.promoz.model.User;
 import promoz.com.br.promoz.util.DateUtil;
 
-public class ActMain extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class ActMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Integer userID=0;
     private CircleImageView foto,fotoclick;
     int backButtonCount = 0;
@@ -38,6 +37,7 @@ public class ActMain extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         backButtonCount = 0;
+        Log.e("MENU", "BACK BT: "+backButtonCount);
         checkLogged();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_main);
@@ -71,44 +71,67 @@ public class ActMain extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
+            public void onDrawerClosed(View view) {
+                backButtonCount =0;
+                Log.e("MENU", "Fechei");
+                Log.e("MENU", "BACK BT: "+backButtonCount);
+                super.onDrawerClosed(view);
+
+            }
+            public void onDrawerOpened(View drawerView) {
+                backButtonCount =0;
+                Log.e("MENU", "ABRI EIN");
+                Log.e("MENU", "BACK BT: "+backButtonCount);
+                super.onDrawerOpened(drawerView);
+            }
+        };
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+
+
 
         setMenu();
     }
+
 
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
+            backButtonCount =0;
+            Log.e("MENU", "BACK BT: "+backButtonCount);
             drawer.closeDrawer(GravityCompat.START); // recolhe o menu caso esteja "aberto"
-            Log.e("MENU","RECOLHEU");
-        }if(backButtonCount >= 1)
-        {
-            moveTaskToBack(true);
-            Intent intent = new Intent(Intent.ACTION_MAIN);
-            intent.addCategory(Intent.CATEGORY_HOME);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        }
-        else
-        {
-            Toast.makeText(this, "Pressione o botão voltar novamente para sair do aplicativo", Toast.LENGTH_SHORT).show();
-            backButtonCount++;
-            new CountDownTimer(countDown, 5000) {
+            Log.e("MENU", "RECOLHEU");
+        } else {
+            if (backButtonCount >= 1) {
+                Log.e("MENU", "BACK BT: "+backButtonCount);
+                moveTaskToBack(true);
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "Pressione o botão voltar novamente para sair do aplicativo", Toast.LENGTH_SHORT).show();
+                backButtonCount++;
+                Log.e("MENU", "BACK BT: "+backButtonCount);
+                new CountDownTimer(countDown, 5000) {
 
-                public void onTick(long millisUntilFinished) {
-                }
+                    public void onTick(long millisUntilFinished) {
+                    }
 
-                public void onFinish() {
-                    backButtonCount = 0;
-                }
+                    public void onFinish() {
+                        backButtonCount = 0;
+                    }
 
-            }.start();
+                }.start();
 
+            }
         }
     }
+
+
 
     private void checkLogged(){
         userID = getSharedPreferences(getResources().getString(R.string.app_name), Context.MODE_PRIVATE).getInt(User.getChave_ID(),0);
@@ -140,7 +163,9 @@ public class ActMain extends AppCompatActivity
 
     @Override
     protected void onRestart() {
+
         backButtonCount = 0;
+        Log.e("MENU", "BACK BT: "+backButtonCount);
         checkLogged();
         super.onRestart();
         setMenu();

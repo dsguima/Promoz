@@ -157,7 +157,7 @@ public class CarteiraPageFragment extends Fragment{
             //Caso Tab CUPOM
             view = inflater.inflate(R.layout.cupom_layout, container, false);
             listcoupon = (ListView) view.findViewById(R.id.lstCoupon);
-            listcoupon.setDividerHeight(5);
+           listcoupon.setDividerHeight(5);
             updateCouponList();
             return view;
         }
