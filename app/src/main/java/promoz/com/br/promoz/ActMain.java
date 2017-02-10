@@ -1,9 +1,7 @@
 package promoz.com.br.promoz;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -18,8 +16,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.text.SimpleDateFormat;
@@ -87,6 +83,7 @@ public class ActMain extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START); // recolhe o menu caso esteja "aberto"
+            Log.e("MENU","RECOLHEU");
         }if(backButtonCount >= 1)
         {
             moveTaskToBack(true);
@@ -99,7 +96,7 @@ public class ActMain extends AppCompatActivity
         {
             Toast.makeText(this, "Pressione o botão voltar novamente para sair do aplicativo", Toast.LENGTH_SHORT).show();
             backButtonCount++;
-            new CountDownTimer(countDown, 1000) {
+            new CountDownTimer(countDown, 5000) {
 
                 public void onTick(long millisUntilFinished) {
                 }
