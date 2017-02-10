@@ -278,7 +278,7 @@ public Bitmap reSizeImage(Bitmap bt){
         private Boolean authUser(){
 
             UserDAO userDAO = new UserDAO(getApplicationContext());
-            User result = userDAO.findUserByLogin(mName);
+            User result = userDAO.findUserByLogin(mEmail);
             Boolean sucess;
 
             if (result != null) {

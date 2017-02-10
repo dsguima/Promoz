@@ -121,7 +121,7 @@ public class UserDAO extends PromozContract.User {
     public User findUserByLogin(String user){
         User result = null;
 
-        String selection = COLUMN_USER_NAME + " = ?";
+        String selection = COLUMN_USER_EMAIL + " = ?";
         String[] selectionArgs = { String.valueOf(user.trim())};
 
         try {
