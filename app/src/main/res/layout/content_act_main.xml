@@ -14,29 +14,28 @@
     tools:showIn="@layout/app_bar_act_main">
 
     <ImageButton
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:id="@+id/moeda"
-        android:onClick="onMoeda"
-        android:background="@drawable/moeda"
-        app:layout_anchor="@+id/include"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="111dp"
-        android:layout_marginStart="111dp"
-        android:layout_marginBottom="186dp" />
-
-    <ImageButton
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:id="@+id/bau"
         android:onClick="onBau"
         android:background="@drawable/bau_mapa"
+        android:layout_marginLeft="28dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="36dp"
         android:layout_above="@+id/moeda"
         android:layout_toRightOf="@+id/moeda"
-        android:layout_toEndOf="@+id/moeda"
-        android:layout_marginLeft="41dp"
-        android:layout_marginStart="41dp"
-        android:layout_marginBottom="52dp" />
+        android:layout_toEndOf="@+id/moeda" />
+
+    <ImageButton
+        android:layout_height="25dp"
+        android:id="@+id/moeda"
+        android:onClick="onMoeda"
+        android:background="@drawable/moeda"
+        android:layout_marginLeft="100dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginBottom="221dp"
+        android:layout_width="25dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

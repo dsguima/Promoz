@@ -95,9 +95,6 @@ public class ActMain extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-
-
-
         setMenu();
     }
 
@@ -117,6 +114,11 @@ public class ActMain extends AppCompatActivity
         int duracao = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(contexto, texto,duracao);
         toast.show();
+    }
+
+
+    public void addCupom(Integer amountCoin){
+
     }
 
     @Override
@@ -261,7 +263,7 @@ public class ActMain extends AppCompatActivity
             int duracao = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(contexto, texto,duracao);
             toast.show();
-            addCoin(1);
+           // addCoin(1);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
