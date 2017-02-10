@@ -101,6 +101,23 @@ public class ActMain extends AppCompatActivity
         setMenu();
     }
 
+    public void onMoeda(View v){
+        addCoin(1);
+        Context contexto = getApplicationContext();
+        String texto = "Ganhou uma moeda";
+        int duracao = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(contexto, texto,duracao);
+        toast.show();
+    }
+
+    public void onBau(View v){
+     //    addCupom(1);
+        Context contexto = getApplicationContext();
+        String texto = "Ganhou um cupom";
+        int duracao = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(contexto, texto,duracao);
+        toast.show();
+    }
 
     @Override
     public void onBackPressed() {
