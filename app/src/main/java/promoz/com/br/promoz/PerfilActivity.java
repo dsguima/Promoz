@@ -9,23 +9,23 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import promoz.com.br.promoz.dao.UserDAO;
 import promoz.com.br.promoz.model.User;
@@ -58,7 +58,8 @@ public class PerfilActivity extends AppCompatActivity {
 
         UserDAO userDAO = new UserDAO(this);
         User user = userDAO.userById(userId);
-        userDAO.closeDatabase();
+        userDAO.closeDataBase();
+
         byte[] bitmapdata = user.getImg();
         if(bitmapdata != null) {
             Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
@@ -158,7 +159,7 @@ public class PerfilActivity extends AppCompatActivity {
                         }else{
                             Toast.makeText(getApplicationContext(),R.string.senhaAtualErrada,Toast.LENGTH_LONG).show();
                         }
-                        userDao.closeDatabase();
+                        userDao.closeDataBase();
                         dialog.dismiss();
                     }
                 });
@@ -216,6 +217,7 @@ public class PerfilActivity extends AppCompatActivity {
                             User user = userDAO.userById(userId);
                             user.setImg(foto);
                             userDAO.save(user);
+                            userDAO.closeDataBase();
                             //TODO A foto ta  aqui
                         }
                     } catch (IOException e) {

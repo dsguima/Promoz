@@ -12,6 +12,9 @@ public class Wallet implements Serializable {
     private Integer userId;
     private Integer amountCoin;
 
+    public Wallet() {
+    }
+
     public Wallet(Integer _id, Integer userId, Integer amountCoin) {
         this._id = _id;
         this.userId = userId;

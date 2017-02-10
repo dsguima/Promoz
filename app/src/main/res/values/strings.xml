@@ -88,4 +88,10 @@
     <string name="why_need_cpf"><a href="http://www.consultec.com.br/inscbd/2005insc/logos/960.jpg">Por que pedimos seu CPF?</a></string>
     <string name="defaultpassword"><a href="https://goo.gl/fTc4Ae">Esqueceu a senha?</a></string>
 
+    <!-- Strings related to database ERROR  -->
+    <string name="tag_error_db">error_database</string>
+    <string name="error_save_or_update">Erro ao salvar ou atualizar registro!</string>
+    <string name="error_user_by_id">Erro ao buscar usuário!</string>
+    <string name="error_funny_db">Ops! Aconteceu algo estranho. Recomendamos reiniciar o app!</string>
+
 </resources>

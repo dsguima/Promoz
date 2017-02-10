@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.WindowManager;
 import promoz.com.br.promoz.dao.CouponDAO;
 import promoz.com.br.promoz.model.Coupon;
 import promoz.com.br.promoz.model.User;
@@ -54,9 +53,13 @@ public class CarteiraActivity extends AppCompatActivity implements CarteiraPageF
 
         if(cpn.get_id() != -1)
             promoz.com.br.promoz.util.Message.msgInfo(this,cpn.getTitle(),cpn.getInfo(),android.R.drawable.ic_dialog_info);
+
+        cpnDAO.closeDataBase();
     }
 
-    public void useCupom(View view){ // TODO: rotina para utilização do cupom
+    public void useCupom(View view){
+        // TODO: rotina para utilização do cupom
+
         CouponDAO cpnDAO = new CouponDAO(getApplicationContext());
         Coupon cpn = cpnDAO.couponById((Integer) view.getTag());
 
@@ -66,6 +69,8 @@ public class CarteiraActivity extends AppCompatActivity implements CarteiraPageF
             cpnDAO.save(cpn);
             CarteiraPageFragment.handler.sendEmptyMessage(100);
         }
+
+        cpnDAO.closeDataBase();
     }
 
     @Override

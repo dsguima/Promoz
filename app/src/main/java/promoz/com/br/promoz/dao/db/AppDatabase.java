@@ -22,10 +22,11 @@ public class AppDatabase {
         return database;
     }
 
-    public void closeConnection() {
+    //TODO never used
+    /*public void closeConnection() {
         dbHelper.close();
         database.close();
-    }
+    }*/
 
     public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -57,7 +58,7 @@ public class AppDatabase {
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+            //TODO onUpgrade
         }
     }
 }

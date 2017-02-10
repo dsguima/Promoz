@@ -293,7 +293,7 @@ public Bitmap reSizeImage(Bitmap bt){
                 sucess = true;
             }
 
-            userDAO.closeDatabase();
+            //userDAO.closeDatabase();
             return sucess;
         }
 

@@ -4,14 +4,16 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import promoz.com.br.promoz.R;
 import promoz.com.br.promoz.dao.db.AppDatabase;
 import promoz.com.br.promoz.dao.db.PromozContract;
 import promoz.com.br.promoz.model.Coupon;
+import promoz.com.br.promoz.util.Message;
+import promoz.com.br.promoz.util.Util;
 
 /**
  * Created by vallux on 27/01/17.
@@ -21,8 +23,11 @@ public class CouponDAO extends PromozContract.Coupon {
 
     private AppDatabase dbHelper;
     private SQLiteDatabase database;
+    private Context context;
+    private Cursor cursor;
 
     public CouponDAO(Context context) {
+        this.context = context;
         dbHelper = new AppDatabase(context);
         database = dbHelper.getDatabase();
     }
@@ -45,7 +50,14 @@ public class CouponDAO extends PromozContract.Coupon {
         return model;
     }
 
+    /**
+     * Save or update Coupon
+     * @param coupon
+     * @return long Util.Constants.ERROR_BD if error
+     */
     public long save(Coupon coupon){ // salva os campos do objeto na tabela - atualiza ou cria um novo caso não exista
+
+        long result = Util.Constants.ERROR_BD;
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_WALLET_ID, coupon.getWalletId());
@@ -59,66 +71,86 @@ public class CouponDAO extends PromozContract.Coupon {
         values.put(COLUMN_CPN_STR_ID, coupon.getStoreId());
         values.put(COLUMN_CPN_IND_VALID, coupon.getValid());
 
-        if(coupon.get_id() != null){
-            return database.update(TABLE_NAME, values, "_id = ?", new String[]{ coupon.get_id().toString() });
+        try {
+            if(coupon.get_id() != null)
+                result = database.update(TABLE_NAME, values, "_id = ?", new String[]{ coupon.get_id().toString() });
+            else
+                result = database.insert(TABLE_NAME, null, values);
+        } catch (Exception ex){
+            Message.msgErrorDB(context, context.getString(R.string.tag_error_db), context.getString(R.string.error_funny_db), ex);
         }
-        return database.insert(TABLE_NAME, null, values);
+
+    return result;
     }
 
     public Coupon couponById(Integer id){
-        Cursor cursor = database.query(TABLE_NAME, allFields, _ID+"=?", new String[]{id.toString()}, null, null, null);
-
         Coupon cpn = new Coupon();
-        if(cursor.moveToFirst())
-            cpn = populate(cursor);
 
-        cursor.close();
+        try {
+            cursor = database.query(TABLE_NAME, allFields, _ID+"=?", new String[]{id.toString()}, null, null, null);
+            if(cursor.moveToFirst()) cpn = populate(cursor);
+
+        } catch (Exception ex){
+            Message.msgErrorDB(context, context.getString(R.string.tag_error_db), context.getString(R.string.error_save_or_update), ex);
+        } finally {
+            cursor.close();
+        }
 
         return cpn;
     }
-
-    public List<Coupon> listById(Integer walletID){
+    //TODO never used
+    /*public List<Coupon> listById(Integer walletID){
         return listById(walletID, "");
-    }
+    }*/
 
     public List<Coupon> listById(Integer walletID, String order){
-        Cursor cursor = database.query(TABLE_NAME, allFields, COLUMN_WALLET_ID + "=?", new String[]{walletID.toString()}, null, null, order);
-
         List<Coupon> lst = new ArrayList<Coupon>();
-        if (cursor.moveToFirst())
-            do {
-                lst.add(populate(cursor));
-            }while (cursor.moveToNext());
 
-        cursor.close();
+        try {
+            cursor = database.query(TABLE_NAME, allFields, COLUMN_WALLET_ID + "=?", new String[]{walletID.toString()}, null, null, order);
+            if (cursor.moveToFirst())
+                do {
+                    lst.add(populate(cursor));
+                }while (cursor.moveToNext());
+        } catch (Exception ex){
+            Message.msgErrorDB(context, context.getString(R.string.tag_error_db), context.getString(R.string.error_save_or_update), ex);
+        } finally {
+            cursor.close();
+        }
 
         return lst;
     }
 
-    public List<Coupon> list(){
+    //TODO never used
+    /*public List<Coupon> list(){
         return list("");
-    }
+    }*/
 
     public List<Coupon> list(String order){
-        Cursor cursor = database.query(TABLE_NAME, allFields, null, null, null, null, order);
-
         List<Coupon> lst = new ArrayList<Coupon>();
-        if (cursor.moveToFirst())
-            do {
-                lst.add(populate(cursor));
-            }while (cursor.moveToNext());
 
-        cursor.close();
+        try {
+            cursor = database.query(TABLE_NAME, allFields, null, null, null, null, order);
+            if (cursor.moveToFirst())
+                do {
+                    lst.add(populate(cursor));
+                }while (cursor.moveToNext());
+
+        } catch (Exception ex){
+            Message.msgErrorDB(context, context.getString(R.string.tag_error_db), context.getString(R.string.error_save_or_update), ex);
+        } finally {
+            cursor.close();
+        }
 
         return lst;
     }
 
-    public void closeDatabase(){
-        if(database.isOpen())
-            database.close();
+    public void closeDataBase(){
+        if(database.isOpen()) database.close();
     }
 
-    public boolean remove(int id){
+    //TODO never used
+    /*public boolean remove(int id){
         return database.delete(TABLE_NAME, "_id = ?", new String[]{ Integer.toString(id) }) > 0;
-    }
+    }*/
 }

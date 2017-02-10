@@ -1,13 +1,10 @@
 package promoz.com.br.promoz;
 
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -16,14 +13,11 @@ import java.util.List;
 
 import promoz.com.br.promoz.adapter.ShopAdapter;
 import promoz.com.br.promoz.dao.CouponDAO;
-import promoz.com.br.promoz.dao.HistoricCoinDAO;
 import promoz.com.br.promoz.dao.VirtualStoreDAO;
 import promoz.com.br.promoz.dao.WalletDAO;
 import promoz.com.br.promoz.model.Coupon;
-import promoz.com.br.promoz.model.HistoricCoin;
 import promoz.com.br.promoz.model.User;
 import promoz.com.br.promoz.model.VirtualStore;
-import promoz.com.br.promoz.model.Wallet;
 import promoz.com.br.promoz.util.DateUtil;
 
 public class LojaActivity extends AppCompatActivity {
@@ -35,6 +29,7 @@ public class LojaActivity extends AppCompatActivity {
     Integer walletId;
     Integer walletAmount;
     WalletDAO walletDAO;
+    CouponDAO couponDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +41,7 @@ public class LojaActivity extends AppCompatActivity {
         walletDAO = new WalletDAO(this);
         walletId = walletDAO.walletIdByUserId(getIntent().getIntExtra(User.getChave_ID(),0));
         walletAmount = walletDAO.getAmountByWalletId(walletId);
+        walletDAO.closeDataBase();
 
         updateStoreList();
     }
@@ -68,7 +64,7 @@ public class LojaActivity extends AppCompatActivity {
             String date = new SimpleDateFormat(DateUtil.YYYYMMDD_HHmmss).format(new Date(cal.getTimeInMillis()));
             String desc = virtualStore.getTitle();
 
-            CouponDAO couponDAO = new CouponDAO(this);
+            couponDAO = new CouponDAO(this);
             Coupon coupon = new Coupon();
             coupon.setDateExp(date);
             coupon.setTitle(desc);
@@ -80,11 +76,10 @@ public class LojaActivity extends AppCompatActivity {
             coupon.setWalletId(walletId);
             coupon.setStoreId(virtualStore.getStoreId());
             couponDAO.save(coupon);
-            couponDAO.closeDatabase();
+            couponDAO.closeDataBase();
 
             Snackbar.make(view, "Comprou " + desc, Snackbar.LENGTH_SHORT)
                     .setAction("Action", null).show();
-            //Toast.makeText(this, "Comprou " + desc,Toast.LENGTH_SHORT).show();
         } else {
             Snackbar.make(view,getResources().getString(R.string.saldoInsuficiente) + ": " + walletAmount, Snackbar.LENGTH_SHORT)
                     .setAction("Action", null).show();
@@ -97,12 +92,6 @@ public class LojaActivity extends AppCompatActivity {
         virtualStoreList = virtualStoreDAO.list();
         shopAdapter = new ShopAdapter(this,virtualStoreList);
         listShop.setAdapter(shopAdapter);
-    }
-
-    @Override
-    protected void onDestroy() {
-        virtualStoreDAO.closeDatabase();
-        walletDAO.closeDatabase();
-        super.onDestroy();
+        virtualStoreDAO.closeDataBase();
     }
 }

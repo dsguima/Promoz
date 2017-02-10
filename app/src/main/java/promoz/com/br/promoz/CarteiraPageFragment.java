@@ -37,7 +37,6 @@ public class CarteiraPageFragment extends Fragment{
     public ListView listhistoric;
     public static Handler handler;
 
-
     OnGetUserID callback;
 
     // Container Activity must implement this interface
@@ -108,13 +107,6 @@ public class CarteiraPageFragment extends Fragment{
     }
 
     @Override
-    public void onDestroy() {
-        walletDAO.closeDatabase();
-        couponDAO.closeDatabase();
-        super.onDestroy();
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view;
@@ -157,9 +149,23 @@ public class CarteiraPageFragment extends Fragment{
             //Caso Tab CUPOM
             view = inflater.inflate(R.layout.cupom_layout, container, false);
             listcoupon = (ListView) view.findViewById(R.id.lstCoupon);
-           listcoupon.setDividerHeight(5);
+            listcoupon.setDividerHeight(5);
             updateCouponList();
             return view;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if(historicCoinDAO != null)
+            historicCoinDAO.closeDataBase();
+
+        if(couponDAO != null)
+            couponDAO.closeDataBase();
+
+        if(walletDAO != null)
+            walletDAO.closeDataBase();
     }
 }

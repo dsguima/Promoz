@@ -2,6 +2,9 @@ package promoz.com.br.promoz.util;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Created by vallux on 03/02/17.
@@ -18,6 +21,11 @@ public class Message {
         alert.setPositiveButton("OK", null);
         alert.setIcon(iconId);
         alert.show();
+    }
+
+    public static void msgErrorDB(Context context, String tag, String error, Exception ex){
+        Log.e(tag, error + ex.getMessage());
+        Toast.makeText(context, error, Toast.LENGTH_LONG);
     }
 
 }

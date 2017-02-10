@@ -175,7 +175,7 @@ public class LoginActivity extends AppCompatActivity {
                 sucess = false;
             }
 
-            userDAO.closeDatabase();
+            userDAO.closeDataBase();
             return sucess;
 
         }

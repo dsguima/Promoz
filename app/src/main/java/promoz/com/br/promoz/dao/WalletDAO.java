@@ -1,16 +1,14 @@
 package promoz.com.br.promoz.dao;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
+import promoz.com.br.promoz.R;
 import promoz.com.br.promoz.dao.db.AppDatabase;
 import promoz.com.br.promoz.dao.db.PromozContract;
 import promoz.com.br.promoz.model.Wallet;
+import promoz.com.br.promoz.util.Message;
 
 /**
  * Created by vallux on 25/01/17.
@@ -20,13 +18,16 @@ public class WalletDAO extends PromozContract.Wallet {
 
     private AppDatabase dbHelper;
     private SQLiteDatabase database;
+    private Context context;
+    private Cursor cursor;
 
     public WalletDAO(Context context) {
+        this.context = context;
         dbHelper = new AppDatabase(context);
         database = dbHelper.getDatabase();
     }
 
-    private Wallet populate(Cursor cursor){ // Popula o objeto "Wallet" com os dados do cursor
+    private Wallet populate(){ // Popula o objeto "Wallet" com os dados do cursor
         Wallet model = new Wallet(
                 cursor.getInt(cursor.getColumnIndex(_ID)),
                 cursor.getInt(cursor.getColumnIndex(COLUMN_USER_ID)),
@@ -35,7 +36,8 @@ public class WalletDAO extends PromozContract.Wallet {
         return model;
     }
 
-    public long save(Wallet hist){ // salva os campos do objeto na tabela - atualiza ou cria um novo caso não exista
+    //TODO never used
+    /*public long save(Wallet hist){ // salva os campos do objeto na tabela - atualiza ou cria um novo caso não exista
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_USER_ID, hist.getUserId());
@@ -45,56 +47,81 @@ public class WalletDAO extends PromozContract.Wallet {
             return database.update(TABLE_NAME, values, "_id = ?", new String[]{ hist.get_id().toString() });
         }
         return database.insert(TABLE_NAME, null, values);
-    }
+    }*/
 
-    public Wallet walletById(Integer id){
-        Cursor cursor = database.query(TABLE_NAME, allFields, _ID+"=?", new String[]{id.toString()}, null, null, null);
+    public Wallet walletById(int id){
 
-        Wallet wlt = new Wallet(null,null,null);
-        if(cursor.moveToFirst())
-            wlt = populate(cursor);
-        cursor.close();
+        try {
+            cursor = database.query(TABLE_NAME, allFields, _ID+"=?", new String[]{String.valueOf(id)}, null, null, null);
+            if(cursor.moveToFirst())
+                return populate();
 
-       // Log.e("WallwtDAO","===============" + wlt.getAmountCoin());
-
-        return wlt;
+        } catch (Exception ex){
+            Message.msgErrorDB(context, context.getString(R.string.tag_error_db), context.getString(R.string.error_funny_db), ex);
+        } finally {
+            cursor.close();
+        }
+        return null;
     }
 
     public Integer getAmountByWalletId(Integer id){
-        Cursor cursor = database.query(TABLE_NAME, new String[]{COLUMN_AMOUNT_COIN}, COLUMN_USER_ID+"=?", new String[]{id.toString()}, null, null, null);
+        Integer result = -1;
 
-        if(cursor.moveToFirst())
-            return cursor.getInt(0);
+        try {
+            cursor = database.query(TABLE_NAME, new String[]{COLUMN_AMOUNT_COIN}, COLUMN_USER_ID+"=?", new String[]{id.toString()}, null, null, null);
+            if(cursor.moveToFirst())
+                result = cursor.getInt(cursor.getColumnIndex(COLUMN_AMOUNT_COIN));
 
-        return 0;
+        } catch (Exception ex){
+            Message.msgErrorDB(context, context.getString(R.string.tag_error_db), context.getString(R.string.error_funny_db), ex);
+        } finally {
+            cursor.close();
+        }
+
+        return result;
     }
 
     public Integer walletIdByUserId(Integer id){
-        Cursor cursor = database.query(TABLE_NAME, new String[]{_ID}, COLUMN_USER_ID+"=?", new String[]{id.toString()}, null, null, null);
+        Integer result = -1;
 
-        if(cursor.moveToFirst())
-            return cursor.getInt(0);
+        try {
+            cursor = database.query(TABLE_NAME, new String[]{_ID}, COLUMN_USER_ID+"=?", new String[]{id.toString()}, null, null, null);
+            if(cursor.moveToFirst())
+                result = cursor.getInt(cursor.getColumnIndex(_ID));
 
-        return 0;
+        } catch (Exception ex){
+            Message.msgErrorDB(context, context.getString(R.string.tag_error_db), context.getString(R.string.error_funny_db), ex);
+        } finally {
+            cursor.close();
+        }
+
+        return result;
     }
 
-    public List<Wallet> list(){
-        Cursor cursor = database.query(TABLE_NAME, allFields, null, null, null, null, null);
-
-//        cursor.moveToFirst();
+    //TODO never used
+    /*public List<Wallet> list(){
         List<Wallet> lst = new ArrayList<Wallet>();
-        while (cursor.moveToNext())
-            lst.add(populate(cursor));
-        cursor.close();
+
+        try {
+            cursor = database.query(TABLE_NAME, allFields, null, null, null, null, null);
+            while (cursor.moveToNext())
+                lst.add(populate());
+
+        } catch (Exception ex){
+            Message.msgErrorDB(context, context.getString(R.string.tag_error_db), context.getString(R.string.error_funny_db), ex);
+        } finally {
+            cursor.close();
+        }
 
         return lst;
-    }
+    }*/
 
-    public void closeDatabase(){
-        database.close();
-    }
-
-    public boolean remove(int id){
+    //TODO never used
+    /*public boolean remove(int id){
         return database.delete(TABLE_NAME, "_id = ?", new String[]{ Integer.toString(id) }) > 0;
+    }*/
+
+    public void closeDataBase(){
+        if(database.isOpen()) database.close();
     }
 }

@@ -7,20 +7,22 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import promoz.com.br.promoz.dao.HistoricCoinDAO;
 import promoz.com.br.promoz.dao.UserDAO;
@@ -29,7 +31,8 @@ import promoz.com.br.promoz.model.HistoricCoin;
 import promoz.com.br.promoz.model.User;
 import promoz.com.br.promoz.util.DateUtil;
 
-public class ActMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class ActMain extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
     private Integer userID=0;
     private CircleImageView foto,fotoclick;
     int backButtonCount = 0;
@@ -161,7 +164,7 @@ public class ActMain extends AppCompatActivity implements NavigationView.OnNavig
                     foto.setImageBitmap(bitmap);
             }
         }
-        userDAO.closeDatabase();
+        userDAO.closeDataBase();
     }
 
     @Override
@@ -174,13 +177,17 @@ public class ActMain extends AppCompatActivity implements NavigationView.OnNavig
         setMenu();
     }
 
-    private void addCoin(Integer amountCoin){ // TODO: Adicionar moedas apenas para protótipo
+    // TODO: Adicionar moedas apenas para protótipo
+    private void addCoin(Integer amountCoin){
         WalletDAO wallet = new WalletDAO(this);
         Integer walletId = wallet.walletIdByUserId(userID);
         String date = new SimpleDateFormat(DateUtil.YYYYMMDD_HHmmss).format(new Date());
         HistoricCoin historicCoin = new HistoricCoin(walletId,1,date,amountCoin,"Ganhou Moeda");
         HistoricCoinDAO historicCoinDAO = new HistoricCoinDAO(this);
         historicCoinDAO.save(historicCoin);
+        wallet.closeDataBase();
+        historicCoinDAO.closeDataBase();
+
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
