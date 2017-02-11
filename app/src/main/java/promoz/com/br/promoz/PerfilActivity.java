@@ -215,8 +215,8 @@ public class PerfilActivity extends AppCompatActivity {
 
                         Integer imgSize = bitmap.getWidth()*bitmap.getHeight();
 
-                        //if(bitmap.getHeight()>4000 || bitmap.getWidth()>4000){
-                        if(imgSize > 2048000){
+                        if(bitmap.getHeight()>4000 || bitmap.getWidth()>4000){
+                        //if(imgSize > 2048000){
                             promoz.com.br.promoz.util.Message.msgInfo(this,"Imagem muito grande","Por favor escolher uma imagem menor que 2MB"  ,android.R.drawable.ic_dialog_info);
                         } else {
                             CircleImageView perfilPhoto = (CircleImageView) findViewById(R.id.perfil_foto);
@@ -224,7 +224,7 @@ public class PerfilActivity extends AppCompatActivity {
 
 
                             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream);
                             byte[] foto = stream.toByteArray();
 
                             UserDAO userDAO = new UserDAO(this);
@@ -248,24 +248,23 @@ public class PerfilActivity extends AppCompatActivity {
 
     public Bitmap reSizeImage(Bitmap bt){
         float largura = (float)bt.getWidth();
-        Log.d("SIZE",largura + "");
         float altura = (float) bt.getHeight();
-        Log.d("SIZE",altura + "");
+
         if(altura > largura){
-            float altProp = ((largura/altura)*100);
-            Log.d("SIZE",altProp + "");
-            Bitmap.createScaledBitmap(bt, Math.round(altProp), 100, false);
+            float altProp = ((altura/largura)*100);
+            Log.d("A_SIZE",altProp + "");
+            Bitmap.createScaledBitmap(bt, Math.round(altProp), 100, true);
 
         }
         if(largura > altura){
-            float largProp = ((altura/largura)*100);
-            Log.d("SIZE",largProp + "");
-            Bitmap.createScaledBitmap(bt, 100, Math.round(largProp), false);
+            float largProp = ((largura/altura)*100);
+            Log.d("L_SIZE",largProp + "");
+            Bitmap.createScaledBitmap(bt, 100, Math.round(largProp), true);
 
         }
         if(largura == altura){
 
-            Bitmap.createScaledBitmap(bt, 100, 100, false);
+            Bitmap.createScaledBitmap(bt, 100, 100, true);
 
         }
         return bt;
