@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,12 +22,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import promoz.com.br.promoz.dao.CouponDAO;
 import promoz.com.br.promoz.dao.HistoricCoinDAO;
 import promoz.com.br.promoz.dao.UserDAO;
 import promoz.com.br.promoz.dao.WalletDAO;
+import promoz.com.br.promoz.model.Coupon;
 import promoz.com.br.promoz.model.HistoricCoin;
 import promoz.com.br.promoz.model.User;
 import promoz.com.br.promoz.util.DateUtil;
@@ -100,25 +104,49 @@ public class ActMain extends AppCompatActivity
 
     public void onMoeda(View v){
         addCoin(1);
-        Context contexto = getApplicationContext();
         String texto = "Ganhou uma moeda";
-        int duracao = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(contexto, texto,duracao);
-        toast.show();
+        Snackbar.make(findViewById(R.id.drawer_layout),texto, Snackbar.LENGTH_SHORT)
+                .setAction("Action", null).show();
     }
 
     public void onBau(View v){
-     //    addCupom(1);
-        Context contexto = getApplicationContext();
-        String texto = "Ganhou um cupom";
-        int duracao = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(contexto, texto,duracao);
-        toast.show();
+         addCupom();
     }
 
 
-    public void addCupom(Integer amountCoin){
+    public void addCupom(){
+        WalletDAO wallet = new WalletDAO(this);
+        Integer walletId = wallet.walletIdByUserId(userID);
+        Integer walletAmount = wallet.getAmountByWalletId(walletId);
 
+        if(walletAmount >= 2) {
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DAY_OF_MONTH, 10);
+            String date = new SimpleDateFormat(DateUtil.YYYYMMDD_HHmmss).format(new Date(cal.getTimeInMillis()));
+
+            Coupon coupon = new Coupon();
+            coupon.setTitle("Mês do Fitness");
+            coupon.setSubTitle("R$50,00 de desconto em compras acima de R$700,00");
+            coupon.setInfo("Neste mês de Fevereiro, a Centauro traz para você promoções imperdíveis: Toda linha fitness com até 50% de desconto.");
+            coupon.setDateExp(date);
+            coupon.setPrice(2);
+            coupon.setValid(1);
+            coupon.setStoreId(2);
+            coupon.setImg(R.drawable.cia_logo);
+            coupon.setWalletId(walletId);
+
+            CouponDAO couponDAO = new CouponDAO(this);
+            couponDAO.save(coupon);
+            couponDAO.closeDataBase();
+
+            String texto = "Ganhou um cupom";
+            Snackbar.make(findViewById(R.id.drawer_layout),texto, Snackbar.LENGTH_SHORT)
+                    .setAction("Action", null).show();
+
+        }else{
+            Snackbar.make(findViewById(R.id.drawer_layout),getResources().getString(R.string.saldoInsuficiente) + ": " + walletAmount, Snackbar.LENGTH_SHORT)
+                    .setAction("Action", null).show();
+        }
     }
 
     @Override

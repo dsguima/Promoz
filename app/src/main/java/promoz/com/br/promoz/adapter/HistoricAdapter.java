@@ -63,7 +63,7 @@ public class HistoricAdapter extends BaseAdapter {
         ImageView coin = (ImageView) view.findViewById(R.id.historic_coin);
 
         if(value < 0){
-            amount.setTextColor(view.getResources().getColor(R.color.colorPrimaryDark));
+            amount.setTextColor(view.getResources().getColor(R.color.colorPrimary));
             coin.setImageDrawable(view.getResources().getDrawable(R.drawable.moeda_gasto));
         }else{
             amount.setTextColor(view.getResources().getColor(R.color.colorVerdeMoeda));
