@@ -353,8 +353,8 @@ public Bitmap reSizeImage(Bitmap bt){
                 setSharedPreferences();
                 finish();
             } else {
-                viewName.setError("Usuário já cadastrado");
-                viewName.requestFocus();
+                viewEmail.setError("Usuário já cadastrado");
+                viewEmail.requestFocus();
             }
         }
 
