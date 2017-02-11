@@ -81,31 +81,27 @@
             android:background="@android:color/transparent" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
             android:layout_margin="@dimen/activity_horizontal_margin">
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/change_password"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
             android:id="@+id/change_pass"
-            android:padding="10dp"
             android:textColor="@drawable/text_buttom_color_logout_perfil"
             android:background="@drawable/buttom_logout_perfil" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_weight="1"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:background="@android:color/transparent" />
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/logout"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
             android:id="@+id/logoutbt"
             android:textColor="@drawable/text_buttom_color_logout_perfil"
             android:background="@drawable/buttom_logout_perfil" />

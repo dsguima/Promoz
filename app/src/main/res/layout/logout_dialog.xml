@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,18 +10,18 @@
 
     <TextView
         android:id="@+id/confirm_logout"
-        android:text="Você tem certeza de que quer perder a oportunidade de continuar usando o PromoZ?"
+        android:text="Temos promoções e ofertas incríveis por aqui! Tem certeza que vai perder isso?"
         android:textAlignment="center"
         android:textColor="@color/colorPrimary"
         android:layout_width="wrap_content"
         android:layout_margin="@dimen/activity_horizontal_margin"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
 
         <requestFocus />
     </TextView>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="10dp">
@@ -35,7 +36,7 @@
             android:background="@drawable/buttom_logout_perfil"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/no_bt" />
+            android:text="@string/no_bt_funny" />
         <Button
             android:id="@+id/yes"
             android:layout_marginTop="15dp"

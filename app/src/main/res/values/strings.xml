@@ -48,15 +48,18 @@
     <!-- Strings related to Perfil -->
     <string name="user_name">Nome do Usuário</string>
     <string name="user_email">usuario@promoz.com.br</string>
-    <string name="change_password">Trocar senha</string>
-    <string name="logout">Log out</string>
+    <string name="change_password">Alterar senha</string>
+    <string name="logout">Sair</string>
+    <string name="logout_confirm">Temos promoções e ofertas incríveis por aqui! Tem certeza que vai perder isso?</string>
     <string name="now_pass">Digite sua senha atual</string>
     <string name="new_pass">Digite sua nova senha</string>
     <string name="new_pass_again">Confirme sua nova senha</string>
     <string name="confirm_bt">Confirmar</string>
     <string name="cancel_bt">Cancelar</string>
     <string name="no_bt">Não</string>
+    <string name="no_bt_funny">Quero ficar!</string>
     <string name="yes_bt">Sim</string>
+    <string name="yes_bt_funny">Depois eu volto!</string>
 
     <!-- Strings related to Loja -->
     <string name="buy">Comprar</string>
@@ -84,7 +87,6 @@
     <string name="error_funny">Ops! Aconteceu algo estranho. Tente novamente!</string>
 
     <string name="txt_lembrar_senha">Esqueceu a senha?</string>
-    <string name="Required_field">*Campo obrigatório</string>
     <string name="why_need_cpf"><a href="http://www.consultec.com.br/inscbd/2005insc/logos/960.jpg">Por que pedimos seu CPF?</a></string>
     <string name="defaultpassword"><a href="https://goo.gl/fTc4Ae">Esqueceu a senha?</a></string>
 
