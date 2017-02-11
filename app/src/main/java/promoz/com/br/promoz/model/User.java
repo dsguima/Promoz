@@ -35,6 +35,15 @@ public class User implements Serializable {
         this.img = img;
     }
 
+    public boolean hasImg(){
+        boolean result = true;
+
+        if(img == null)
+            result = false;
+
+        return result;
+    }
+
     public Integer get_id() {
         return _id;
     }
@@ -76,7 +85,14 @@ public class User implements Serializable {
     }
 
     public byte[] getImg() {
-        return img;
+        try {
+            return img;
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            byte[] im = new byte[]{1,1};
+            return im;
+        }
+
     }
 
     public void setImg(byte[] img) {

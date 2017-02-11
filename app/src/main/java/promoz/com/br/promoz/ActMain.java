@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -21,6 +23,10 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -99,7 +105,7 @@ public class ActMain extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        setMenu();
+        setMenu(); // #########################################    seta a imagem do menu
     }
 
     public void onMoeda(View v){
@@ -139,7 +145,7 @@ public class ActMain extends AppCompatActivity
             couponDAO.save(coupon);
             couponDAO.closeDataBase();
 
-            String texto = "Ganhou um cupom";
+            String texto = "Comprou um cupom";
             Snackbar.make(findViewById(R.id.drawer_layout),texto, Snackbar.LENGTH_SHORT)
                     .setAction("Action", null).show();
 
@@ -185,7 +191,6 @@ public class ActMain extends AppCompatActivity
     }
 
 
-
     private void checkLogged(){
         userID = getSharedPreferences(getResources().getString(R.string.app_name), Context.MODE_PRIVATE).getInt(User.getChave_ID(),0);
         if(userID == 0)
@@ -198,11 +203,14 @@ public class ActMain extends AppCompatActivity
         View hView =  navigationView.getHeaderView(0);
         foto =  (CircleImageView) hView.findViewById(R.id.foto_nav);
 
+      //  Bitmap bitmap = null;
+
         UserDAO userDAO = new UserDAO(this);
         User user = userDAO.userById(userID);
         byte[] bitmapdata;
         if(user != null) {
             bitmapdata = user.getImg();
+            Log.e("","");
             TextView name = (TextView) hView.findViewById(R.id.navDrawerNome);
             name.setText(user.getNome());
             if(bitmapdata != null) {
@@ -216,9 +224,7 @@ public class ActMain extends AppCompatActivity
 
     @Override
     protected void onRestart() {
-
         backButtonCount = 0;
-        Log.e("MENU", "BACK BT: "+backButtonCount);
         checkLogged();
         super.onRestart();
         setMenu();
@@ -234,7 +240,6 @@ public class ActMain extends AppCompatActivity
         historicCoinDAO.save(historicCoin);
         wallet.closeDataBase();
         historicCoinDAO.closeDataBase();
-
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

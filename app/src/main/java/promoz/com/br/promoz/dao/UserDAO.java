@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import promoz.com.br.promoz.R;
 import promoz.com.br.promoz.dao.db.AppDatabase;
@@ -32,6 +33,7 @@ public class UserDAO extends PromozContract.User {
     }
 
     private User populate(){ // Popula o objeto "User" com os dados do cursor
+
         User model = new User(
                 cursor.getInt(cursor.getColumnIndex(_ID)),
                 cursor.getString(cursor.getColumnIndex(COLUMN_USER_NAME)),
@@ -85,8 +87,9 @@ public class UserDAO extends PromozContract.User {
             cursor = database.query(TABLE_NAME, allFields, _ID + " = ?", new String[]{userId.toString()}, null, null, null);
             if(cursor.moveToFirst())
                 result = populate();
+
         } catch (Exception ex){
-            Message.msgErrorDB(context, context.getString(R.string.tag_error_db), context.getString(R.string.error_funny_db), ex);
+            Message.msgErrorDB(context, context.getString(R.string.tag_error_db),  context.getString(R.string.error_funny_db), ex);
         } finally {
             cursor.close();
         }

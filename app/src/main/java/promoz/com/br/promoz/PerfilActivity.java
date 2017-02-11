@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -24,11 +25,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import promoz.com.br.promoz.dao.UserDAO;
 import promoz.com.br.promoz.model.User;
+import promoz.com.br.promoz.util.ImageUtil;
 
 public class PerfilActivity extends AppCompatActivity {
     private int STORAGE_PERMISSION_CODE = 23;
@@ -60,19 +63,24 @@ public class PerfilActivity extends AppCompatActivity {
         User user = userDAO.userById(userId);
         userDAO.closeDataBase();
 
-        byte[] bitmapdata = user.getImg();
-        if(bitmapdata != null) {
-            Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
-            if (bitmap != null)
-                ci.setImageBitmap(bitmap);
+        if(user != null) {
+            byte[] bitmapdata = user.getImg();
+            if (bitmapdata != null) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
+                if (bitmap != null)
+                    ci.setImageBitmap(bitmap);
+            }
+        }else{
+            Log.e("IMG", "Não tem imagem");
         }
 
-
         TextView email = (TextView) findViewById(R.id.email);
-        email.setText(user.getEmail());
+        if(user != null) {
+            email.setText(user.getEmail());
 
-        TextView name = (TextView) findViewById(R.id.nome);
-        name.setText(user.getNome());
+            TextView name = (TextView) findViewById(R.id.nome);
+            name.setText(user.getNome());
+        }
 
 
         Button button_logout = (Button) findViewById(R.id.logoutbt);
@@ -203,11 +211,17 @@ public class PerfilActivity extends AppCompatActivity {
                     {
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
 
-                        if(bitmap.getHeight()>4000 || bitmap.getWidth()>4000){
-                            promoz.com.br.promoz.util.Message.msgInfo(this,"Imagem muito grande","Por favor escolher uma imagem com resolução menor que 4000px"  ,android.R.drawable.ic_dialog_info);
+                        Log.e("IMAGEM","TAMANHO IMAGEM >> " + bitmap.getHeight() +" x " + bitmap.getWidth());
+
+                        Integer imgSize = bitmap.getWidth()*bitmap.getHeight();
+
+                        //if(bitmap.getHeight()>4000 || bitmap.getWidth()>4000){
+                        if(imgSize > 2048000){
+                            promoz.com.br.promoz.util.Message.msgInfo(this,"Imagem muito grande","Por favor escolher uma imagem menor que 2MB"  ,android.R.drawable.ic_dialog_info);
                         } else {
                             CircleImageView perfilPhoto = (CircleImageView) findViewById(R.id.perfil_foto);
                             perfilPhoto.setImageBitmap(reSizeImage(bitmap));
+
 
                             ByteArrayOutputStream stream = new ByteArrayOutputStream();
                             bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
@@ -218,6 +232,7 @@ public class PerfilActivity extends AppCompatActivity {
                             user.setImg(foto);
                             userDAO.save(user);
                             userDAO.closeDataBase();
+                            Log.e("IMAGEM","POPULOU IMAGEM >> " + bitmap.getHeight());
                             //TODO A foto ta  aqui
                         }
                     } catch (IOException e) {
