@@ -202,7 +202,7 @@ public final class PromozContract {
                 ") VALUES('Moeda Verde')";
 
         private static final String VALUE_TABLE_USER = INSERT_STM + User.TABLE_NAME + " (" + User.COLUMN_USER_NAME +
-                COMMA_SEP + User.COLUMN_USER_PASSWORD + COMMA_SEP + User.COLUMN_USER_EMAIL+ ") VALUES('promoz','','promoz@promoz.com.br')";
+                COMMA_SEP + User.COLUMN_USER_PASSWORD + COMMA_SEP + User.COLUMN_USER_EMAIL+ ") VALUES('Promoz','','promoz@promoz.com.br')";
 
         private static final String VALUE_TABLE_COUPON_CENTAURO = INSERT_STM + Coupon.TABLE_NAME + " (" + Coupon.COLUMN_CPN_TITLE +
                 COMMA_SEP + Coupon.COLUMN_CPN_SUBTITLE + COMMA_SEP + Coupon.COLUMN_CPN_INFO + COMMA_SEP + Coupon.COLUMN_CPN_DT_EXP +

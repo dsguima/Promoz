@@ -24,8 +24,7 @@ public class Message {
     }
 
     public static void msgErrorDB(Context context, String tag, String error, Exception ex){
-        Log.e(tag, error + ex.getMessage());
-        Toast.makeText(context, error, Toast.LENGTH_LONG);
+        Toast.makeText(context, error, Toast.LENGTH_LONG).show();
     }
 
 }

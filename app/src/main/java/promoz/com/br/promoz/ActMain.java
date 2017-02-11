@@ -40,6 +40,7 @@ import promoz.com.br.promoz.model.Coupon;
 import promoz.com.br.promoz.model.HistoricCoin;
 import promoz.com.br.promoz.model.User;
 import promoz.com.br.promoz.util.DateUtil;
+import promoz.com.br.promoz.util.Util;
 
 public class ActMain extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -69,6 +70,7 @@ public class ActMain extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context,PerfilActivity.class);
+                closeMenu();
                 context.startActivity(intent);
             }
         });
@@ -157,15 +159,9 @@ public class ActMain extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            backButtonCount =0;
-            Log.e("MENU", "BACK BT: "+backButtonCount);
-            drawer.closeDrawer(GravityCompat.START); // recolhe o menu caso esteja "aberto"
-            Log.e("MENU", "RECOLHEU");
-        } else {
+
+        if (closeMenu()) {
             if (backButtonCount >= 1) {
-                Log.e("MENU", "BACK BT: "+backButtonCount);
                 moveTaskToBack(true);
                 Intent intent = new Intent(Intent.ACTION_MAIN);
                 intent.addCategory(Intent.CATEGORY_HOME);
@@ -174,18 +170,13 @@ public class ActMain extends AppCompatActivity
             } else {
                 Toast.makeText(this, "Pressione o botão voltar novamente para sair do aplicativo", Toast.LENGTH_SHORT).show();
                 backButtonCount++;
-                Log.e("MENU", "BACK BT: "+backButtonCount);
                 new CountDownTimer(countDown, 5000) {
-
                     public void onTick(long millisUntilFinished) {
                     }
-
                     public void onFinish() {
                         backButtonCount = 0;
                     }
-
                 }.start();
-
             }
         }
     }
@@ -207,10 +198,10 @@ public class ActMain extends AppCompatActivity
 
         UserDAO userDAO = new UserDAO(this);
         User user = userDAO.userById(userID);
-        byte[] bitmapdata;
+
         if(user != null) {
+            byte[] bitmapdata;
             bitmapdata = user.getImg();
-            Log.e("","");
             TextView name = (TextView) hView.findViewById(R.id.navDrawerNome);
             name.setText(user.getNome());
             if(bitmapdata != null) {
@@ -222,9 +213,20 @@ public class ActMain extends AppCompatActivity
         userDAO.closeDataBase();
     }
 
+    private boolean closeMenu(){
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            backButtonCount =0;
+            drawer.closeDrawer(GravityCompat.START); // recolhe o menu caso esteja "aberto"
+            return false;
+        }
+        return true;
+    }
+
     @Override
     protected void onRestart() {
-        backButtonCount = 0;
+       // backButtonCount = 0;
+       // closeMenu();
         checkLogged();
         super.onRestart();
         setMenu();

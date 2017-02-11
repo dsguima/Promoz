@@ -18,13 +18,22 @@ import java.io.ByteArrayOutputStream;
 
 public class ImageUtil {
 
+    private static byte percentage = 100;
+
+    public static byte[] getThumbNail(Bitmap bitmap){
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, percentage, stream);
+        return stream.toByteArray();
+    }
+
     public static byte[] drawableToByteArray(Context context, int resourceId){
 
         try {
             Drawable drawable = ContextCompat.getDrawable(context,resourceId);
             Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            bitmap.compress(Bitmap.CompressFormat.PNG, percentage, stream);
             return stream.toByteArray();
         } catch (Exception e) {
             Log.d("ImageManager", "Error: " + e.toString());

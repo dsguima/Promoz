@@ -209,39 +209,18 @@ public class PerfilActivity extends AppCompatActivity {
                 {
                     try
                     {
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
-
-                        Log.e("IMAGEM","TAMANHO IMAGEM >> " + bitmap.getHeight() +" x " + bitmap.getWidth());
-
-                        Integer imgSize = bitmap.getWidth()*bitmap.getHeight();
-
-                        if(bitmap.getHeight()>4000 || bitmap.getWidth()>4000){
-                        //if(imgSize > 2048000){
-                            promoz.com.br.promoz.util.Message.msgInfo(this,"Imagem muito grande","Por favor escolher uma imagem menor que 2MB"  ,android.R.drawable.ic_dialog_info);
-                        } else {
-                            CircleImageView perfilPhoto = (CircleImageView) findViewById(R.id.perfil_foto);
-                            perfilPhoto.setImageBitmap(reSizeImage(bitmap));
-
-
-                            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, stream);
-                            byte[] foto = stream.toByteArray();
-
-                            UserDAO userDAO = new UserDAO(this);
-                            User user = userDAO.userById(userId);
-                            user.setImg(foto);
-                            userDAO.save(user);
-                            userDAO.closeDataBase();
-                            Log.e("IMAGEM","POPULOU IMAGEM >> " + bitmap.getHeight());
-                            //TODO A foto ta  aqui
-                        }
+                        Bitmap bitmap = reSizeImage(MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData()));
+                        CircleImageView perfilPhoto = (CircleImageView) findViewById(R.id.perfil_foto);
+                        perfilPhoto.setImageBitmap(bitmap);
+                        UserDAO userDAO = new UserDAO(this);
+                        User user = userDAO.userById(userId);
+                        user.setImg(ImageUtil.getThumbNail(bitmap));
+                        userDAO.save(user);
+                        userDAO.closeDataBase();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
                 }
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(this, "Cancelado", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -249,25 +228,21 @@ public class PerfilActivity extends AppCompatActivity {
     public Bitmap reSizeImage(Bitmap bt){
         float largura = (float)bt.getWidth();
         float altura = (float) bt.getHeight();
+        int base = 1000;
 
-        if(altura > largura){
-            float altProp = ((altura/largura)*100);
-            Log.d("A_SIZE",altProp + "");
-            Bitmap.createScaledBitmap(bt, Math.round(altProp), 100, true);
+        if(largura < base && altura < base){
+            return bt;
+        } else if(altura > largura){
+            float altProp = ((largura/altura)*base);
+            return Bitmap.createScaledBitmap(bt, Math.round(altProp), base, false);
 
+        } else if(largura > altura){
+            float largProp = ((altura/largura)*base);
+            return Bitmap.createScaledBitmap(bt, base, Math.round(largProp), false);
+
+        } else {
+            return Bitmap.createScaledBitmap(bt, base, base, false);
         }
-        if(largura > altura){
-            float largProp = ((largura/altura)*100);
-            Log.d("L_SIZE",largProp + "");
-            Bitmap.createScaledBitmap(bt, 100, Math.round(largProp), true);
-
-        }
-        if(largura == altura){
-
-            Bitmap.createScaledBitmap(bt, 100, 100, true);
-
-        }
-        return bt;
     }
 
     private void requestStoragePermission(){

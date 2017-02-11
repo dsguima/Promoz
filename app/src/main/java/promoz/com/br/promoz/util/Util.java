@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 public class Util extends AppCompatActivity {
 
+
     public static class Constants {
 
         public static String URI_GOOGLE = "https://www.google.com/intl/pt-BR/policies/terms/";
@@ -24,7 +25,6 @@ public class Util extends AppCompatActivity {
         public static int ERROR_LOGIN = -1;
         public static int ERROR_SENHA = 1;
         public static int ERROR_BD = -1;
-
     }
 
     public static void setFont(AssetManager assets, TextView textView, String font){
