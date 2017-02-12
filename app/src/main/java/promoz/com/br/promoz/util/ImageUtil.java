@@ -27,6 +27,26 @@ public class ImageUtil {
         return stream.toByteArray();
     }
 
+    public static Bitmap reSizeImage(Bitmap bt){
+        float largura = (float)bt.getWidth();
+        float altura = (float) bt.getHeight();
+        int base = 1000;
+
+        if(largura < base && altura < base){
+            return bt;
+        } else if(altura > largura){
+            float altProp = ((largura/altura)*base);
+            return Bitmap.createScaledBitmap(bt, Math.round(altProp), base, false);
+
+        } else if(largura > altura){
+            float largProp = ((altura/largura)*base);
+            return Bitmap.createScaledBitmap(bt, base, Math.round(largProp), false);
+
+        } else {
+            return Bitmap.createScaledBitmap(bt, base, base, false);
+        }
+    }
+
     public static byte[] drawableToByteArray(Context context, int resourceId){
 
         try {

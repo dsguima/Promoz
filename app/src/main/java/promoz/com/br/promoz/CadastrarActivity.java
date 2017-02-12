@@ -16,21 +16,19 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import de.hdodenhof.circleimageview.CircleImageView;
 import promoz.com.br.promoz.dao.UserDAO;
 import promoz.com.br.promoz.model.User;
+import promoz.com.br.promoz.util.ImageUtil;
 
 public class CadastrarActivity extends AppCompatActivity {
 
     private int STORAGE_PERMISSION_CODE = 23;
     private int SELECT_IMAGE = 1;
-    byte[] photo;
     Bitmap bitmap=null;
     User user = null;
     private CadastrarActivity.UserLoginTask mAuthTask = null;
@@ -65,13 +63,13 @@ public class CadastrarActivity extends AppCompatActivity {
 
     public void galleyView(){
         if(isReadStorageAllowed()){
-            Log.v("PERM","Já possuo");
+          //  Log.v("PERM","Já possuo");
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);//
             startActivityForResult(Intent.createChooser(intent, "Select Picture"),SELECT_IMAGE);
         }else {
-            Log.v("PERM","Não possuo");
+          //  Log.v("PERM","Não possuo");
             requestStoragePermission();
         }
     }
@@ -87,16 +85,9 @@ public class CadastrarActivity extends AppCompatActivity {
                 {
                     try
                     {
-                        bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData());
-
-                        if(bitmap.getHeight()>4000 || bitmap.getWidth()>4000){
-                            promoz.com.br.promoz.util.Message.msgInfo(this,"Imagem muito grande","Por favor escolher uma imagem com resolução menor que 4000px"  ,android.R.drawable.ic_dialog_info);
-                        }else{
+                        bitmap = ImageUtil.reSizeImage(MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData()));
                         CircleImageView perfilPhoto = (CircleImageView) findViewById(R.id.choose_photo);
-                        perfilPhoto.setImageBitmap(reSizeImage(bitmap));
-                        //TODO A foto ta  aqui
-                            Log.e("FOTO","RESULT FOTO");
-                      }
+                        perfilPhoto.setImageBitmap(bitmap);
                     } catch (IOException e)
                     {
                         e.printStackTrace();
@@ -110,7 +101,7 @@ public class CadastrarActivity extends AppCompatActivity {
         }
     }
 
-public Bitmap reSizeImage(Bitmap bt){
+/*public Bitmap reSizeImage(Bitmap bt){
         float largura = (float)bt.getWidth();
         Log.d("SIZE",largura + "");
         float altura = (float) bt.getHeight();
@@ -133,7 +124,7 @@ public Bitmap reSizeImage(Bitmap bt){
 
     }
     return bt;
-}
+}*/
 
     private void requestStoragePermission(){
 
@@ -141,17 +132,17 @@ public Bitmap reSizeImage(Bitmap bt){
             //If the user has denied the permission previously your code will come to this block
             //Here you can explain why you need this permission
             //Explain here why you need this permission
-            Log.v("PERM","EXPLIQUEI");
+         //   Log.v("PERM","EXPLIQUEI");
         }
         //And finally ask for the permission
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},STORAGE_PERMISSION_CODE);
-        Log.v("PERM","PEDI");
+     //   Log.v("PERM","PEDI");
     }
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
         //Checking the request code of our request
         if (requestCode == STORAGE_PERMISSION_CODE) {
-            Log.v("PERM",grantResults[0]+"");
+         //   Log.v("PERM",grantResults[0]+"");
             //If permission is granted
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 galleyView();
@@ -203,7 +194,7 @@ public Bitmap reSizeImage(Bitmap bt){
         String password = viewPassword.getText().toString();
         String confirm = viewConfirm.getText().toString();
 
-        Log.e("CAD",name + ", " + email + ", " + password + ", " + confirm);
+     //   Log.e("CAD",name + ", " + email + ", " + password + ", " + confirm);
 
         // Reset errors.
         viewEmail.setError(null);
@@ -217,7 +208,7 @@ public Bitmap reSizeImage(Bitmap bt){
         // Check for a valid password, if the user entered one.
         if (!isPasswordValid(password) || !password.equals(confirm)) {
 //        if (!TextUtils.isEmpty(password) && !isPasswordValid(password) && !password.equals(confirm)) {
-            Log.e("PASS","PASS INVALIDO");
+          //  Log.e("PASS","PASS INVALIDO");
             viewPassword.setError(getString(R.string.error_invalid_password));
             focusView = viewPassword;
             cancel = true;
@@ -225,12 +216,12 @@ public Bitmap reSizeImage(Bitmap bt){
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            Log.e("EMAIL","EMAIL VAZIO");
+         //   Log.e("EMAIL","EMAIL VAZIO");
             viewEmail.setError(getString(R.string.error_field_required));
             focusView = viewEmail;
             cancel = true;
         } else if (!isEmailValid(email)) {
-            Log.e("EMAIL","EMAIL INVALIDO");
+        //    Log.e("EMAIL","EMAIL INVALIDO");
             viewEmail.setError(getString(R.string.error_invalid_email));
             focusView = viewEmail;
             cancel = true;
@@ -238,7 +229,7 @@ public Bitmap reSizeImage(Bitmap bt){
 
         // Check for a valid user name.
         if (TextUtils.isEmpty(name)) {
-            Log.e("NOME","NOME VAZIO");
+          //  Log.e("NOME","NOME VAZIO");
             viewName.setError(getString(R.string.error_field_required));
             focusView = viewName;
             cancel = true;
@@ -306,12 +297,8 @@ public Bitmap reSizeImage(Bitmap bt){
             user = new User();
             authUser = new User();
 
-            if(bitmap != null){
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                photo = stream.toByteArray();
-                authUser.setImg(photo);
-            }
+            if(bitmap != null)
+                authUser.setImg(ImageUtil.getThumbNail(bitmap));
 
             authUser.setEmail(mEmail);
             authUser.setNome(mName);
@@ -336,7 +323,7 @@ public Bitmap reSizeImage(Bitmap bt){
 
             try {
                 // Simulate network access.
-                Thread.sleep(1500);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 return false;
             }
@@ -361,7 +348,6 @@ public Bitmap reSizeImage(Bitmap bt){
         @Override
         protected void onCancelled() {
             mAuthTask = null;
-//            Util.showProgress(false, getResources(), mLoginFormView, mProgressView);
         }
     }
 

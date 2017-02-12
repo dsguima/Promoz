@@ -191,7 +191,7 @@ public class PerfilActivity extends AppCompatActivity {
         if(isReadStorageAllowed()){
         Intent intent = new Intent();
         intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);//
+        intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"),SELECT_IMAGE);
         }else {
             Log.v("PERM","Não possuo");
@@ -209,7 +209,7 @@ public class PerfilActivity extends AppCompatActivity {
                 {
                     try
                     {
-                        Bitmap bitmap = reSizeImage(MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData()));
+                        Bitmap bitmap = ImageUtil.reSizeImage(MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData()));
                         CircleImageView perfilPhoto = (CircleImageView) findViewById(R.id.perfil_foto);
                         perfilPhoto.setImageBitmap(bitmap);
                         UserDAO userDAO = new UserDAO(this);
@@ -225,25 +225,7 @@ public class PerfilActivity extends AppCompatActivity {
         }
     }
 
-    public Bitmap reSizeImage(Bitmap bt){
-        float largura = (float)bt.getWidth();
-        float altura = (float) bt.getHeight();
-        int base = 1000;
 
-        if(largura < base && altura < base){
-            return bt;
-        } else if(altura > largura){
-            float altProp = ((largura/altura)*base);
-            return Bitmap.createScaledBitmap(bt, Math.round(altProp), base, false);
-
-        } else if(largura > altura){
-            float largProp = ((altura/largura)*base);
-            return Bitmap.createScaledBitmap(bt, base, Math.round(largProp), false);
-
-        } else {
-            return Bitmap.createScaledBitmap(bt, base, base, false);
-        }
-    }
 
     private void requestStoragePermission(){
 
