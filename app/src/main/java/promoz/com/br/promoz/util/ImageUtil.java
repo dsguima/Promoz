@@ -1,14 +1,11 @@
 package promoz.com.br.promoz.util;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.CursorLoader;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.util.Log;
 import java.io.ByteArrayOutputStream;
 
@@ -20,11 +17,39 @@ public class ImageUtil {
 
     private static byte percentage = 100;
 
-    public static byte[] getThumbNail(Bitmap bitmap){
+    public static byte[] getThumbNail(Bitmap bitmap) {
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, percentage, stream);
         return stream.toByteArray();
+    }
+
+    public static byte[] getThumbNailDrawable(RoundedBitmapDrawable drawable){
+
+        Bitmap bitmap = drawable.getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, percentage, stream);
+        return stream.toByteArray();
+    }
+
+    public static Bitmap reSizeImageCrop(Bitmap bt, int base) {
+        float largura = (float)bt.getWidth();
+        float altura = (float) bt.getHeight();
+        int offsetX = 0;
+        int offsetY = 0;
+        Bitmap b;
+        if(altura > largura) {
+            altura = base*(altura/largura);
+            largura = base;
+            b = Bitmap.createScaledBitmap(bt, Math.round(largura), Math.round(altura), false);
+            offsetY = Math.round((altura - largura)/2);
+        } else {
+            largura = base*(largura/altura);
+            altura = base;
+            b = Bitmap.createScaledBitmap(bt, Math.round(largura), Math.round(altura), false);
+            offsetX = Math.round((largura - altura)/2);
+        }
+        return Bitmap.createBitmap(b, offsetX, offsetY, base, base);
     }
 
     public static Bitmap reSizeImage(Bitmap bt){

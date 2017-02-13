@@ -2,36 +2,30 @@ package promoz.com.br.promoz;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 import promoz.com.br.promoz.dao.CouponDAO;
 import promoz.com.br.promoz.dao.HistoricCoinDAO;
 import promoz.com.br.promoz.dao.UserDAO;
@@ -40,19 +34,17 @@ import promoz.com.br.promoz.model.Coupon;
 import promoz.com.br.promoz.model.HistoricCoin;
 import promoz.com.br.promoz.model.User;
 import promoz.com.br.promoz.util.DateUtil;
-import promoz.com.br.promoz.util.Util;
 
 public class ActMain extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private Integer userID=0;
-    private CircleImageView foto,fotoclick;
+    private ImageView foto,fotoclick;
     int backButtonCount = 0;
     int countDown = 10000;
     final Context context =this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         backButtonCount = 0;
-        Log.e("MENU", "BACK BT: "+backButtonCount);
         checkLogged();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_main);
@@ -65,8 +57,8 @@ public class ActMain extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View hView =  navigationView.getHeaderView(0);
-        fotoclick =  (CircleImageView) hView.findViewById(R.id.foto_nav);
-        fotoclick.setOnClickListener(new View.OnClickListener() {
+        foto =  (ImageView) hView.findViewById(R.id.foto_nav);
+        foto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context,PerfilActivity.class);
@@ -92,15 +84,10 @@ public class ActMain extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close){
             public void onDrawerClosed(View view) {
                 backButtonCount =0;
-                Log.e("MENU", "Fechei");
-                Log.e("MENU", "BACK BT: "+backButtonCount);
                 super.onDrawerClosed(view);
-
             }
             public void onDrawerOpened(View drawerView) {
                 backButtonCount =0;
-                Log.e("MENU", "ABRI EIN");
-                Log.e("MENU", "BACK BT: "+backButtonCount);
                 super.onDrawerOpened(drawerView);
             }
         };
@@ -192,10 +179,6 @@ public class ActMain extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View hView =  navigationView.getHeaderView(0);
-        foto =  (CircleImageView) hView.findViewById(R.id.foto_nav);
-
-      //  Bitmap bitmap = null;
-
         UserDAO userDAO = new UserDAO(this);
         User user = userDAO.userById(userID);
 
@@ -206,8 +189,17 @@ public class ActMain extends AppCompatActivity
             name.setText(user.getNome());
             if(bitmapdata != null) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
-                if (bitmap != null)
-                    foto.setImageBitmap(bitmap);
+                if (bitmap != null){
+                    RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+                    drawable.setCircular(true);
+                    foto.setImageDrawable(drawable);
+                }
+            } else {
+                Resources res = getResources();
+                Bitmap src = BitmapFactory.decodeResource(res, R.drawable.default_photo);
+                RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory.create(getResources(), src);
+                drawable.setCircular(true);
+                foto.setImageDrawable(drawable);
             }
         }
         userDAO.closeDataBase();
@@ -225,8 +217,6 @@ public class ActMain extends AppCompatActivity
 
     @Override
     protected void onRestart() {
-       // backButtonCount = 0;
-       // closeMenu();
         checkLogged();
         super.onRestart();
         setMenu();
@@ -294,11 +284,10 @@ public class ActMain extends AppCompatActivity
 
         } else if (id == R.id.nav_terms) {
             Context contexto = getApplicationContext();
-            String texto = "Ganhou uma moeda";
+            String texto = "TERMO DE SERVOÇO";
             int duracao = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(contexto, texto,duracao);
             toast.show();
-           // addCoin(1);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

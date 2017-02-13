@@ -18,14 +18,14 @@
         android:gravity="center|bottom"
         android:orientation="vertical"
         >
-        <de.hdodenhof.circleimageview.CircleImageView
+
+        <ImageView
             android:layout_width="80dp"
             android:id="@+id/foto_nav"
             android:layout_height="80dp"
             android:src="@drawable/default_photo"
-            android:paddingBottom="10dp"
-            app:civ_border_width="2dp"
-            app:civ_border_color="@color/colorSecondary" />
+            android:background="@drawable/rounded_border"
+            android:padding="2dp" />
 
         <TextView
             android:id="@+id/navDrawerNome"

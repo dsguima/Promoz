@@ -26,15 +26,15 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-            <de.hdodenhof.circleimageview.CircleImageView
+            <ImageView
                 android:layout_width="200dp"
                 android:id="@+id/choose_photo"
                 android:layout_marginTop="10dp"
                 android:layout_height="200dp"
+                android:background="@drawable/rounded_border_primary"
+                android:padding="2dp"
                 android:layout_marginBottom="10dp"
-                android:src="@drawable/default_photo"
-                app:civ_border_width="2dp"
-                app:civ_border_color="@color/colorPrimary" />
+                android:src="@drawable/default_photo" />
 
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/change_photo"

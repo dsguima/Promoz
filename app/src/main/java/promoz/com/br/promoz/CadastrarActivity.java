@@ -6,21 +6,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.io.IOException;
-import de.hdodenhof.circleimageview.CircleImageView;
 import promoz.com.br.promoz.dao.UserDAO;
 import promoz.com.br.promoz.model.User;
 import promoz.com.br.promoz.util.ImageUtil;
@@ -29,28 +33,34 @@ public class CadastrarActivity extends AppCompatActivity {
 
     private int STORAGE_PERMISSION_CODE = 23;
     private int SELECT_IMAGE = 1;
-    Bitmap bitmap=null;
-    User user = null;
+    private RoundedBitmapDrawable drawable=null;
+    private User user = null;
     private CadastrarActivity.UserLoginTask mAuthTask = null;
-    TextView viewName;
-    TextView viewEmail;
-    TextView viewCPF;
-    TextView viewPassword;
-    TextView viewConfirm;
+    private TextView viewName;
+    private TextView viewEmail;
+    private TextView viewCPF;
+    private TextView viewPassword;
+    private TextView viewConfirm;
+    private ImageView perfilPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastrar);
 
-        //TextView mWhyCPF = (TextView) findViewById(R.id.why_cpf);
-        //mWhyCPF.setMovementMethod(LinkMovementMethod.getInstance());
-
         viewName = (TextView) findViewById(R.id.user_name);
         viewEmail = (TextView) findViewById(R.id.email);
         viewCPF = (TextView) findViewById(R.id.user_cpf);
         viewPassword = (TextView) findViewById(R.id.password);
         viewConfirm = (TextView) findViewById(R.id.password_again);
+        perfilPhoto = (ImageView) findViewById(R.id.choose_photo);
+
+        Resources res = getResources();
+        Bitmap src = BitmapFactory.decodeResource(res, R.drawable.default_photo);
+        RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory.create(getResources(), src);
+        drawable.setCircular(true);
+
+        perfilPhoto.setImageDrawable(drawable);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.change_photo);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -59,17 +69,16 @@ public class CadastrarActivity extends AppCompatActivity {
                 galleyView();
             }
         });
+
     }
 
     public void galleyView(){
         if(isReadStorageAllowed()){
-          //  Log.v("PERM","Já possuo");
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);//
             startActivityForResult(Intent.createChooser(intent, "Select Picture"),SELECT_IMAGE);
         }else {
-          //  Log.v("PERM","Não possuo");
             requestStoragePermission();
         }
     }
@@ -85,9 +94,10 @@ public class CadastrarActivity extends AppCompatActivity {
                 {
                     try
                     {
-                        bitmap = ImageUtil.reSizeImage(MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData()));
-                        CircleImageView perfilPhoto = (CircleImageView) findViewById(R.id.choose_photo);
-                        perfilPhoto.setImageBitmap(bitmap);
+                        Bitmap bitmap = ImageUtil.reSizeImageCrop(MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData()), perfilPhoto.getWidth());
+                        drawable = RoundedBitmapDrawableFactory.create(this.getResources(), bitmap);
+                        drawable.setCircular(true);
+                        perfilPhoto.setImageDrawable(drawable);
                     } catch (IOException e)
                     {
                         e.printStackTrace();
@@ -132,17 +142,14 @@ public class CadastrarActivity extends AppCompatActivity {
             //If the user has denied the permission previously your code will come to this block
             //Here you can explain why you need this permission
             //Explain here why you need this permission
-         //   Log.v("PERM","EXPLIQUEI");
         }
         //And finally ask for the permission
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},STORAGE_PERMISSION_CODE);
-     //   Log.v("PERM","PEDI");
     }
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
         //Checking the request code of our request
         if (requestCode == STORAGE_PERMISSION_CODE) {
-         //   Log.v("PERM",grantResults[0]+"");
             //If permission is granted
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 galleyView();
@@ -186,15 +193,10 @@ public class CadastrarActivity extends AppCompatActivity {
             return;
         }
 
-        // Store values at the time of the login attempt.
-        //  String email = mEmailView.getText().toString();
-
         String name = viewName.getText().toString();
         String email = viewEmail.getText().toString();
         String password = viewPassword.getText().toString();
         String confirm = viewConfirm.getText().toString();
-
-     //   Log.e("CAD",name + ", " + email + ", " + password + ", " + confirm);
 
         // Reset errors.
         viewEmail.setError(null);
@@ -207,8 +209,6 @@ public class CadastrarActivity extends AppCompatActivity {
 
         // Check for a valid password, if the user entered one.
         if (!isPasswordValid(password) || !password.equals(confirm)) {
-//        if (!TextUtils.isEmpty(password) && !isPasswordValid(password) && !password.equals(confirm)) {
-          //  Log.e("PASS","PASS INVALIDO");
             viewPassword.setError(getString(R.string.error_invalid_password));
             focusView = viewPassword;
             cancel = true;
@@ -216,12 +216,10 @@ public class CadastrarActivity extends AppCompatActivity {
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-         //   Log.e("EMAIL","EMAIL VAZIO");
             viewEmail.setError(getString(R.string.error_field_required));
             focusView = viewEmail;
             cancel = true;
         } else if (!isEmailValid(email)) {
-        //    Log.e("EMAIL","EMAIL INVALIDO");
             viewEmail.setError(getString(R.string.error_invalid_email));
             focusView = viewEmail;
             cancel = true;
@@ -229,7 +227,6 @@ public class CadastrarActivity extends AppCompatActivity {
 
         // Check for a valid user name.
         if (TextUtils.isEmpty(name)) {
-          //  Log.e("NOME","NOME VAZIO");
             viewName.setError(getString(R.string.error_field_required));
             focusView = viewName;
             cancel = true;
@@ -273,12 +270,7 @@ public class CadastrarActivity extends AppCompatActivity {
             Boolean sucess;
 
             if (result != null) {
-              //  if(result.getNome() != null && result.getNome().equals(mName)) {
-//                    authUser = result;
-//                    sucess = true;
-//                } else {
-                    sucess = false;
-              //  }
+                sucess = false;
             } else {
                 createUser(userDAO);
                 sucess = true;
@@ -297,8 +289,8 @@ public class CadastrarActivity extends AppCompatActivity {
             user = new User();
             authUser = new User();
 
-            if(bitmap != null)
-                authUser.setImg(ImageUtil.getThumbNail(bitmap));
+            if(drawable != null)
+                authUser.setImg(ImageUtil.getThumbNailDrawable(drawable));
 
             authUser.setEmail(mEmail);
             authUser.setNome(mName);
@@ -334,7 +326,6 @@ public class CadastrarActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
-            //showProgress(false);
 
             if (success) {
                 setSharedPreferences();

@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -16,19 +16,16 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 import promoz.com.br.promoz.dao.UserDAO;
 import promoz.com.br.promoz.model.User;
 import promoz.com.br.promoz.util.ImageUtil;
@@ -57,7 +54,7 @@ public class PerfilActivity extends AppCompatActivity {
                 galleyView();
             }
         });
-        final CircleImageView ci = (CircleImageView)findViewById(R.id.perfil_foto);
+        final ImageView ci = (ImageView)findViewById(R.id.perfil_foto);
 
         UserDAO userDAO = new UserDAO(this);
         User user = userDAO.userById(userId);
@@ -67,11 +64,19 @@ public class PerfilActivity extends AppCompatActivity {
             byte[] bitmapdata = user.getImg();
             if (bitmapdata != null) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
-                if (bitmap != null)
-                    ci.setImageBitmap(bitmap);
+
+                if (bitmap != null){
+                    RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory.create(this.getResources(), bitmap);
+                    drawable.setCircular(true);
+                    ci.setImageDrawable(drawable);
+                }
+            }else{
+                Resources res = getResources();
+                Bitmap src = BitmapFactory.decodeResource(res, R.drawable.default_photo);
+                RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory.create(getResources(), src);
+                drawable.setCircular(true);
+                ci.setImageDrawable(drawable);
             }
-        }else{
-            Log.e("IMG", "Não tem imagem");
         }
 
         TextView email = (TextView) findViewById(R.id.email);
@@ -146,7 +151,6 @@ public class PerfilActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        //TODO:IMPLEMENTAR TROCAR SENHAR
                         UserDAO userDao = new UserDAO(context);
                         User user = userDao.userById(userId);
 
@@ -157,7 +161,6 @@ public class PerfilActivity extends AppCompatActivity {
                         String newPass = newpass.getText().toString();
                         if(user.getPassword().equals(lastpass.getText().toString())){
                             if(newPass.equals(confirmpass.getText().toString())){
-                               // Log.e("SENHA",newPass + " == " + lastpass.getText().toString());
                                 user.setPassword(newPass);
                                 userDao.save(user);
                                 Toast.makeText(getApplicationContext(),R.string.senhaAtualizada,Toast.LENGTH_LONG).show();
@@ -194,7 +197,6 @@ public class PerfilActivity extends AppCompatActivity {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"),SELECT_IMAGE);
         }else {
-            Log.v("PERM","Não possuo");
             requestStoragePermission();
         }
     }
@@ -209,12 +211,16 @@ public class PerfilActivity extends AppCompatActivity {
                 {
                     try
                     {
-                        Bitmap bitmap = ImageUtil.reSizeImage(MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData()));
-                        CircleImageView perfilPhoto = (CircleImageView) findViewById(R.id.perfil_foto);
-                        perfilPhoto.setImageBitmap(bitmap);
+                        ImageView perfilPhoto = (ImageView) findViewById(R.id.perfil_foto);
+                        Bitmap bitmap = ImageUtil.reSizeImageCrop(MediaStore.Images.Media.getBitmap(this.getContentResolver(), data.getData()), perfilPhoto.getWidth());
+                        RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory.create(this.getResources(), bitmap);
+                        drawable.setCircular(true);
+                        perfilPhoto.setImageDrawable(drawable);
+
+                        // #### salvar no banco
                         UserDAO userDAO = new UserDAO(this);
                         User user = userDAO.userById(userId);
-                        user.setImg(ImageUtil.getThumbNail(bitmap));
+                        user.setImg(ImageUtil.getThumbNailDrawable(drawable));
                         userDAO.save(user);
                         userDAO.closeDataBase();
                     } catch (IOException e) {
@@ -233,17 +239,14 @@ public class PerfilActivity extends AppCompatActivity {
             //If the user has denied the permission previously your code will come to this block
             //Here you can explain why you need this permission
             //Explain here why you need this permission
-            Log.v("PERM","EXPLIQUEI");
         }
         //And finally ask for the permission
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},STORAGE_PERMISSION_CODE);
-        Log.v("PERM","PEDI");
     }
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
         //Checking the request code of our request
         if (requestCode == STORAGE_PERMISSION_CODE) {
-            Log.v("PERM",grantResults[0]+"");
             //If permission is granted
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 galleyView();
