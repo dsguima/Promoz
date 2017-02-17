@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 /**
- * Created by dsguima on 04/02/17.
+ * Created by RafaelBVieira on 04/02/17.
  */
 
 public class Util extends AppCompatActivity {
@@ -32,16 +32,9 @@ public class Util extends AppCompatActivity {
         Typeface customFont = Typeface.createFromAsset(assets, font);
         textView.setTypeface(customFont);
     }
-
-
-    /**
-     * Shows the progress UI and hides the login form.
-     */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     public static void showProgress(final boolean show, Resources resources, final View mFormView, final View mProgressView) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = resources.getInteger(android.R.integer.config_shortAnimTime);
 
@@ -63,8 +56,6 @@ public class Util extends AppCompatActivity {
                 }
             });
         } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }

@@ -35,13 +35,13 @@ import promoz.com.br.promoz.model.HistoricCoin;
 import promoz.com.br.promoz.model.User;
 import promoz.com.br.promoz.util.DateUtil;
 
-public class ActMain extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class ActMain extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private Integer userID=0;
     private ImageView foto,fotoclick;
     int backButtonCount = 0;
     int countDown = 10000;
     final Context context =this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         backButtonCount = 0;
@@ -74,8 +74,6 @@ public class ActMain extends AppCompatActivity
                 Intent intent = new Intent(ActMain.this,CarteiraActivity.class);
                 intent.putExtra(User.getChave_ID(),userID);
                 ActMain.this.startActivity(intent);
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
             }
         });
 
@@ -94,7 +92,7 @@ public class ActMain extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        setMenu(); // #########################################    seta a imagem do menu
+        setMenu();
     }
 
     public void onMoeda(View v){
@@ -108,7 +106,7 @@ public class ActMain extends AppCompatActivity
          addCupom();
     }
 
-
+    // TODO: Adicionar Cupom apenas para protótipo
     public void addCupom(){
         WalletDAO wallet = new WalletDAO(this);
         Integer walletId = wallet.walletIdByUserId(userID);
@@ -146,7 +144,6 @@ public class ActMain extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-
         if (closeMenu()) {
             if (backButtonCount >= 1) {
                 moveTaskToBack(true);

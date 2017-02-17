@@ -34,19 +34,17 @@ public class PerfilActivity extends AppCompatActivity {
     private int STORAGE_PERMISSION_CODE = 23;
     private int SELECT_IMAGE = 1;
     final Context context = this;
-  //  private Button button;
     private Integer userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-     //   this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
         setContentView(R.layout.activity_perfil);
 
         userId = getSharedPreferences(getResources().getString(R.string.app_name), Context.MODE_PRIVATE).getInt(User.getChave_ID(),1);
 
-        //Change picture
-
+        //Trocando foto
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.change_photo);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +62,6 @@ public class PerfilActivity extends AppCompatActivity {
             byte[] bitmapdata = user.getImg();
             if (bitmapdata != null) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata, 0, bitmapdata.length);
-
                 if (bitmap != null){
                     RoundedBitmapDrawable drawable = RoundedBitmapDrawableFactory.create(this.getResources(), bitmap);
                     drawable.setCircular(true);
@@ -78,7 +75,6 @@ public class PerfilActivity extends AppCompatActivity {
                 ci.setImageDrawable(drawable);
             }
         }
-
         TextView email = (TextView) findViewById(R.id.email);
         if(user != null) {
             email.setText(user.getEmail());
@@ -86,16 +82,14 @@ public class PerfilActivity extends AppCompatActivity {
             TextView name = (TextView) findViewById(R.id.nome);
             name.setText(user.getNome());
         }
-
-
         Button button_logout = (Button) findViewById(R.id.logoutbt);
         Button button_change = (Button) findViewById(R.id.change_pass);
-        // add button listener
+
+        //Button LOG OUT
         button_logout.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
-
                 // custom dialog
                 final Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.logout_dialog);
@@ -103,7 +97,6 @@ public class PerfilActivity extends AppCompatActivity {
                 dialog.show();
                 Button btY = (Button) dialog.findViewById(R.id.yes);
                 Button btN = (Button) dialog.findViewById(R.id.no);
-                // if button is clicked, close the custom dialog
                 btN.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -120,22 +113,17 @@ public class PerfilActivity extends AppCompatActivity {
                         finish();
                     }
                 });
-
                 dialog.show();
             }
         });
 
-
+        //Button TROCAR SENHA
         button_change.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
-
-
                 final Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.change_pass_dialog);
-
-
                 dialog.setTitle("Trocar senha");
                 dialog.show();
                 Button btconfirm = (Button) dialog.findViewById(R.id.confirm_change);
@@ -174,7 +162,6 @@ public class PerfilActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
-
                 dialog.show();
             }
         });
@@ -200,8 +187,7 @@ public class PerfilActivity extends AppCompatActivity {
             requestStoragePermission();
         }
     }
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SELECT_IMAGE)
         {
@@ -217,7 +203,7 @@ public class PerfilActivity extends AppCompatActivity {
                         drawable.setCircular(true);
                         perfilPhoto.setImageDrawable(drawable);
 
-                        // #### salvar no banco
+                        // salvar no banco
                         UserDAO userDAO = new UserDAO(this);
                         User user = userDAO.userById(userId);
                         user.setImg(ImageUtil.getThumbNailDrawable(drawable));
@@ -231,40 +217,36 @@ public class PerfilActivity extends AppCompatActivity {
         }
     }
 
-
-
     private void requestStoragePermission(){
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)){
-            //If the user has denied the permission previously your code will come to this block
-            //Here you can explain why you need this permission
-            //Explain here why you need this permission
+            //Caso o usuario tenha negado anteriormente a permissão
         }
-        //And finally ask for the permission
+        //Pedidndo a permissão
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},STORAGE_PERMISSION_CODE);
     }
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
         //Checking the request code of our request
         if (requestCode == STORAGE_PERMISSION_CODE) {
-            //If permission is granted
+            //Caso a permissão tenha sido aceita
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 galleyView();
             } else {
-                //Displaying another toast if permission is not granted
+                //Caso a permissão tenha sido recusada
                 Toast.makeText(this, "Oops you just denied the permission", Toast.LENGTH_LONG).show();
             }
         }
     }
     private boolean isReadStorageAllowed() {
-        //Getting the permission status
+        //Testando se a permissão já foi aceita
         int result = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
 
-        //If permission is granted returning true
+        //Caso sim
         if (result == PackageManager.PERMISSION_GRANTED)
             return true;
 
-        //If permission is not granted returning false
+        //Caso não
         return false;
     }
 

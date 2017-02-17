@@ -16,22 +16,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import promoz.com.br.promoz.dao.UserDAO;
 import promoz.com.br.promoz.model.User;
 import promoz.com.br.promoz.util.Util;
 
-/**
- * A login screen that offers login via email/password.
- */
+
+
 public class LoginActivity extends AppCompatActivity {
-
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
     private UserLoginTask mAuthTask = null;
-
-    // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
@@ -41,13 +33,11 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         //TODO lembrar senha
         TextView mLembrarSenhaLink = (TextView) findViewById(R.id.lembrar_senha);
         mLembrarSenhaLink.setMovementMethod(LinkMovementMethod.getInstance());
 
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -59,7 +49,6 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         });
-
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -67,40 +56,32 @@ public class LoginActivity extends AppCompatActivity {
                 attemptLogin();
             }
         });
-
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
 
-    /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
-     */
     private void attemptLogin() {
         if (mAuthTask != null) {
             return;
         }
 
-        // Reset errors.
+        // Erros
         mEmailView.setError(null);
         mPasswordView.setError(null);
-
-        // Store values at the time of the login attempt.
+        // Pegando os valores de email e senha
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
-        // Check for a valid password, if the user entered one.
+        // Testando dados p/ saber se são validos
+
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
         }
-
-        // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
@@ -110,14 +91,10 @@ public class LoginActivity extends AppCompatActivity {
             focusView = mEmailView;
             cancel = true;
         }
-
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
+            //Efetuando o login
             Util.showProgress(true, getResources(), mLoginFormView, mProgressView);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
@@ -126,8 +103,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean isEmailValid(String email) {
         //TODO: isEmailValid
-        return true;
         //return email.contains("@");
+        return true;
     }
 
     private boolean isPasswordValid(String password) {
@@ -136,10 +113,7 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
+    //Login Task
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
         private final String mEmail;
@@ -157,11 +131,9 @@ public class LoginActivity extends AppCompatActivity {
          * @return true or false
          */
         private Boolean authUser(){
-
             UserDAO userDAO = new UserDAO(getApplicationContext());
             User result = userDAO.findUserByLogin(mEmail);
             Boolean sucess;
-
             if (result != null) {
                 if(result.getPassword() != null && result.getPassword().equals(mPassword)){
                     authUser = result;
@@ -174,12 +146,9 @@ public class LoginActivity extends AppCompatActivity {
                 mError = Util.Constants.ERROR_LOGIN;
                 sucess = false;
             }
-
             userDAO.closeDataBase();
             return sucess;
-
         }
-
         /**
          * Login automático
          */
@@ -191,23 +160,18 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
             try {
-                // Simulate network access.
+                //TODO: Acessando o WebService
                 Thread.sleep(1500);
             } catch (InterruptedException e) {
                 return false;
             }
-
             return authUser();
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
-            //showProgress(false);
-
             if (success) {
                 setSharedPreferences();
                 finish();
