@@ -30,7 +30,6 @@ import promoz.com.br.promoz.model.User;
 import promoz.com.br.promoz.util.ImageUtil;
 
 public class CadastrarActivity extends AppCompatActivity {
-
     private int STORAGE_PERMISSION_CODE = 23;
     private int SELECT_IMAGE = 1;
     private RoundedBitmapDrawable drawable=null;
@@ -69,7 +68,6 @@ public class CadastrarActivity extends AppCompatActivity {
                 galleyView();
             }
         });
-
     }
 
     public void galleyView(){
@@ -83,8 +81,7 @@ public class CadastrarActivity extends AppCompatActivity {
         }
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SELECT_IMAGE)
         {
@@ -111,63 +108,34 @@ public class CadastrarActivity extends AppCompatActivity {
         }
     }
 
-/*public Bitmap reSizeImage(Bitmap bt){
-        float largura = (float)bt.getWidth();
-        Log.d("SIZE",largura + "");
-        float altura = (float) bt.getHeight();
-        Log.d("SIZE",altura + "");
-    if(altura > largura){
-        float altProp = ((largura/altura)*100);
-        Log.d("SIZE",altProp + "");
-        Bitmap.createScaledBitmap(bt, Math.round(altProp), 100, false);
-
-    }
-    if(largura > altura){
-        float largProp = ((altura/largura)*100);
-        Log.d("SIZE",largProp + "");
-        Bitmap.createScaledBitmap(bt, 100, Math.round(largProp), false);
-
-    }
-    if(largura == altura){
-
-        Bitmap.createScaledBitmap(bt, 100, 100, false);
-
-    }
-    return bt;
-}*/
-
     private void requestStoragePermission(){
 
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)){
-            //If the user has denied the permission previously your code will come to this block
-            //Here you can explain why you need this permission
-            //Explain here why you need this permission
+            //Caso o usuario tenha negado anteriormente a permissão
         }
-        //And finally ask for the permission
+        //Pedidndo a permissão
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},STORAGE_PERMISSION_CODE);
     }
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
-        //Checking the request code of our request
         if (requestCode == STORAGE_PERMISSION_CODE) {
-            //If permission is granted
+            //Caso a permissão tenha sido aceita
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 galleyView();
             } else {
-                //Displaying another toast if permission is not granted
-                Toast.makeText(this, "Oops you just denied the permission", Toast.LENGTH_LONG).show();
+                //Caso a permissão tenha sido recusada
+                Toast.makeText(this, "Permissão negada", Toast.LENGTH_LONG).show();
             }
         }
     }
     private boolean isReadStorageAllowed() {
-        //Getting the permission status
+        //Testando se a permissão já foi aceita
         int result = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
 
-        //If permission is granted returning true
+        //Caso sim
         if (result == PackageManager.PERMISSION_GRANTED)
             return true;
 
-        //If permission is not granted returning false
+        //Caso não
         return false;
     }
 
@@ -184,21 +152,20 @@ public class CadastrarActivity extends AppCompatActivity {
 
     private boolean isEmailValid(String email) {
         //TODO: isEmailValid
-        return true;
         //return email.contains("@");
+        return true;
     }
 
     private void attemptLogin() {
         if (mAuthTask != null) {
             return;
         }
-
         String name = viewName.getText().toString();
         String email = viewEmail.getText().toString();
         String password = viewPassword.getText().toString();
         String confirm = viewConfirm.getText().toString();
 
-        // Reset errors.
+        // Erros
         viewEmail.setError(null);
         viewPassword.setError(null);
         viewConfirm.setError(null);
@@ -207,45 +174,38 @@ public class CadastrarActivity extends AppCompatActivity {
         boolean cancel = false;
         View focusView = null;
 
-        // Check for a valid password, if the user entered one.
+        // Testando dados p/ saber se são validos
+
         if (!isPasswordValid(password) || !password.equals(confirm)) {
             viewPassword.setError(getString(R.string.error_invalid_password));
             focusView = viewPassword;
             cancel = true;
         }
-
-        // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             viewEmail.setError(getString(R.string.error_field_required));
             focusView = viewEmail;
             cancel = true;
-        } else if (!isEmailValid(email)) {
+        } else
+        if (!isEmailValid(email)) {
             viewEmail.setError(getString(R.string.error_invalid_email));
             focusView = viewEmail;
             cancel = true;
         }
-
-        // Check for a valid user name.
         if (TextUtils.isEmpty(name)) {
             viewName.setError(getString(R.string.error_field_required));
             focusView = viewName;
             cancel = true;
         }
-
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
+            //Efetuando o cadastro
             mAuthTask = new CadastrarActivity.UserLoginTask(name, email, password);
             mAuthTask.execute((Void) null);
         }
     }
 
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-
         private final String mEmail;
         private final String mPassword;
         private final String mName;
@@ -279,7 +239,6 @@ public class CadastrarActivity extends AppCompatActivity {
             //userDAO.closeDatabase();
             return sucess;
         }
-
         /**
          * Método para criar um novo usuário
          * @param userDAO
@@ -299,9 +258,8 @@ public class CadastrarActivity extends AppCompatActivity {
             Long id = userDAO.save(authUser);
             authUser.set_id(id.intValue());
         }
-
         /**
-         * Login automático
+         * //Login automático
          */
         private void setSharedPreferences(){
             SharedPreferences.Editor editor = getSharedPreferences(getResources().getString(R.string.app_name), Context.MODE_PRIVATE).edit();
@@ -311,22 +269,18 @@ public class CadastrarActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
             try {
-                // Simulate network access.
+                //TODO: Acessando o WebService
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 return false;
             }
-
             return authUser();
         }
 
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
-
             if (success) {
                 setSharedPreferences();
                 finish();
@@ -341,5 +295,4 @@ public class CadastrarActivity extends AppCompatActivity {
             mAuthTask = null;
         }
     }
-
 }

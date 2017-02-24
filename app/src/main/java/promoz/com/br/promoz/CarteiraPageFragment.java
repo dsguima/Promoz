@@ -22,8 +22,8 @@ import promoz.com.br.promoz.model.Coupon;
 import promoz.com.br.promoz.model.HistoricCoin;
 
 public class CarteiraPageFragment extends Fragment{
-    public static final String ARG_PAGE = "ARG_PAGE";
 
+    public static final String ARG_PAGE = "ARG_PAGE";
     private int mPage;
     private int walletID=0;
     private WalletDAO walletDAO;
@@ -36,10 +36,8 @@ public class CarteiraPageFragment extends Fragment{
     public ListView listcoupon;
     public ListView listhistoric;
     public static Handler handler;
-
     OnGetUserID callback;
 
-    // Container Activity must implement this interface
     public interface OnGetUserID {
         public Integer getUserId();
     }
@@ -47,9 +45,6 @@ public class CarteiraPageFragment extends Fragment{
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
         try {
             callback = (OnGetUserID) activity;
         } catch (ClassCastException e) {
@@ -108,9 +103,7 @@ public class CarteiraPageFragment extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view;
-
         //Caso Tab SALDO
         if (mPage == 1) {
             //TODO login

@@ -33,7 +33,7 @@ public class CarteiraFragmentPagerAdapter  extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        // Generate title based on item position
+        // Titulo baseado na posição
         return tabTitles[position];
     }
 }

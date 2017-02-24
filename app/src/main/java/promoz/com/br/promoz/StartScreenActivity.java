@@ -15,10 +15,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import promoz.com.br.promoz.model.User;
 import promoz.com.br.promoz.util.Util;
-
 import static promoz.com.br.promoz.R.string.terms;
 
 
@@ -27,17 +25,11 @@ public class StartScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         checkLogged();
-
         setContentView(R.layout.activity_start_screen);
-
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
         setSpannableString(getString(terms), Util.Constants.URI_GOOGLE, (TextView) findViewById(R.id.text_bellow));
-
         Util.setFont(getAssets(), (TextView) findViewById(R.id.promoztv), Util.Constants.FONT_ITCKRIST);
-
     }
 
     @Override
@@ -81,7 +73,6 @@ public class StartScreenActivity extends AppCompatActivity {
     }
 
     public void setSpannableString(String span, final String link, TextView txtView){
-
         SpannableString ss = new SpannableString(span);
 
         ClickableSpan clickableSpan = new ClickableSpan() {
@@ -97,9 +88,7 @@ public class StartScreenActivity extends AppCompatActivity {
                 ds.setUnderlineText(true);
             }
         };
-
         ss.setSpan(clickableSpan, 36, 89, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
         txtView.setText(ss);
         txtView.setMovementMethod(LinkMovementMethod.getInstance());
         txtView.setHighlightColor(Color.TRANSPARENT);
