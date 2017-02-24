@@ -223,11 +223,11 @@ public class ActMain extends AppCompatActivity
     }
 
     // TODO: Adicionar moedas apenas para protótipo
-    private void addCoin(Integer amountCoin){
+    private void addCoin(Integer amountCoin) {
         WalletDAO wallet = new WalletDAO(this);
         Integer walletId = wallet.walletIdByUserId(userID);
         String date = new SimpleDateFormat(DateUtil.YYYYMMDD_HHmmss).format(new Date());
-        HistoricCoin historicCoin = new HistoricCoin(walletId,1,date,amountCoin,"Ganhou Moeda");
+        HistoricCoin historicCoin = new HistoricCoin(walletId,1,date,amountCoin,0);
         HistoricCoinDAO historicCoinDAO = new HistoricCoinDAO(this);
         historicCoinDAO.save(historicCoin);
         wallet.closeDataBase();

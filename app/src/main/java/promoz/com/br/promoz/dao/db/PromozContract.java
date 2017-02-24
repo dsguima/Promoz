@@ -157,7 +157,8 @@ public final class PromozContract {
         public static final String COLUMN_FK_HST_TP_ID = "hst_tp_id)  REFERENCES " + HistoricTypeCoin.TABLE_NAME + "("+HistoricTypeCoin._ID+")";
         public static final String COLUMN_HST_DT_OPER = "hst_dt_oper";
         public static final String COLUMN_AMOUNT_COIN = "amount_coin";
-        public static final String COLUMN_DESC_OPER = "desc_oper";
+        //public static final String COLUMN_DESC_OPER = "desc_oper";
+        public static final String COLUMN_COIN_ID = "coin_id";
 
         public static final String SQL_CREATE_HISTORIC_COIN = CREATE_STM + HistoricCoin.TABLE_NAME + " (" +
                 HistoricCoin._ID + PK_TYPE + COMMA_SEP +
@@ -165,7 +166,7 @@ public final class PromozContract {
                 HistoricCoin.COLUMN_AMOUNT_COIN + INTEGER_TYPE + COMMA_SEP +
                 HistoricCoin.COLUMN_WALLET_ID + INTEGER_TYPE + COMMA_SEP +
                 HistoricCoin.COLUMN_HST_TP_ID + INTEGER_TYPE + COMMA_SEP +
-                HistoricCoin.COLUMN_DESC_OPER + TEXT_TYPE + COMMA_SEP +
+                HistoricCoin.COLUMN_COIN_ID + INTEGER_TYPE + COMMA_SEP +
                 FK_TYPE + HistoricCoin.COLUMN_FK_WALLET_ID + COMMA_SEP +
                 FK_TYPE + HistoricCoin.COLUMN_FK_HST_TP_ID +
                 END_STM;
@@ -176,7 +177,7 @@ public final class PromozContract {
                 HistoricCoin.COLUMN_HST_TP_ID,
                 HistoricCoin.COLUMN_HST_DT_OPER,
                 HistoricCoin.COLUMN_AMOUNT_COIN,
-                HistoricCoin.COLUMN_DESC_OPER
+                HistoricCoin.COLUMN_COIN_ID
         };
     }
 
@@ -199,7 +200,9 @@ public final class PromozContract {
     public static class PopulateBasicTables {
         private static final String INSERT_STM = "INSERT INTO ";
         private static final String VALUE_TABLE_HISTORIC_TYPE_COIN = INSERT_STM + HistoricTypeCoin.TABLE_NAME + " (" + HistoricTypeCoin.COLUMN_HST_TP_DESC +
-                ") VALUES('Moeda Verde')";
+                ") VALUES('Ganhou Moeda')";
+        private static final String VALUE_TABLE_HISTORIC_TYPE_COIN2 = INSERT_STM + HistoricTypeCoin.TABLE_NAME + " (" + HistoricTypeCoin.COLUMN_HST_TP_DESC +
+                ") VALUES('Comprou Cupom')";
 
         private static final String VALUE_TABLE_USER = INSERT_STM + User.TABLE_NAME + " (" + User.COLUMN_USER_NAME +
                 COMMA_SEP + User.COLUMN_USER_PASSWORD + COMMA_SEP + User.COLUMN_USER_EMAIL+ ") VALUES('Promoz','','promoz@promoz.com.br')";
@@ -220,28 +223,28 @@ public final class PromozContract {
 
         private static final String VALUE_TABLE_HISTORIC_COIN_1 = INSERT_STM + HistoricCoin.TABLE_NAME + " (" + HistoricCoin.COLUMN_HST_DT_OPER +
                 COMMA_SEP + HistoricCoin.COLUMN_AMOUNT_COIN + COMMA_SEP + HistoricCoin.COLUMN_WALLET_ID +
-                COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_DESC_OPER +
-                ") VALUES('2017-01-13 10:30:28',1,1,1,'Ganhou Moeda')";
+                COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_COIN_ID +
+                ") VALUES('2017-01-25 10:30:28',1,1,1,0)";
 
         private static final String VALUE_TABLE_HISTORIC_COIN_2 = INSERT_STM + HistoricCoin.TABLE_NAME + " (" + HistoricCoin.COLUMN_HST_DT_OPER +
                 COMMA_SEP + HistoricCoin.COLUMN_AMOUNT_COIN + COMMA_SEP + HistoricCoin.COLUMN_WALLET_ID +
-                COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_DESC_OPER +
-                ") VALUES('2017-01-22 13:22:38',1,1,1,'Ganhou Moeda')";
+                COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_COIN_ID +
+                ") VALUES('2017-01-25 13:22:38',1,1,1,0)";
 
         private static final String VALUE_TABLE_HISTORIC_COIN_3 = INSERT_STM + HistoricCoin.TABLE_NAME + " (" + HistoricCoin.COLUMN_HST_DT_OPER +
                 COMMA_SEP + HistoricCoin.COLUMN_AMOUNT_COIN + COMMA_SEP + HistoricCoin.COLUMN_WALLET_ID +
-                COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_DESC_OPER +
-                ") VALUES('2017-01-23 17:40:11',3,1,1,'Ganhou Moeda')";
+                COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_COIN_ID +
+                ") VALUES('2017-01-26 17:40:11',3,1,1,0)";
 
         private static final String VALUE_TABLE_HISTORIC_COIN_4 = INSERT_STM + HistoricCoin.TABLE_NAME + " (" + HistoricCoin.COLUMN_HST_DT_OPER +
                 COMMA_SEP + HistoricCoin.COLUMN_AMOUNT_COIN + COMMA_SEP + HistoricCoin.COLUMN_WALLET_ID +
-                COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_DESC_OPER +
-                ") VALUES('2017-01-27 20:35:11',5,1,1,'Ganhou Moeda')";
+                COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_COIN_ID +
+                ") VALUES('2017-01-27 20:35:11',5,1,1,0)";
 
         private static final String VALUE_TABLE_HISTORIC_COIN_5 = INSERT_STM + HistoricCoin.TABLE_NAME + " (" + HistoricCoin.COLUMN_HST_DT_OPER +
                 COMMA_SEP + HistoricCoin.COLUMN_AMOUNT_COIN + COMMA_SEP + HistoricCoin.COLUMN_WALLET_ID +
-                COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_DESC_OPER +
-                ") VALUES('2017-02-01 12:03:22',5,1,1,'Ganhou Moeda')";
+                COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID + COMMA_SEP + HistoricCoin.COLUMN_COIN_ID +
+                ") VALUES('2017-02-01 12:03:22',5,1,1,0)";
 
         private static final String VALUE_TABLE_VIRTUAL_STORE_1 = INSERT_STM + VirtualStore.TABLE_NAME + " (" + VirtualStore.COLUMN_VRT_STR_TITLE +
                 COMMA_SEP + VirtualStore.COLUMN_VRT_STR_INFO + COMMA_SEP + VirtualStore.COLUMN_VRT_STR_IMG +
@@ -285,9 +288,9 @@ public final class PromozContract {
                 "AFTER INSERT ON " + Coupon.TABLE_NAME + " BEGIN INSERT INTO " + HistoricCoin.TABLE_NAME + " (" +
                 HistoricCoin.COLUMN_HST_DT_OPER + COMMA_SEP + HistoricCoin.COLUMN_AMOUNT_COIN +
                 COMMA_SEP + HistoricCoin.COLUMN_WALLET_ID + COMMA_SEP + HistoricCoin.COLUMN_HST_TP_ID +
-                COMMA_SEP + HistoricCoin.COLUMN_DESC_OPER + " ) VALUES ( strftime('%Y-%m-%d %H:%M:%S', 'now', 'localtime'), " +
+                COMMA_SEP + HistoricCoin.COLUMN_COIN_ID + " ) VALUES ( strftime('%Y-%m-%d %H:%M:%S', 'now', 'localtime'), " +
                 "-1*(new." + Coupon.COLUMN_CPN_PRICE + "), " + " new." + Coupon.COLUMN_WALLET_ID +
-                ", 1, 'Comprou Cupom'); END;";
+                ", 2, 0); END;";
 
 /*        // TRIGER PARA ATUALIZAR SALDO DA CARTEIRA QUANDO DA COMPRA NA VIRTUALSTORE
         private static final String TRIGER_STORE_BUY = "CREATE TRIGGER trigger_virtual_store " +
@@ -300,6 +303,7 @@ public final class PromozContract {
     //STRINGS CONSTANTS ############################################################################
     public static final String valuesToPopulate[] = {
         PopulateBasicTables.VALUE_TABLE_HISTORIC_TYPE_COIN,
+        PopulateBasicTables.VALUE_TABLE_HISTORIC_TYPE_COIN2,
         PopulateBasicTables.VALUE_TABLE_USER, PopulateBasicTables.VALUE_TABLE_COUPON_CENTAURO,
         PopulateBasicTables.VALUE_TABLE_COUPON_CIA, PopulateBasicTables.VALUE_TABLE_COUPON_CIA,
         PopulateBasicTables.VALUE_TABLE_HISTORIC_COIN_1, PopulateBasicTables.VALUE_TABLE_HISTORIC_COIN_2,

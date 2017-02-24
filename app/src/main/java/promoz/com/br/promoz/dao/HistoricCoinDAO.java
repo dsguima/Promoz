@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,16 +33,16 @@ public class HistoricCoinDAO extends PromozContract.HistoricCoin {
         database = dbHelper.getDatabase();
     }
 
-    private HistoricCoin populate(){ // Popula o objeto com os dados do cursor
+    private HistoricCoin populate() { // Popula o objeto com os dados do cursor
         HistoricCoin model = new HistoricCoin(
                 cursor.getInt(cursor.getColumnIndex(_ID)),
                 cursor.getInt(cursor.getColumnIndex(COLUMN_WALLET_ID)),
                 cursor.getInt(cursor.getColumnIndex(COLUMN_HST_TP_ID)),
                 cursor.getString(cursor.getColumnIndex(COLUMN_HST_DT_OPER)),
                 cursor.getInt(cursor.getColumnIndex(COLUMN_AMOUNT_COIN)),
-                cursor.getString(cursor.getColumnIndex(COLUMN_DESC_OPER))
+                cursor.getInt(cursor.getColumnIndex(COLUMN_COIN_ID)),
+                cursor.getString(cursor.getColumnIndex(HistoricTypeCoinDAO.COLUMN_HST_TP_DESC))
         );
-
         return model;
     }
 
@@ -58,7 +59,7 @@ public class HistoricCoinDAO extends PromozContract.HistoricCoin {
         values.put(COLUMN_HST_TP_ID, historic.getHistoricTypeId());
         values.put(COLUMN_HST_DT_OPER, historic.getHistoricDateOperation());
         values.put(COLUMN_AMOUNT_COIN, historic.getAmountCoin());
-        values.put(COLUMN_DESC_OPER, historic.getOperationDescription());
+        values.put(COLUMN_COIN_ID, historic.getCoinId());
 
         try {
             if(historic.get_id() != null){
@@ -75,12 +76,14 @@ public class HistoricCoinDAO extends PromozContract.HistoricCoin {
     public List<HistoricCoin> listByDate(Integer walletId, Integer daysBefore) {
         List<HistoricCoin> lst = new ArrayList<HistoricCoin>();
 
-        String selection =  COLUMN_WALLET_ID + "=? and " + COLUMN_HST_DT_OPER + " > date('now','"+daysBefore.toString()+" day')";
+        String selection =  COLUMN_WALLET_ID + "=? and " + COLUMN_HST_DT_OPER + " > date('now','"+daysBefore.toString()+" day') and " + COLUMN_HST_TP_ID +" = "+HistoricTypeCoinDAO.TABLE_NAME + "." + HistoricTypeCoinDAO._ID;
         String[] selectionArgs = { String.valueOf(walletId)};
         String orderBy = COLUMN_HST_DT_OPER + " DESC";
 
+        String fields[] = new String[]{TABLE_NAME + "." + allFields[0],allFields[1],allFields[2],allFields[3],allFields[4],allFields[5], HistoricTypeCoinDAO.TABLE_NAME + "." + HistoricTypeCoinDAO.COLUMN_HST_TP_DESC};
+
         try {
-            cursor = database.query(TABLE_NAME, allFields, selection, selectionArgs, null, null, orderBy);
+            cursor = database.query(TABLE_NAME + ", " + HistoricTypeCoinDAO.TABLE_NAME, fields, selection, selectionArgs, null, null, orderBy);
             if(cursor.moveToFirst())
                 do {
                     lst.add(populate());
@@ -95,25 +98,16 @@ public class HistoricCoinDAO extends PromozContract.HistoricCoin {
         return lst;
     }
 
-    //TODO never used
-    /*public List<HistoricCoin> listById(Integer walletId){
+    public Integer countByCoinId(Integer coinId) {
 
-        String selection = COLUMN_WALLET_ID + " = ?";
-        String[] selectionArgs = { String.valueOf(walletId)};
-        String orderBy = COLUMN_HST_DT_OPER + " DESC";
-
-        Cursor cursor = database.query(TABLE_NAME, allFields, selection, selectionArgs, null, null, orderBy);
-
-        List<HistoricCoin> lst = new ArrayList<HistoricCoin>();
-
-        if(cursor.moveToFirst())
-            do {
-                lst.add(populate(cursor));
-            }while (cursor.moveToNext());
-
+        String selection = COLUMN_COIN_ID + " = ?";
+        String[] selectionArgs = { String.valueOf(coinId)};
+        cursor = database.query(TABLE_NAME, allFields, selection, selectionArgs, null, null, null);
+        Integer qtd = cursor.getCount();
         cursor.close();
-        return lst;
-    }*/
+
+        return qtd;
+    }
 
     //TODO never used
     /*public List<HistoricCoin> list(){
